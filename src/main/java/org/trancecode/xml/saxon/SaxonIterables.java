@@ -19,7 +19,7 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.core.collection.TubularIterables;
+import org.trancecode.collection.TubularIterables;
 
 import com.google.common.collect.Iterables;
 

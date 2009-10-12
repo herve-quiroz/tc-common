@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core.function;
+package org.trancecode.function;
 
 import org.trancecode.core.AbstractImmutableObject;
 
@@ -36,9 +36,9 @@ import com.google.common.collect.MapMaker;
  * @author Herve Quiroz
  * @version $Revision$
  */
-public final class TubularFunctions
+public final class TranceCodeFunctions
 {
-	private TubularFunctions()
+	private TranceCodeFunctions()
 	{
 		// No instantiation
 	}

@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core.function;
+package org.trancecode.function;
 
 /**
  * @author Herve Quiroz

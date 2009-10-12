@@ -17,11 +17,11 @@
  *
  * $Id$
  */
-package org.trancecode.core.collection;
+package org.trancecode.collection;
 
 import org.trancecode.annotation.ReturnsNullable;
 import org.trancecode.core.AbstractImmutableObject;
-import org.trancecode.core.function.TubularFunctions;
+import org.trancecode.function.TranceCodeFunctions;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -113,7 +113,7 @@ public final class TubularIterables
 	/** Compute a sequence of results by applying each function form the list to the same argument. */
 	public static <F, T> Iterable<T> applyFunctions(final Iterable<Function<F, T>> functions, final F argument)
 	{
-		final Function<Function<F, T>, T> applyFunction = TubularFunctions.applyTo(argument);
+		final Function<Function<F, T>, T> applyFunction = TranceCodeFunctions.applyTo(argument);
 		return Iterables.transform(functions, applyFunction);
 	}
 

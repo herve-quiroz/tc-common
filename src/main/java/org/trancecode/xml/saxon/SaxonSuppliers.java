@@ -19,7 +19,7 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.core.function.TubularSuppliers;
+import org.trancecode.function.TranceCodeSuppliers;
 
 import java.util.Iterator;
 
@@ -46,6 +46,6 @@ public final class SaxonSuppliers
 
 	public static Supplier<Iterator<XdmItem>> axisIterator(final XdmNode node, final Axis axis)
 	{
-		return TubularSuppliers.fromFunction(SaxonFunctions.axisIterator(axis), node);
+		return TranceCodeSuppliers.fromFunction(SaxonFunctions.axisIterator(axis), node);
 	}
 }

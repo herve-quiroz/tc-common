@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core.collection;
+package org.trancecode.collection;
 
 import java.util.Map;
 

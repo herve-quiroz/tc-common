@@ -20,7 +20,7 @@
 package org.trancecode.function;
 
 import org.trancecode.AbstractTest;
-import org.trancecode.core.function.TubularFunctions;
+import org.trancecode.function.TranceCodeFunctions;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
 
 
 /**
- * Tests for {@link TubularFunctions}.
+ * Tests for {@link TranceCodeFunctions}.
  * 
  * @author Herve Quiroz
  * @version $Revision: 3842 $
@@ -42,7 +42,7 @@ public class TubularFunctionsTest extends AbstractTest
 	public void toIterable()
 	{
 		final Iterable<String> iterable =
-			Iterables.concat(Iterables.transform(ImmutableList.of("abc", "def"), TubularFunctions
+			Iterables.concat(Iterables.transform(ImmutableList.of("abc", "def"), TranceCodeFunctions
 				.toIterable(String.class)));
 		AssertJUnit.assertEquals(ImmutableList.of("abc", "def"), ImmutableList.copyOf(iterable));
 	}

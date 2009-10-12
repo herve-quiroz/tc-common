@@ -19,7 +19,7 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.core.function.TubularPredicates;
+import org.trancecode.function.TranceCodePredicates;
 import org.trancecode.io.IOUtil;
 import org.trancecode.xml.XmlAttributes;
 import org.trancecode.xml.XmlSchemaTypes;
@@ -83,7 +83,7 @@ public class SaxonUtil implements XmlAttributes
 		assert node != null;
 
 		return Iterables.filter(SaxonIterables.childElements(node), Predicates.compose(
-			TubularPredicates.matches(names), SaxonFunctions.getNodeName()));
+			TranceCodePredicates.matches(names), SaxonFunctions.getNodeName()));
 	}
 
 

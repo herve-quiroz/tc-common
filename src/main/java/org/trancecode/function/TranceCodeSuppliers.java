@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core.function;
+package org.trancecode.function;
 
 import org.trancecode.core.AbstractImmutableObject;
 
@@ -32,9 +32,9 @@ import com.google.common.base.Supplier;
  * @author Herve Quiroz
  * @version $Revision$
  */
-public final class TubularSuppliers
+public final class TranceCodeSuppliers
 {
-	private TubularSuppliers()
+	private TranceCodeSuppliers()
 	{
 		// No instantiation
 	}

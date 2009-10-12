@@ -17,21 +17,56 @@
  *
  * $Id$
  */
-package org.trancecode.core.collection;
+package org.trancecode.function;
 
-import java.util.Collection;
+import org.trancecode.core.AbstractImmutableObject;
 
 
 /**
- * Utility methods related to {@link Collection}.
+ * Utility methods related to {@link Pair}.
  * 
  * @author Herve Quiroz
  * @version $Revision$
  */
-public final class TubularCollections
+public final class Pairs
 {
-	private TubularCollections()
+	private Pairs()
 	{
 		// No instantiation
+	}
+
+
+	public static <L, R> Pair<L, R> newImmutablePair(final L left, final R right)
+	{
+		return new ImmutablePair<L, R>(left, right);
+	}
+
+
+	private static class ImmutablePair<L, R> extends AbstractImmutableObject implements Pair<L, R>
+	{
+		private final L left;
+		private final R right;
+
+
+		public ImmutablePair(final L left, final R right)
+		{
+			super(left, right);
+			this.left = left;
+			this.right = right;
+		}
+
+
+		@Override
+		public L left()
+		{
+			return left;
+		}
+
+
+		@Override
+		public R right()
+		{
+			return right;
+		}
 	}
 }

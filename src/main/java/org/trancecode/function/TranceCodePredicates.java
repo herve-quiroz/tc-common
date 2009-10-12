@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core.function;
+package org.trancecode.function;
 
 import org.trancecode.core.AbstractImmutableObject;
 
@@ -35,9 +35,9 @@ import com.google.common.base.Predicates;
  * @author Herve Quiroz
  * @version $Revision$
  */
-public final class TubularPredicates
+public final class TranceCodePredicates
 {
-	private TubularPredicates()
+	private TranceCodePredicates()
 	{
 		// No instantiation
 	}
