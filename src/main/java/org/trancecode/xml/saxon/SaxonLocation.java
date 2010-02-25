@@ -32,6 +32,8 @@ import net.sf.saxon.s9api.XdmNode;
 @Immutable
 public class SaxonLocation implements Location
 {
+	private static final long serialVersionUID = 7136827002407040675L;
+
 	public final XdmNode node;
 
 	private String toString;

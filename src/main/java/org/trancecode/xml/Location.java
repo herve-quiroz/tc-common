@@ -19,6 +19,8 @@
  */
 package org.trancecode.xml;
 
+import java.io.Serializable;
+
 import javax.xml.transform.SourceLocator;
 
 
@@ -26,6 +28,6 @@ import javax.xml.transform.SourceLocator;
  * @author Herve Quiroz
  * @version $Revision$
  */
-public interface Location extends SourceLocator
+public interface Location extends SourceLocator, Serializable
 {
 }
