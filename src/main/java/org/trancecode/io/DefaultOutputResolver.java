@@ -32,7 +32,7 @@ import java.net.URI;
  */
 public class DefaultOutputResolver implements OutputResolver
 {
-	public static DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
+	public static final DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
 
 
 	private DefaultOutputResolver()
