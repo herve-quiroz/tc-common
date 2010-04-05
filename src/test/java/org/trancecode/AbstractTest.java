@@ -25,8 +25,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.varia.NullAppender;
 
-import org.slf4j.ext.XLogger;
-import org.slf4j.ext.XLoggerFactory;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
@@ -41,7 +39,7 @@ public abstract class AbstractTest
 
 	public static final boolean QUIET = Boolean.getBoolean(PROPERTY_QUIET);
 
-	protected final XLogger log = XLoggerFactory.getXLogger(getClass());
+	protected final org.trancecode.logging.Logger log = org.trancecode.logging.Logger.getLogger(getClass());
 
 
 	@BeforeSuite
@@ -50,7 +48,7 @@ public abstract class AbstractTest
 		Logger.getRootLogger().removeAllAppenders();
 		if (!QUIET)
 		{
-			Logger.getRootLogger().addAppender(new ConsoleAppender(new PatternLayout("%-5p %30.30c{2} %-30M %m%n")));
+			Logger.getRootLogger().addAppender(new ConsoleAppender(new PatternLayout("%-5p %30.30c{2} %m%n")));
 			Logger.getLogger("org.trancecode").setLevel(Level.TRACE);
 		}
 		else

@@ -21,6 +21,7 @@ package org.trancecode.xml.saxon;
 
 import org.trancecode.function.TranceCodePredicates;
 import org.trancecode.io.IOUtil;
+import org.trancecode.logging.Logger;
 import org.trancecode.xml.XmlAttributes;
 import org.trancecode.xml.XmlSchemaTypes;
 
@@ -50,8 +51,6 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
 
-import org.slf4j.ext.XLogger;
-import org.slf4j.ext.XLoggerFactory;
 import org.w3c.dom.Document;
 
 
@@ -61,7 +60,7 @@ import org.w3c.dom.Document;
  */
 public class SaxonUtil implements XmlAttributes
 {
-	private static final XLogger LOG = XLoggerFactory.getXLogger(SaxonUtil.class);
+	private static final Logger LOG = Logger.getLogger(SaxonUtil.class);
 
 
 	private SaxonUtil()
@@ -82,8 +81,8 @@ public class SaxonUtil implements XmlAttributes
 	{
 		assert node != null;
 
-		return Iterables.filter(SaxonIterables.childElements(node), Predicates.compose(
-			TranceCodePredicates.matches(names), SaxonFunctions.getNodeName()));
+		return Iterables.filter(SaxonIterables.childElements(node), Predicates.compose(TranceCodePredicates
+			.matches(names), SaxonFunctions.getNodeName()));
 	}
 
 

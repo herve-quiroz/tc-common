@@ -19,12 +19,12 @@
  */
 package org.trancecode.io;
 
+import org.trancecode.logging.Logger;
+
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.slf4j.Logger;
 
 
 /**

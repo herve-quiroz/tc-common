@@ -21,6 +21,7 @@ package org.trancecode.xml;
 
 import org.trancecode.io.IOUtil;
 import org.trancecode.io.InputResolver;
+import org.trancecode.logging.Logger;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,8 +29,6 @@ import java.net.URISyntaxException;
 
 import com.google.common.base.Preconditions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -98,7 +97,7 @@ public final class EntityResolvers
 	{
 		public static final NullEntityResolver INSTANCE = new NullEntityResolver();
 
-		private static final Logger LOG = LoggerFactory.getLogger(NullEntityResolver.class);
+		private static final Logger LOG = Logger.getLogger(NullEntityResolver.class);
 
 
 		private NullEntityResolver()
