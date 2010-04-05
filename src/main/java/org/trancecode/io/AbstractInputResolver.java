@@ -22,17 +22,16 @@ package org.trancecode.io;
 import java.io.InputStream;
 import java.net.URI;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public abstract class AbstractInputResolver implements InputResolver
 {
-	@Override
-	public InputStream resolveInputStream(final String href, final String base)
-	{
-		final URI uri = Uris.resolve(href, base);
-		return resolveInputStream(uri);
-	}
+    @Override
+    public InputStream resolveInputStream(final String href, final String base)
+    {
+        final URI uri = Uris.resolve(href, base);
+        return resolveInputStream(uri);
+    }
 }

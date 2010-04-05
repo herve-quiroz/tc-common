@@ -33,7 +33,6 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-
 /**
  * Utility methods related to {@link EntityResolver}.
  * 
@@ -42,79 +41,71 @@ import org.xml.sax.SAXException;
  */
 public final class EntityResolvers
 {
-	private EntityResolvers()
-	{
-		// No instantiation
-	}
+    private EntityResolvers()
+    {
+        // No instantiation
+    }
 
+    public static EntityResolver newEntityResolver(final InputResolver inputResolver)
+    {
+        return new InputResolverEntityResolver(inputResolver);
+    }
 
-	public static EntityResolver newEntityResolver(final InputResolver inputResolver)
-	{
-		return new InputResolverEntityResolver(inputResolver);
-	}
+    private static class InputResolverEntityResolver implements EntityResolver
+    {
+        private final InputResolver inputResolver;
 
+        public InputResolverEntityResolver(final InputResolver inputResolver)
+        {
+            super();
+            this.inputResolver = Preconditions.checkNotNull(inputResolver);
+        }
 
-	private static class InputResolverEntityResolver implements EntityResolver
-	{
-		private final InputResolver inputResolver;
+        @Override
+        public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException
+        {
+            final URI uri;
+            try
+            {
+                uri = new URI(systemId);
+            }
+            catch (final URISyntaxException e)
+            {
+                throw new SAXException("not a valid URI: " + systemId, e);
+            }
 
+            final InputSource inputSource = new InputSource(inputResolver.resolveInputStream(uri));
+            inputSource.setSystemId(uri.toString());
 
-		public InputResolverEntityResolver(final InputResolver inputResolver)
-		{
-			super();
-			this.inputResolver = Preconditions.checkNotNull(inputResolver);
-		}
+            return inputSource;
+        }
+    }
 
+    public static EntityResolver nullEntityResolver()
+    {
+        return NullEntityResolver.INSTANCE;
+    }
 
-		@Override
-		public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException
-		{
-			final URI uri;
-			try
-			{
-				uri = new URI(systemId);
-			}
-			catch (final URISyntaxException e)
-			{
-				throw new SAXException("not a valid URI: " + systemId, e);
-			}
+    private static class NullEntityResolver implements EntityResolver
+    {
+        public static final NullEntityResolver INSTANCE = new NullEntityResolver();
 
-			final InputSource inputSource = new InputSource(inputResolver.resolveInputStream(uri));
-			inputSource.setSystemId(uri.toString());
+        private static final Logger LOG = Logger.getLogger(NullEntityResolver.class);
 
-			return inputSource;
-		}
-	}
+        private NullEntityResolver()
+        {
+            // Singleton
+        }
 
+        public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException
+        {
+            LOG.trace("publicId = {} ; systemId = {}", publicId, systemId);
 
-	public static EntityResolver nullEntityResolver()
-	{
-		return NullEntityResolver.INSTANCE;
-	}
+            final InputSource inputSource = new InputSource(IOUtil.newNullInputStream());
+            inputSource.setPublicId(publicId);
+            inputSource.setSystemId(systemId);
 
-
-	private static class NullEntityResolver implements EntityResolver
-	{
-		public static final NullEntityResolver INSTANCE = new NullEntityResolver();
-
-		private static final Logger LOG = Logger.getLogger(NullEntityResolver.class);
-
-
-		private NullEntityResolver()
-		{
-			// Singleton
-		}
-
-
-		public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException
-		{
-			LOG.trace("publicId = {} ; systemId = {}", publicId, systemId);
-
-			final InputSource inputSource = new InputSource(IOUtil.newNullInputStream());
-			inputSource.setPublicId(publicId);
-			inputSource.setSystemId(systemId);
-
-			return inputSource;
-		}
-	}
+            return inputSource;
+        }
+    }
 }

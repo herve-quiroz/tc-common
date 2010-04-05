@@ -21,18 +21,16 @@ package org.trancecode.xml;
 
 import javax.xml.XMLConstants;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public final class XmlNamespace extends Namespace
 {
-	public static final XmlNamespace INSTANCE = new XmlNamespace();
+    public static final XmlNamespace INSTANCE = new XmlNamespace();
 
-
-	private XmlNamespace()
-	{
-		super(XMLConstants.XML_NS_URI, XMLConstants.XML_NS_PREFIX);
-	}
+    private XmlNamespace()
+    {
+        super(XMLConstants.XML_NS_URI, XMLConstants.XML_NS_PREFIX);
+    }
 }

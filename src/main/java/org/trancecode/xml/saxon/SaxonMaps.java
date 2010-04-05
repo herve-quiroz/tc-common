@@ -27,7 +27,6 @@ import com.google.common.collect.Maps;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmNode;
 
-
 /**
  * Utility methods related to {@link Map} and Saxon.
  * 
@@ -36,16 +35,15 @@ import net.sf.saxon.s9api.XdmNode;
  */
 public final class SaxonMaps
 {
-	private SaxonMaps()
-	{
-		// No instantiation
-	}
+    private SaxonMaps()
+    {
+        // No instantiation
+    }
 
-
-	public static Map<QName, String> attributes(final Iterable<XdmNode> nodes)
-	{
-		assert Iterables.all(nodes, SaxonPredicates.isAttribute());
-		final Map<QName, XdmNode> nodeMap = Maps.uniqueIndex(nodes, SaxonFunctions.getNodeName());
-		return Maps.transformValues(nodeMap, SaxonFunctions.getStringValue());
-	}
+    public static Map<QName, String> attributes(final Iterable<XdmNode> nodes)
+    {
+        assert Iterables.all(nodes, SaxonPredicates.isAttribute());
+        final Map<QName, XdmNode> nodeMap = Maps.uniqueIndex(nodes, SaxonFunctions.getNodeName());
+        return Maps.transformValues(nodeMap, SaxonFunctions.getStringValue());
+    }
 }

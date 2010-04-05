@@ -25,7 +25,6 @@ import com.google.common.base.Predicates;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 
-
 /**
  * Utility methods related to {@link Predicate} and Saxon.
  * 
@@ -34,22 +33,20 @@ import net.sf.saxon.s9api.XdmNodeKind;
  */
 public final class SaxonPredicates
 {
-	private SaxonPredicates()
-	{
-		// No instantiation
-	}
+    private SaxonPredicates()
+    {
+        // No instantiation
+    }
 
+    public static Predicate<XdmNode> isElement()
+    {
+        // TODO memoize?
+        return Predicates.compose(Predicates.equalTo(XdmNodeKind.ELEMENT), SaxonFunctions.getNodeKind());
+    }
 
-	public static Predicate<XdmNode> isElement()
-	{
-		// TODO memoize?
-		return Predicates.compose(Predicates.equalTo(XdmNodeKind.ELEMENT), SaxonFunctions.getNodeKind());
-	}
-
-
-	public static Predicate<XdmNode> isAttribute()
-	{
-		// TODO memoize?
-		return Predicates.compose(Predicates.equalTo(XdmNodeKind.ATTRIBUTE), SaxonFunctions.getNodeKind());
-	}
+    public static Predicate<XdmNode> isAttribute()
+    {
+        // TODO memoize?
+        return Predicates.compose(Predicates.equalTo(XdmNodeKind.ATTRIBUTE), SaxonFunctions.getNodeKind());
+    }
 }

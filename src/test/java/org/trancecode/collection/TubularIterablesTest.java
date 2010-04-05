@@ -28,7 +28,6 @@ import com.google.common.collect.ImmutableList;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-
 /**
  * Tests for {@link TubularIterables}.
  * 
@@ -38,29 +37,29 @@ import org.testng.annotations.Test;
 @Test
 public class TubularIterablesTest extends AbstractTest
 {
-	@Test
-	public void getDescendants()
-	{
-		final Function<String, Iterable<String>> split = new Function<String, Iterable<String>>()
-		{
-			@Override
-			public Iterable<String> apply(final String string)
-			{
-				if (string.length() == 1)
-				{
-					return ImmutableList.of();
-				}
+    @Test
+    public void getDescendants()
+    {
+        final Function<String, Iterable<String>> split = new Function<String, Iterable<String>>()
+        {
+            @Override
+            public Iterable<String> apply(final String string)
+            {
+                if (string.length() == 1)
+                {
+                    return ImmutableList.of();
+                }
 
-				return ImmutableList.of(string.substring(0, 1), string.substring(1));
-			}
-		};
+                return ImmutableList.of(string.substring(0, 1), string.substring(1));
+            }
+        };
 
-		AssertJUnit.assertEquals(ImmutableList.of("a", "bcd"), ImmutableList.copyOf(split.apply("abcd")));
-		AssertJUnit.assertEquals(ImmutableList.of(), ImmutableList.copyOf(split.apply("a")));
+        AssertJUnit.assertEquals(ImmutableList.of("a", "bcd"), ImmutableList.copyOf(split.apply("abcd")));
+        AssertJUnit.assertEquals(ImmutableList.of(), ImmutableList.copyOf(split.apply("a")));
 
-		final Iterable<String> elements = TubularIterables.getDescendants("abcd", split);
+        final Iterable<String> elements = TubularIterables.getDescendants("abcd", split);
 
-		AssertJUnit.assertEquals(ImmutableList.of("abcd", "a", "bcd", "b", "cd", "c", "d"), ImmutableList
-			.copyOf(elements));
-	}
+        AssertJUnit.assertEquals(ImmutableList.of("abcd", "a", "bcd", "b", "cd", "c", "d"), ImmutableList
+                .copyOf(elements));
+    }
 }

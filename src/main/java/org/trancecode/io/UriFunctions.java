@@ -27,7 +27,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 
-
 /**
  * {@link Function} implementations related to {@link URI}.
  * 
@@ -36,71 +35,62 @@ import com.google.common.base.Preconditions;
  */
 public final class UriFunctions
 {
-	private UriFunctions()
-	{
-		// No instantiation
-	}
+    private UriFunctions()
+    {
+        // No instantiation
+    }
 
+    public static Function<URI, URI> resolveUri(final URI baseUri)
+    {
+        if (baseUri == null)
+        {
+            return Functions.identity();
+        }
 
-	public static Function<URI, URI> resolveUri(final URI baseUri)
-	{
-		if (baseUri == null)
-		{
-			return Functions.identity();
-		}
+        return new ResolveUriFunction(baseUri);
+    }
 
-		return new ResolveUriFunction(baseUri);
-	}
+    private static class ResolveUriFunction extends AbstractImmutableHashCodeObject implements Function<URI, URI>
+    {
+        private final URI baseUri;
 
+        public ResolveUriFunction(final URI baseUri)
+        {
+            super();
+            Preconditions.checkNotNull(baseUri);
+            this.baseUri = baseUri;
+        }
 
-	private static class ResolveUriFunction extends AbstractImmutableHashCodeObject implements Function<URI, URI>
-	{
-		private final URI baseUri;
+        @Override
+        public URI apply(final URI uri)
+        {
+            return Uris.resolve(uri, baseUri);
+        }
+    }
 
+    public static Function<String, URI> resolveString(final URI baseUri)
+    {
+        return Functions.compose(resolveUri(baseUri), createUri());
+    }
 
-		public ResolveUriFunction(final URI baseUri)
-		{
-			super();
-			Preconditions.checkNotNull(baseUri);
-			this.baseUri = baseUri;
-		}
+    public static Function<String, URI> createUri()
+    {
+        return CreateUriFunction.INSTANCE;
+    }
 
+    private static class CreateUriFunction implements Function<String, URI>
+    {
+        public static final CreateUriFunction INSTANCE = new CreateUriFunction();
 
-		@Override
-		public URI apply(final URI uri)
-		{
-			return Uris.resolve(uri, baseUri);
-		}
-	}
+        private CreateUriFunction()
+        {
+            // Singleton
+        }
 
-
-	public static Function<String, URI> resolveString(final URI baseUri)
-	{
-		return Functions.compose(resolveUri(baseUri), createUri());
-	}
-
-
-	public static Function<String, URI> createUri()
-	{
-		return CreateUriFunction.INSTANCE;
-	}
-
-
-	private static class CreateUriFunction implements Function<String, URI>
-	{
-		public static final CreateUriFunction INSTANCE = new CreateUriFunction();
-
-
-		private CreateUriFunction()
-		{
-			// Singleton
-		}
-
-
-		@Override
-		public URI apply(final String uri)
-		{
-			return Uris.createUri(uri);
-		}
-	}
+        @Override
+        public URI apply(final String uri)
+        {
+            return Uris.createUri(uri);
+        }
+    }
 }

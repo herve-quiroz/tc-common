@@ -23,7 +23,6 @@ import org.trancecode.annotation.Immutable;
 
 import net.sf.saxon.s9api.QName;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
@@ -31,29 +30,27 @@ import net.sf.saxon.s9api.QName;
 @Immutable
 public class Namespace
 {
-	public final String uri;
-	public final String prefix;
+    public final String uri;
+    public final String prefix;
 
+    public Namespace(final String uri, final String prefix)
+    {
+        this.uri = uri;
+        this.prefix = prefix;
+    }
 
-	public Namespace(final String uri, final String prefix)
-	{
-		this.uri = uri;
-		this.prefix = prefix;
-	}
+    public QName newSaxonQName(final String localName)
+    {
+        if (uri != null)
+        {
+            if (prefix != null)
+            {
+                return new QName(prefix, uri, localName);
+            }
 
+            return new QName(uri, localName);
+        }
 
-	public QName newSaxonQName(final String localName)
-	{
-		if (uri != null)
-		{
-			if (prefix != null)
-			{
-				return new QName(prefix, uri, localName);
-			}
-
-			return new QName(uri, localName);
-		}
-
-		return new QName(localName);
-	}
+        return new QName(localName);
+    }
 }

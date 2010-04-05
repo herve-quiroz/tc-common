@@ -28,39 +28,36 @@ import org.apache.log4j.varia.NullAppender;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public abstract class AbstractTest
 {
-	public static final String PROPERTY_QUIET = AbstractTest.class.getName() + ".QUIET";
+    public static final String PROPERTY_QUIET = AbstractTest.class.getName() + ".QUIET";
 
-	public static final boolean QUIET = Boolean.getBoolean(PROPERTY_QUIET);
+    public static final boolean QUIET = Boolean.getBoolean(PROPERTY_QUIET);
 
-	protected final org.trancecode.logging.Logger log = org.trancecode.logging.Logger.getLogger(getClass());
+    protected final org.trancecode.logging.Logger log = org.trancecode.logging.Logger.getLogger(getClass());
 
+    @BeforeSuite
+    public static void setupLogging()
+    {
+        Logger.getRootLogger().removeAllAppenders();
+        if (!QUIET)
+        {
+            Logger.getRootLogger().addAppender(new ConsoleAppender(new PatternLayout("%-5p %30.30c{2} %m%n")));
+            Logger.getLogger("org.trancecode").setLevel(Level.TRACE);
+        }
+        else
+        {
+            Logger.getRootLogger().addAppender(new NullAppender());
+        }
+    }
 
-	@BeforeSuite
-	public static void setupLogging()
-	{
-		Logger.getRootLogger().removeAllAppenders();
-		if (!QUIET)
-		{
-			Logger.getRootLogger().addAppender(new ConsoleAppender(new PatternLayout("%-5p %30.30c{2} %m%n")));
-			Logger.getLogger("org.trancecode").setLevel(Level.TRACE);
-		}
-		else
-		{
-			Logger.getRootLogger().addAppender(new NullAppender());
-		}
-	}
-
-
-	@BeforeTest
-	public void logTestDelimiter()
-	{
-		log.info("------------------------------------------------------------------------------");
-	}
+    @BeforeTest
+    public void logTestDelimiter()
+    {
+        log.info("------------------------------------------------------------------------------");
+    }
 }

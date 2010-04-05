@@ -36,7 +36,6 @@ import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-
 /**
  * Tests for {@link SaxonIterables}.
  * 
@@ -46,26 +45,23 @@ import org.testng.annotations.Test;
 @Test
 public class SaxonIterablesTest extends AbstractTest
 {
-	private XdmNode document;
-	private XdmNode documentRoot;
+    private XdmNode document;
+    private XdmNode documentRoot;
 
+    @BeforeTest
+    public void parseDocument() throws Exception
+    {
+        final String documentString = "<root attribute1='value1' attribute2='value2'>TEXT<element1/><!-- comment --><element2/></root>";
+        final Source source = new StreamSource(new StringReader(documentString));
+        document = new Processor(false).newDocumentBuilder().build(source);
+        documentRoot = SaxonIterables.childElement(document);
+        AssertJUnit.assertEquals(new QName("root"), documentRoot.getNodeName());
+    }
 
-	@BeforeTest
-	public void parseDocument() throws Exception
-	{
-		final String documentString =
-			"<root attribute1='value1' attribute2='value2'>TEXT<element1/><!-- comment --><element2/></root>";
-		final Source source = new StreamSource(new StringReader(documentString));
-		document = new Processor(false).newDocumentBuilder().build(source);
-		documentRoot = SaxonIterables.childElement(document);
-		AssertJUnit.assertEquals(new QName("root"), documentRoot.getNodeName());
-	}
-
-
-	@Test
-	public void childNodes() throws Exception
-	{
-		final Iterable<XdmNode> childNodes = SaxonIterables.childNodes(documentRoot);
-		AssertJUnit.assertEquals(2, Iterables.size(Iterables.filter(childNodes, SaxonPredicates.isAttribute())));
-	}
+    @Test
+    public void childNodes() throws Exception
+    {
+        final Iterable<XdmNode> childNodes = SaxonIterables.childNodes(documentRoot);
+        AssertJUnit.assertEquals(2, Iterables.size(Iterables.filter(childNodes, SaxonPredicates.isAttribute())));
+    }
 }

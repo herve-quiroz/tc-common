@@ -28,7 +28,6 @@ import com.google.common.collect.Iterables;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-
 /**
  * Tests for {@link TranceCodeFunctions}.
  * 
@@ -38,12 +37,11 @@ import org.testng.annotations.Test;
 @Test
 public class TubularFunctionsTest extends AbstractTest
 {
-	@Test
-	public void toIterable()
-	{
-		final Iterable<String> iterable =
-			Iterables.concat(Iterables.transform(ImmutableList.of("abc", "def"), TranceCodeFunctions
-				.toIterable(String.class)));
-		AssertJUnit.assertEquals(ImmutableList.of("abc", "def"), ImmutableList.copyOf(iterable));
-	}
+    @Test
+    public void toIterable()
+    {
+        final Iterable<String> iterable = Iterables.concat(Iterables.transform(ImmutableList.of("abc", "def"),
+                TranceCodeFunctions.toIterable(String.class)));
+        AssertJUnit.assertEquals(ImmutableList.of("abc", "def"), ImmutableList.copyOf(iterable));
+    }
 }

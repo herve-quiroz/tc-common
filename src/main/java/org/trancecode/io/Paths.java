@@ -27,22 +27,20 @@ package org.trancecode.io;
  */
 public final class Paths
 {
-	private static final String PATH_DELIMITER = "/";
+    private static final String PATH_DELIMITER = "/";
 
+    private Paths()
+    {
+        // No instantiation
+    }
 
-	private Paths()
-	{
-		// No instantiation
-	}
+    public static String asAbsolutePath(final String path)
+    {
+        if (path.startsWith(PATH_DELIMITER))
+        {
+            return path;
+        }
 
-
-	public static String asAbsolutePath(final String path)
-	{
-		if (path.startsWith(PATH_DELIMITER))
-		{
-			return path;
-		}
-
-		return PATH_DELIMITER + path;
-	}
+        return PATH_DELIMITER + path;
+    }
 }

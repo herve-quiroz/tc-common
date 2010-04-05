@@ -23,7 +23,6 @@ import org.trancecode.io.IOUtil;
 
 import org.xml.sax.InputSource;
 
-
 /**
  * Utility methods related to SAX.
  * 
@@ -32,20 +31,19 @@ import org.xml.sax.InputSource;
  */
 public final class Sax
 {
-	private Sax()
-	{
-		// No instantiation
-	}
+    private Sax()
+    {
+        // No instantiation
+    }
 
+    public static void closeQuietly(final InputSource inputSource)
+    {
+        if (inputSource == null)
+        {
+            return;
+        }
 
-	public static void closeQuietly(final InputSource inputSource)
-	{
-		if (inputSource == null)
-		{
-			return;
-		}
-
-		IOUtil.closeQuietly(inputSource.getByteStream());
-		IOUtil.closeQuietly(inputSource.getCharacterStream());
-	}
+        IOUtil.closeQuietly(inputSource.getByteStream());
+        IOUtil.closeQuietly(inputSource.getCharacterStream());
+    }
 }

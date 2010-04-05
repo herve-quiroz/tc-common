@@ -25,12 +25,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
  * Objects from this class are immutable.
  * <p>
- * For instance, if object <code>A</code> and <code>B</code> are <code>Immutable</code> objects, then the result of
- * <code>A.equals(B)</code> is the same at any given time.
+ * For instance, if object <code>A</code> and <code>B</code> are
+ * <code>Immutable</code> objects, then the result of <code>A.equals(B)</code>
+ * is the same at any given time.
  * 
  * @author Herve Quiroz
  * @version $Revision$

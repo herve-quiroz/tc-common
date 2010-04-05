@@ -29,7 +29,6 @@ import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 
-
 /**
  * Utility methods related to {@link Supplier} and Saxon.
  * 
@@ -38,14 +37,13 @@ import net.sf.saxon.s9api.XdmNode;
  */
 public final class SaxonSuppliers
 {
-	private SaxonSuppliers()
-	{
-		// No instantiation
-	}
+    private SaxonSuppliers()
+    {
+        // No instantiation
+    }
 
-
-	public static Supplier<Iterator<XdmItem>> axisIterator(final XdmNode node, final Axis axis)
-	{
-		return TranceCodeSuppliers.fromFunction(SaxonFunctions.axisIterator(axis), node);
-	}
+    public static Supplier<Iterator<XdmItem>> axisIterator(final XdmNode node, final Axis axis)
+    {
+        return TranceCodeSuppliers.fromFunction(SaxonFunctions.axisIterator(axis), node);
+    }
 }

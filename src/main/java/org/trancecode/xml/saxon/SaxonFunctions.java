@@ -30,7 +30,6 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 
-
 /**
  * Utility methods related to {@link Function} and Saxon.
  * 
@@ -39,110 +38,94 @@ import net.sf.saxon.s9api.XdmNodeKind;
  */
 public final class SaxonFunctions
 {
-	private SaxonFunctions()
-	{
-		// No instantiation
-	}
+    private SaxonFunctions()
+    {
+        // No instantiation
+    }
 
+    public static Function<XdmNode, XdmNodeKind> getNodeKind()
+    {
+        return GetNodeKindFunction.INSTANCE;
+    }
 
-	public static Function<XdmNode, XdmNodeKind> getNodeKind()
-	{
-		return GetNodeKindFunction.INSTANCE;
-	}
+    private static class GetNodeKindFunction implements Function<XdmNode, XdmNodeKind>
+    {
+        private static GetNodeKindFunction INSTANCE = new GetNodeKindFunction();
 
+        private GetNodeKindFunction()
+        {
+            // Singleton
+        }
 
-	private static class GetNodeKindFunction implements Function<XdmNode, XdmNodeKind>
-	{
-		private static GetNodeKindFunction INSTANCE = new GetNodeKindFunction();
+        @Override
+        public XdmNodeKind apply(final XdmNode node)
+        {
+            return node.getNodeKind();
+        }
+    }
 
+    public static Function<XdmNode, Iterator<XdmItem>> axisIterator(final Axis axis)
+    {
+        return new AxisIteratorFunction(axis);
+    }
 
-		private GetNodeKindFunction()
-		{
-			// Singleton
-		}
+    private static class AxisIteratorFunction implements Function<XdmNode, Iterator<XdmItem>>
+    {
+        private final Axis axis;
 
+        public AxisIteratorFunction(final Axis axis)
+        {
+            super();
+            Preconditions.checkNotNull(axis);
+            this.axis = axis;
+        }
 
-		@Override
-		public XdmNodeKind apply(final XdmNode node)
-		{
-			return node.getNodeKind();
-		}
-	}
+        @Override
+        public Iterator<XdmItem> apply(final XdmNode node)
+        {
+            return node.axisIterator(axis);
+        }
+    }
 
+    public static Function<XdmNode, String> getStringValue()
+    {
+        return GetStringValueFunction.INSTANCE;
+    }
 
-	public static Function<XdmNode, Iterator<XdmItem>> axisIterator(final Axis axis)
-	{
-		return new AxisIteratorFunction(axis);
-	}
+    private static class GetStringValueFunction implements Function<XdmNode, String>
+    {
+        private static GetStringValueFunction INSTANCE = new GetStringValueFunction();
 
+        private GetStringValueFunction()
+        {
+            // Singleton
+        }
 
-	private static class AxisIteratorFunction implements Function<XdmNode, Iterator<XdmItem>>
-	{
-		private final Axis axis;
+        @Override
+        public String apply(final XdmNode node)
+        {
+            return node.getStringValue();
+        }
+    }
 
+    public static Function<XdmNode, QName> getNodeName()
+    {
+        return GetNodeNameFunction.INSTANCE;
+    }
 
-		public AxisIteratorFunction(final Axis axis)
-		{
-			super();
-			Preconditions.checkNotNull(axis);
-			this.axis = axis;
-		}
+    private static class GetNodeNameFunction implements Function<XdmNode, QName>
+    {
+        private static GetNodeNameFunction INSTANCE = new GetNodeNameFunction();
 
+        private GetNodeNameFunction()
+        {
+            // Singleton
+        }
 
-		@Override
-		public Iterator<XdmItem> apply(final XdmNode node)
-		{
-			return node.axisIterator(axis);
-		}
-	}
-
-
-	public static Function<XdmNode, String> getStringValue()
-	{
-		return GetStringValueFunction.INSTANCE;
-	}
-
-
-	private static class GetStringValueFunction implements Function<XdmNode, String>
-	{
-		private static GetStringValueFunction INSTANCE = new GetStringValueFunction();
-
-
-		private GetStringValueFunction()
-		{
-			// Singleton
-		}
-
-
-		@Override
-		public String apply(final XdmNode node)
-		{
-			return node.getStringValue();
-		}
-	}
-
-
-	public static Function<XdmNode, QName> getNodeName()
-	{
-		return GetNodeNameFunction.INSTANCE;
-	}
-
-
-	private static class GetNodeNameFunction implements Function<XdmNode, QName>
-	{
-		private static GetNodeNameFunction INSTANCE = new GetNodeNameFunction();
-
-
-		private GetNodeNameFunction()
-		{
-			// Singleton
-		}
-
-
-		@Override
-		public QName apply(final XdmNode node)
-		{
-			return node.getNodeName();
-		}
-	}
+        @Override
+        public QName apply(final XdmNode node)
+        {
+            return node.getNodeName();
+        }
+    }
 }

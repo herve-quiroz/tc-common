@@ -21,7 +21,6 @@ package org.trancecode.collection;
 
 import java.util.Collection;
 
-
 /**
  * Utility methods related to {@link Collection}.
  * 
@@ -30,8 +29,8 @@ import java.util.Collection;
  */
 public final class TubularCollections
 {
-	private TubularCollections()
-	{
-		// No instantiation
-	}
+    private TubularCollections()
+    {
+        // No instantiation
+    }
 }

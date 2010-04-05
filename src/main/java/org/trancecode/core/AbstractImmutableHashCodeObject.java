@@ -25,33 +25,30 @@ package org.trancecode.core;
  */
 public abstract class AbstractImmutableHashCodeObject extends AbstractImmutableObject
 {
-	private int hashCode;
-	private boolean hashCodeComputed = false;
+    private int hashCode;
+    private boolean hashCodeComputed = false;
 
+    public AbstractImmutableHashCodeObject(final Object... properties)
+    {
+        super(properties);
+    }
 
-	public AbstractImmutableHashCodeObject(final Object... properties)
-	{
-		super(properties);
-	}
+    @Override
+    public boolean equals(final Object o)
+    {
+        // To comply with Object.hashCode() and Object.equals() contract
+        return super.equals(o);
+    }
 
+    @Override
+    public int hashCode()
+    {
+        if (!hashCodeComputed)
+        {
+            hashCode = super.hashCode();
+            hashCodeComputed = true;
+        }
 
-	@Override
-	public boolean equals(final Object o)
-	{
-		// To comply with Object.hashCode() and Object.equals() contract
-		return super.equals(o);
-	}
-
-
-	@Override
-	public int hashCode()
-	{
-		if (!hashCodeComputed)
-		{
-			hashCode = super.hashCode();
-			hashCodeComputed = true;
-		}
-
-		return hashCode;
-	}
+        return hashCode;
+    }
 }

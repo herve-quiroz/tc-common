@@ -27,33 +27,30 @@ package org.trancecode.core;
  */
 public abstract class AbstractImmutableObject
 {
-	private final Object[] properties;
+    private final Object[] properties;
 
+    public AbstractImmutableObject(final Object... properties)
+    {
+        super();
+        this.properties = properties;
+    }
 
-	public AbstractImmutableObject(final Object... properties)
-	{
-		super();
-		this.properties = properties;
-	}
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (o != null && o instanceof AbstractImmutableObject)
+        {
+            final AbstractImmutableObject immutableObject = (AbstractImmutableObject) o;
+            return TubularObjects.pairEquals(getClass(), immutableObject.getClass(), properties,
+                    immutableObject.properties);
+        }
 
+        return false;
+    }
 
-	@Override
-	public boolean equals(final Object o)
-	{
-		if (o != null && o instanceof AbstractImmutableObject)
-		{
-			final AbstractImmutableObject immutableObject = (AbstractImmutableObject)o;
-			return TubularObjects
-				.pairEquals(getClass(), immutableObject.getClass(), properties, immutableObject.properties);
-		}
-
-		return false;
-	}
-
-
-	@Override
-	public int hashCode()
-	{
-		return TubularObjects.hashCode(getClass(), properties);
-	}
+    @Override
+    public int hashCode()
+    {
+        return TubularObjects.hashCode(getClass(), properties);
+    }
 }

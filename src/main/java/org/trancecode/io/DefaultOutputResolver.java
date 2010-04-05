@@ -25,39 +25,36 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public class DefaultOutputResolver implements OutputResolver
 {
-	public static final DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
+    public static final DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
 
+    private DefaultOutputResolver()
+    {
+        // Only a single instance needed
+    }
 
-	private DefaultOutputResolver()
-	{
-		// Only a single instance needed
-	}
+    @Override
+    public OutputStream resolveOutputStream(final String href, final String base)
+    {
+        final URI uri = Uris.resolve(href, base);
+        if (uri.getScheme() == null || "file".equals(uri.getScheme()))
+        {
+            final File file = new File(uri);
+            try
+            {
+                return new FileOutputStream(file);
+            }
+            catch (final IOException e)
+            {
+                throw new RuntimeIOException(e, "error resolving output: href = %s ; base = %s", href, base);
+            }
+        }
 
-
-	@Override
-	public OutputStream resolveOutputStream(final String href, final String base)
-	{
-		final URI uri = Uris.resolve(href, base);
-		if (uri.getScheme() == null || "file".equals(uri.getScheme()))
-		{
-			final File file = new File(uri);
-			try
-			{
-				return new FileOutputStream(file);
-			}
-			catch (final IOException e)
-			{
-				throw new RuntimeIOException(e, "error resolving output: href = %s ; base = %s", href, base);
-			}
-		}
-
-		throw new UnsupportedOperationException("URI scheme not supported: " + uri.getScheme());
-	}
+        throw new UnsupportedOperationException("URI scheme not supported: " + uri.getScheme());
+    }
 }

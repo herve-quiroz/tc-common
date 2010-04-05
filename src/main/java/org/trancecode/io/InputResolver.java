@@ -22,15 +22,13 @@ package org.trancecode.io;
 import java.io.InputStream;
 import java.net.URI;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public interface InputResolver
 {
-	InputStream resolveInputStream(String href, String base);
+    InputStream resolveInputStream(String href, String base);
 
-
-	InputStream resolveInputStream(URI uri);
+    InputStream resolveInputStream(URI uri);
 }

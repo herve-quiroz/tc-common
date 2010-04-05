@@ -21,12 +21,11 @@ package org.trancecode.xml;
 
 import net.sf.saxon.s9api.QName;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public interface XmlAttributes
 {
-	QName BASE = XmlNamespace.INSTANCE.newSaxonQName("base");
+    QName BASE = XmlNamespace.INSTANCE.newSaxonQName("base");
 }

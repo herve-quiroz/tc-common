@@ -27,7 +27,6 @@ import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 
-
 /**
  * Utility methods related to {@link Iterable} and Saxon.
  * 
@@ -36,40 +35,34 @@ import net.sf.saxon.s9api.XdmNode;
  */
 public final class SaxonIterables
 {
-	private SaxonIterables()
-	{
-		// No instantiation
-	}
+    private SaxonIterables()
+    {
+        // No instantiation
+    }
 
+    public static Iterable<XdmItem> childXdmItems(final XdmNode node)
+    {
+        return Iterables.concat(TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.ATTRIBUTE)),
+                TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.CHILD)));
+    }
 
-	public static Iterable<XdmItem> childXdmItems(final XdmNode node)
-	{
-		return Iterables.concat(
-			TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.ATTRIBUTE)), TubularIterables
-				.newIterable(SaxonSuppliers.axisIterator(node, Axis.CHILD)));
-	}
+    public static Iterable<XdmNode> childNodes(final XdmNode node)
+    {
+        return Iterables.filter(childXdmItems(node), XdmNode.class);
+    }
 
+    public static XdmNode childElement(final XdmNode node)
+    {
+        return Iterables.getOnlyElement(childElements(node));
+    }
 
-	public static Iterable<XdmNode> childNodes(final XdmNode node)
-	{
-		return Iterables.filter(childXdmItems(node), XdmNode.class);
-	}
+    public static Iterable<XdmNode> childElements(final XdmNode node)
+    {
+        return Iterables.filter(childNodes(node), SaxonPredicates.isElement());
+    }
 
-
-	public static XdmNode childElement(final XdmNode node)
-	{
-		return Iterables.getOnlyElement(childElements(node));
-	}
-
-
-	public static Iterable<XdmNode> childElements(final XdmNode node)
-	{
-		return Iterables.filter(childNodes(node), SaxonPredicates.isElement());
-	}
-
-
-	public static Iterable<XdmNode> attributes(final XdmNode node)
-	{
-		return Iterables.filter(childNodes(node), SaxonPredicates.isAttribute());
-	}
+    public static Iterable<XdmNode> attributes(final XdmNode node)
+    {
+        return Iterables.filter(childNodes(node), SaxonPredicates.isAttribute());
+    }
 }

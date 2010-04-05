@@ -24,7 +24,6 @@ import org.trancecode.xml.Location;
 
 import net.sf.saxon.s9api.XdmNode;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
@@ -32,51 +31,45 @@ import net.sf.saxon.s9api.XdmNode;
 @Immutable
 public class SaxonLocation implements Location
 {
-	private static final long serialVersionUID = 7136827002407040675L;
+    private static final long serialVersionUID = 7136827002407040675L;
 
-	public final XdmNode node;
+    public final XdmNode node;
 
-	private String toString;
+    private String toString;
 
+    public SaxonLocation(final XdmNode node)
+    {
+        this.node = node;
+    }
 
-	public SaxonLocation(final XdmNode node)
-	{
-		this.node = node;
-	}
+    public String getSystemId()
+    {
+        return node.getUnderlyingNode().getSystemId();
+    }
 
+    public int getColumnNumber()
+    {
+        return node.getUnderlyingNode().getColumnNumber();
+    }
 
-	public String getSystemId()
-	{
-		return node.getUnderlyingNode().getSystemId();
-	}
+    public int getLineNumber()
+    {
+        return node.getUnderlyingNode().getLineNumber();
+    }
 
+    public String getPublicId()
+    {
+        return null;
+    }
 
-	public int getColumnNumber()
-	{
-		return node.getUnderlyingNode().getColumnNumber();
-	}
+    @Override
+    public String toString()
+    {
+        if (toString == null)
+        {
+            toString = String.format("line %s, column %s in %s", getLineNumber(), getColumnNumber(), getSystemId());
+        }
 
-
-	public int getLineNumber()
-	{
-		return node.getUnderlyingNode().getLineNumber();
-	}
-
-
-	public String getPublicId()
-	{
-		return null;
-	}
-
-
-	@Override
-	public String toString()
-	{
-		if (toString == null)
-		{
-			toString = String.format("line %s, column %s in %s", getLineNumber(), getColumnNumber(), getSystemId());
-		}
-
-		return toString;
-	}
+        return toString;
+    }
 }

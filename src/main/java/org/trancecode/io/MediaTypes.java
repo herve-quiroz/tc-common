@@ -25,9 +25,9 @@ package org.trancecode.io;
  */
 public interface MediaTypes
 {
-	String MEDIA_TYPE_BINARY = "application/octet-stream";
-	String MEDIA_TYPE_HTML = "text/html";
-	String MEDIA_TYPE_PDF = "application/pdf";
-	String MEDIA_TYPE_XHTML = "application/xhtml+xml";
-	String MEDIA_TYPE_XML = "text/xml";
+    String MEDIA_TYPE_BINARY = "application/octet-stream";
+    String MEDIA_TYPE_HTML = "text/html";
+    String MEDIA_TYPE_PDF = "application/pdf";
+    String MEDIA_TYPE_XHTML = "application/xhtml+xml";
+    String MEDIA_TYPE_XML = "text/xml";
 }

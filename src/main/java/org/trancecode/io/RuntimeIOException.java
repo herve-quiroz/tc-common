@@ -21,36 +21,31 @@ package org.trancecode.io;
 
 import org.trancecode.core.BaseException;
 
-
 /**
  * @author Herve
  * @version $Revision$
  */
 public class RuntimeIOException extends BaseException
 {
-	private static final long serialVersionUID = -6251615522546450218L;
+    private static final long serialVersionUID = -6251615522546450218L;
 
+    public RuntimeIOException()
+    {
+        super();
+    }
 
-	public RuntimeIOException()
-	{
-		super();
-	}
+    public RuntimeIOException(final String message, final Object... parameters)
+    {
+        super(message, parameters);
+    }
 
+    public RuntimeIOException(final Throwable cause, final String message, final Object... parameters)
+    {
+        super(cause, message, parameters);
+    }
 
-	public RuntimeIOException(final String message, final Object... parameters)
-	{
-		super(message, parameters);
-	}
-
-
-	public RuntimeIOException(final Throwable cause, final String message, final Object... parameters)
-	{
-		super(cause, message, parameters);
-	}
-
-
-	public RuntimeIOException(final Throwable cause)
-	{
-		super(cause);
-	}
+    public RuntimeIOException(final Throwable cause)
+    {
+        super(cause);
+    }
 }

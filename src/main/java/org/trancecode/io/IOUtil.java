@@ -26,7 +26,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 /**
  * Utilty methods related to I/O.
  * 
@@ -35,51 +34,46 @@ import java.io.InputStream;
  */
 public final class IOUtil
 {
-	public static final byte[] EMPTY_BYTE_BUFFER = new byte[0];
+    public static final byte[] EMPTY_BYTE_BUFFER = new byte[0];
 
+    private IOUtil()
+    {
+        // To prevent instantiation
+    }
 
-	private IOUtil()
-	{
-		// To prevent instantiation
-	}
+    public static void close(final Closeable closeable) throws IOException
+    {
+        if (closeable != null)
+        {
+            closeable.close();
+        }
+    }
 
+    public static void closeQuietly(final Closeable closeable)
+    {
+        closeQuietly(closeable, null);
+    }
 
-	public static void close(final Closeable closeable) throws IOException
-	{
-		if (closeable != null)
-		{
-			closeable.close();
-		}
-	}
+    public static void closeQuietly(final Closeable closeable, final Logger logger)
+    {
+        try
+        {
+            if (closeable != null)
+            {
+                closeable.close();
+            }
+        }
+        catch (final IOException e)
+        {
+            if (logger != null)
+            {
+                logger.warn(e.toString(), e);
+            }
+        }
+    }
 
-
-	public static void closeQuietly(final Closeable closeable)
-	{
-		closeQuietly(closeable, null);
-	}
-
-
-	public static void closeQuietly(final Closeable closeable, final Logger logger)
-	{
-		try
-		{
-			if (closeable != null)
-			{
-				closeable.close();
-			}
-		}
-		catch (final IOException e)
-		{
-			if (logger != null)
-			{
-				logger.warn(e.toString(), e);
-			}
-		}
-	}
-
-
-	public static InputStream newNullInputStream()
-	{
-		return new ByteArrayInputStream(EMPTY_BYTE_BUFFER);
-	}
+    public static InputStream newNullInputStream()
+    {
+        return new ByteArrayInputStream(EMPTY_BYTE_BUFFER);
+    }
 }

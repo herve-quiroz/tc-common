@@ -23,7 +23,6 @@ import java.io.Serializable;
 
 import javax.xml.transform.SourceLocator;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$

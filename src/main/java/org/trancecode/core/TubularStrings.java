@@ -27,8 +27,8 @@ package org.trancecode.core;
  */
 public final class TubularStrings
 {
-	private TubularStrings()
-	{
-		// No instantiation
-	}
+    private TubularStrings()
+    {
+        // No instantiation
+    }
 }

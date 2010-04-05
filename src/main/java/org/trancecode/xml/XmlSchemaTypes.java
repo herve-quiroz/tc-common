@@ -21,12 +21,11 @@ package org.trancecode.xml;
 
 import net.sf.saxon.s9api.QName;
 
-
 /**
  * @author Hzrve Quiroz
  * @version $Revision$
  */
 public interface XmlSchemaTypes
 {
-	QName UNTYPED_ATOMIC = XmlSchemaNamespace.INSTANCE.newSaxonQName("untypedAtomic");
+    QName UNTYPED_ATOMIC = XmlSchemaNamespace.INSTANCE.newSaxonQName("untypedAtomic");
 }

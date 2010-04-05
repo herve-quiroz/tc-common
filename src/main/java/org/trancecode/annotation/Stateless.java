@@ -25,9 +25,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
- * Method is stateless and thus returns the same exact value for the same exact set of arguments.
+ * Method is stateless and thus returns the same exact value for the same exact
+ * set of arguments.
  * 
  * @author Herve Quiroz
  * @version $Revision$

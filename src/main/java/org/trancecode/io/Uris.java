@@ -25,7 +25,6 @@ import org.trancecode.annotation.ReturnsNullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
 /**
  * Utility methods related to {@link URI}.
  * 
@@ -34,58 +33,54 @@ import java.net.URISyntaxException;
  */
 public final class Uris
 {
-	private Uris()
-	{
-		// To prevent instantiation
-	}
+    private Uris()
+    {
+        // To prevent instantiation
+    }
 
+    @ReturnsNullable
+    public static URI createUri(@Nullable final String uri)
+    {
+        if (uri == null || uri.length() == 0)
+        {
+            return null;
+        }
 
-	@ReturnsNullable
-	public static URI createUri(@Nullable final String uri)
-	{
-		if (uri == null || uri.length() == 0)
-		{
-			return null;
-		}
+        return URI.create(uri);
+    }
 
-		return URI.create(uri);
-	}
+    @ReturnsNullable
+    public static URI resolve(@Nullable final String href, @Nullable final String base)
+    {
+        return resolve(createUri(href), createUri(base));
+    }
 
+    @ReturnsNullable
+    public static URI resolve(@Nullable final URI href, @Nullable final URI base)
+    {
+        if (base == null)
+        {
+            return href;
+        }
 
-	@ReturnsNullable
-	public static URI resolve(@Nullable final String href, @Nullable final String base)
-	{
-		return resolve(createUri(href), createUri(base));
-	}
+        if (href == null)
+        {
+            return base;
+        }
 
+        return base.resolve(href);
+    }
 
-	@ReturnsNullable
-	public static URI resolve(@Nullable final URI href, @Nullable final URI base)
-	{
-		if (base == null)
-		{
-			return href;
-		}
-
-		if (href == null)
-		{
-			return base;
-		}
-
-		return base.resolve(href);
-	}
-
-
-	public static boolean isValidUri(final String string)
-	{
-		try
-		{
-			new URI(string);
-			return true;
-		}
-		catch (final URISyntaxException e)
-		{
-			return false;
-		}
-	}
+    public static boolean isValidUri(final String string)
+    {
+        try
+        {
+            new URI(string);
+            return true;
+        }
+        catch (final URISyntaxException e)
+        {
+            return false;
+        }
+    }
 }

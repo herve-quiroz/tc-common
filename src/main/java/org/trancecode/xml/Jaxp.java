@@ -27,7 +27,6 @@ import java.io.IOException;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-
 /**
  * Utility methods related to JAXP (Java API for XML Processing).
  * 
@@ -36,35 +35,33 @@ import javax.xml.transform.stream.StreamSource;
  */
 public final class Jaxp
 {
-	private Jaxp()
-	{
-		// To prevent instantiation
-	}
+    private Jaxp()
+    {
+        // To prevent instantiation
+    }
 
+    public static void closeQuietly(final Source source)
+    {
+        closeQuietly(source, null);
+    }
 
-	public static void closeQuietly(final Source source)
-	{
-		closeQuietly(source, null);
-	}
-
-
-	public static void closeQuietly(final Source source, final Logger logger)
-	{
-		if (source instanceof StreamSource)
-		{
-			final StreamSource streamSource = (StreamSource)source;
-			try
-			{
-				IOUtil.close(streamSource.getInputStream());
-				IOUtil.close(streamSource.getReader());
-			}
-			catch (final IOException e)
-			{
-				if (logger != null)
-				{
-					logger.warn(e.toString(), e);
-				}
-			}
-		}
-	}
+    public static void closeQuietly(final Source source, final Logger logger)
+    {
+        if (source instanceof StreamSource)
+        {
+            final StreamSource streamSource = (StreamSource) source;
+            try
+            {
+                IOUtil.close(streamSource.getInputStream());
+                IOUtil.close(streamSource.getReader());
+            }
+            catch (final IOException e)
+            {
+                if (logger != null)
+                {
+                    logger.warn(e.toString(), e);
+                }
+            }
+        }
+    }
 }

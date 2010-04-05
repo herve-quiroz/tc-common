@@ -28,7 +28,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
-
 /**
  * Utility methods related to {@link Predicate}.
  * 
@@ -37,74 +36,65 @@ import com.google.common.base.Predicates;
  */
 public final class TranceCodePredicates
 {
-	private TranceCodePredicates()
-	{
-		// No instantiation
-	}
+    private TranceCodePredicates()
+    {
+        // No instantiation
+    }
 
+    public static <T> Predicate<T> matches(final Collection<T> filters)
+    {
+        if (filters.isEmpty())
+        {
+            return Predicates.alwaysTrue();
+        }
 
-	public static <T> Predicate<T> matches(final Collection<T> filters)
-	{
-		if (filters.isEmpty())
-		{
-			return Predicates.alwaysTrue();
-		}
+        return isContainedBy(filters);
+    }
 
-		return isContainedBy(filters);
-	}
+    public static <T> Predicate<T> isContainedBy(final Collection<T> collection)
+    {
+        return new IsContainedByPredicate<T>(collection);
+    }
 
+    private static class IsContainedByPredicate<T> extends AbstractImmutableObject implements Predicate<T>
+    {
+        private final Collection<T> collections;
 
-	public static <T> Predicate<T> isContainedBy(final Collection<T> collection)
-	{
-		return new IsContainedByPredicate<T>(collection);
-	}
+        public IsContainedByPredicate(final Collection<T> collection)
+        {
+            super(collection);
+            Preconditions.checkNotNull(collection);
+            this.collections = collection;
+        }
 
+        @Override
+        public boolean apply(final T object)
+        {
+            return collections.contains(object);
+        }
+    }
 
-	private static class IsContainedByPredicate<T> extends AbstractImmutableObject implements Predicate<T>
-	{
-		private final Collection<T> collections;
+    public static <T> Predicate<T> asPredicate(final Function<T, Boolean> function)
+    {
+        return new FunctionAsPredicate<T>(function);
+    }
 
+    private static class FunctionAsPredicate<T> implements Predicate<T>
+    {
+        private final Function<T, Boolean> function;
 
-		public IsContainedByPredicate(final Collection<T> collection)
-		{
-			super(collection);
-			Preconditions.checkNotNull(collection);
-			this.collections = collection;
-		}
+        public FunctionAsPredicate(final Function<T, Boolean> function)
+        {
+            super();
+            Preconditions.checkNotNull(function);
+            this.function = function;
+        }
 
+        @Override
+        public boolean apply(final T input)
+        {
+            return function.apply(input);
+        }
 
-		@Override
-		public boolean apply(final T object)
-		{
-			return collections.contains(object);
-		}
-	}
-
-
-	public static <T> Predicate<T> asPredicate(final Function<T, Boolean> function)
-	{
-		return new FunctionAsPredicate<T>(function);
-	}
-
-
-	private static class FunctionAsPredicate<T> implements Predicate<T>
-	{
-		private final Function<T, Boolean> function;
-
-
-		public FunctionAsPredicate(final Function<T, Boolean> function)
-		{
-			super();
-			Preconditions.checkNotNull(function);
-			this.function = function;
-		}
-
-
-		@Override
-		public boolean apply(final T input)
-		{
-			return function.apply(input);
-		}
-
-	}
+    }
 }

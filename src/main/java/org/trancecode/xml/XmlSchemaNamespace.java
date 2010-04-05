@@ -21,18 +21,16 @@ package org.trancecode.xml;
 
 import net.sf.saxon.om.NamespaceConstant;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public final class XmlSchemaNamespace extends Namespace
 {
-	public static final XmlSchemaNamespace INSTANCE = new XmlSchemaNamespace();
+    public static final XmlSchemaNamespace INSTANCE = new XmlSchemaNamespace();
 
-
-	private XmlSchemaNamespace()
-	{
-		super(NamespaceConstant.SCHEMA, "xs");
-	}
+    private XmlSchemaNamespace()
+    {
+        super(NamespaceConstant.SCHEMA, "xs");
+    }
 }

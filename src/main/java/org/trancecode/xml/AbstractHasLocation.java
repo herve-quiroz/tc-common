@@ -21,25 +21,22 @@ package org.trancecode.xml;
 
 import org.trancecode.annotation.Stateless;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public abstract class AbstractHasLocation implements HasLocation
 {
-	protected final Location location;
+    protected final Location location;
 
+    protected AbstractHasLocation(final Location location)
+    {
+        this.location = location;
+    }
 
-	protected AbstractHasLocation(final Location location)
-	{
-		this.location = location;
-	}
-
-
-	@Stateless
-	public final Location getLocation()
-	{
-		return location;
-	}
+    @Stateless
+    public final Location getLocation()
+    {
+        return location;
+    }
 }

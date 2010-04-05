@@ -26,114 +26,109 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public final class TubularObjects
 {
-	private static final Map<Object, Reference<Object>> internMap = new WeakHashMap<Object, Reference<Object>>();
+    private static final Map<Object, Reference<Object>> internMap = new WeakHashMap<Object, Reference<Object>>();
 
+    private TubularObjects()
+    {
+        // No instantiation
+    }
 
-	private TubularObjects()
-	{
-		// No instantiation
-	}
+    public static int hashCode(@Nullable final Object object)
+    {
+        if (object == null)
+        {
+            return 0;
+        }
 
+        return object.hashCode();
+    }
 
-	public static int hashCode(@Nullable final Object object)
-	{
-		if (object == null)
-		{
-			return 0;
-		}
+    public static int hashCode(final Object... objects)
+    {
+        if (objects.length == 0)
+        {
+            throw new IllegalArgumentException();
+        }
 
-		return object.hashCode();
-	}
+        int hashCode = hashCode(objects[0]);
+        for (int i = 1; i < objects.length; i++)
+        {
+            hashCode <<= 4;
+            hashCode ^= hashCode(objects[i]);
+        }
 
+        return hashCode;
+    }
 
-	public static int hashCode(final Object... objects)
-	{
-		if (objects.length == 0)
-		{
-			throw new IllegalArgumentException();
-		}
+    public static boolean equals(@Nullable final Object object1, @Nullable final Object object2)
+    {
+        if (object1 == object2)
+        {
+            return true;
+        }
 
-		int hashCode = hashCode(objects[0]);
-		for (int i = 1; i < objects.length; i++)
-		{
-			hashCode <<= 4;
-			hashCode ^= hashCode(objects[i]);
-		}
+        if (object1 != null)
+        {
+            return object1.equals(object2);
+        }
 
-		return hashCode;
-	}
+        return false;
+    }
 
+    public static boolean pairEquals(final Object... objects)
+    {
+        if (objects.length % 2 != 0)
+        {
+            throw new IllegalArgumentException("size = " + objects.length);
+        }
 
-	public static boolean equals(@Nullable final Object object1, @Nullable final Object object2)
-	{
-		if (object1 == object2)
-		{
-			return true;
-		}
+        for (int i = 0; i < objects.length; i += 2)
+        {
+            if (!equals(objects[i], objects[i + 1]))
+            {
+                return false;
+            }
+        }
 
-		if (object1 != null)
-		{
-			return object1.equals(object2);
-		}
+        return true;
+    }
 
-		return false;
-	}
+    /**
+     * Similar to {@link String#intern()} but for any {@link Object} regardless
+     * of its class.
+     */
+    public static <T> T intern(final T key)
+    {
+        // TODO not classloader-friendly
 
+        @SuppressWarnings("unchecked")
+        final Reference<T> internObject = (Reference<T>) internMap.get(key);
+        if (internObject != null)
+        {
+            return internObject.get();
+        }
 
-	public static boolean pairEquals(final Object... objects)
-	{
-		if (objects.length % 2 != 0)
-		{
-			throw new IllegalArgumentException("size = " + objects.length);
-		}
+        final Reference<Object> wrappedKey = new WeakReference<Object>(key);
+        internMap.put(key, wrappedKey);
 
-		for (int i = 0; i < objects.length; i += 2)
-		{
-			if (!equals(objects[i], objects[i + 1]))
-			{
-				return false;
-			}
-		}
+        return intern(key);
+    }
 
-		return true;
-	}
-
-
-	/** Similar to {@link String#intern()} but for any {@link Object} regardless of its class. */
-	public static <T> T intern(final T key)
-	{
-		// TODO not classloader-friendly
-
-		@SuppressWarnings("unchecked")
-		final Reference<T> internObject = (Reference<T>)internMap.get(key);
-		if (internObject != null)
-		{
-			return internObject.get();
-		}
-
-		final Reference<Object> wrappedKey = new WeakReference<Object>(key);
-		internMap.put(key, wrappedKey);
-
-		return intern(key);
-	}
-
-
-	public static <T> T conditional(final boolean condition, final T ifTrue, final T ifFalse)
-	{
-		if (condition)
-		{
-			return ifTrue;
-		}
-		else
-		{
-			return ifFalse;
-		}
-	}
+    public static <T> T conditional(final boolean condition, final T ifTrue, final T ifFalse)
+    {
+        if (condition)
+        {
+            return ifTrue;
+        }
+        else
+        {
+            return ifFalse;
+        }
+    }
 }

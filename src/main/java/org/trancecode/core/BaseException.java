@@ -25,47 +25,42 @@ package org.trancecode.core;
  */
 public class BaseException extends RuntimeException
 {
-	private static final long serialVersionUID = -9019452747824422285L;
+    private static final long serialVersionUID = -9019452747824422285L;
 
+    public BaseException()
+    {
+        super();
+    }
 
-	public BaseException()
-	{
-		super();
-	}
+    public BaseException(final String message, final Object... parameters)
+    {
+        super(format(message, parameters));
+    }
 
+    public BaseException(final Throwable cause)
+    {
+        super(cause);
+    }
 
-	public BaseException(final String message, final Object... parameters)
-	{
-		super(format(message, parameters));
-	}
+    public BaseException(final Throwable cause, final String message, final Object... parameters)
+    {
+        super(format(message, parameters), cause);
+    }
 
+    protected static String format(final String message, final Object... parameters)
+    {
+        if (parameters == null || parameters.length == 0)
+        {
+            return message;
+        }
 
-	public BaseException(final Throwable cause)
-	{
-		super(cause);
-	}
-
-
-	public BaseException(final Throwable cause, final String message, final Object... parameters)
-	{
-		super(format(message, parameters), cause);
-	}
-
-
-	protected static String format(final String message, final Object... parameters)
-	{
-		if (parameters == null || parameters.length == 0)
-		{
-			return message;
-		}
-
-		try
-		{
-			return String.format(message, parameters);
-		}
-		catch (final Exception e)
-		{
-			return message;
-		}
-	}
+        try
+        {
+            return String.format(message, parameters);
+        }
+        catch (final Exception e)
+        {
+            return message;
+        }
+    }
 }

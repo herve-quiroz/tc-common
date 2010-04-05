@@ -25,38 +25,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public class DefaultInputResolver extends AbstractInputResolver
 {
-	public static final DefaultInputResolver INSTANCE = new DefaultInputResolver();
+    public static final DefaultInputResolver INSTANCE = new DefaultInputResolver();
 
+    private DefaultInputResolver()
+    {
+        // Only a single instance needed
+    }
 
-	private DefaultInputResolver()
-	{
-		// Only a single instance needed
-	}
+    @Override
+    public InputStream resolveInputStream(final URI uri)
+    {
+        if (uri.getScheme() == null || "file".equals(uri.getScheme()))
+        {
+            final File file = new File(uri);
+            try
+            {
+                return new FileInputStream(file);
+            }
+            catch (final IOException e)
+            {
+                throw new RuntimeIOException(e, "error resolving input: %s", uri);
+            }
+        }
 
-
-	@Override
-	public InputStream resolveInputStream(final URI uri)
-	{
-		if (uri.getScheme() == null || "file".equals(uri.getScheme()))
-		{
-			final File file = new File(uri);
-			try
-			{
-				return new FileInputStream(file);
-			}
-			catch (final IOException e)
-			{
-				throw new RuntimeIOException(e, "error resolving input: %s", uri);
-			}
-		}
-
-		throw new UnsupportedOperationException("URI scheme not supported: " + uri.getScheme());
-	}
+        throw new UnsupportedOperationException("URI scheme not supported: " + uri.getScheme());
+    }
 }

@@ -38,7 +38,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-
 /**
  * Utility methods related to {@link URIResolver}.
  * 
@@ -47,59 +46,55 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public final class UriResolvers
 {
-	private UriResolvers()
-	{
-		// No instantiation
-	}
+    private UriResolvers()
+    {
+        // No instantiation
+    }
 
+    public static URIResolver newUriResolver(final InputResolver inputResolver)
+    {
+        return new EntityResolverURIResolver(inputResolver);
+    }
 
-	public static URIResolver newUriResolver(final InputResolver inputResolver)
-	{
-		return new EntityResolverURIResolver(inputResolver);
-	}
+    private static class EntityResolverURIResolver extends AbstractImmutableObject implements URIResolver
+    {
+        private final InputResolver inputResolver;
+        private final EntityResolver entityResolver;
 
+        public EntityResolverURIResolver(final InputResolver inputResolver)
+        {
+            super(inputResolver);
+            this.inputResolver = Preconditions.checkNotNull(inputResolver);
+            entityResolver = EntityResolvers.newEntityResolver(inputResolver);
+        }
 
-	private static class EntityResolverURIResolver extends AbstractImmutableObject implements URIResolver
-	{
-		private final InputResolver inputResolver;
-		private final EntityResolver entityResolver;
+        @Override
+        public Source resolve(final String href, final String base) throws TransformerException
+        {
+            final URI uri = Uris.resolve(href, base);
+            if (uri == null)
+            {
+                throw new TransformerException(String.format("not a valid URI ; href = %s ; base = %s", href, base));
+            }
 
+            final InputSource inputSource = new InputSource(inputResolver.resolveInputStream(uri));
+            inputSource.setSystemId(uri.toString());
 
-		public EntityResolverURIResolver(final InputResolver inputResolver)
-		{
-			super(inputResolver);
-			this.inputResolver = Preconditions.checkNotNull(inputResolver);
-			entityResolver = EntityResolvers.newEntityResolver(inputResolver);
-		}
+            try
+            {
+                final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+                xmlReader.setEntityResolver(entityResolver);
 
+                final SAXSource source = new SAXSource(xmlReader, inputSource);
+                source.setSystemId(uri.toString());
 
-		@Override
-		public Source resolve(final String href, final String base) throws TransformerException
-		{
-			final URI uri = Uris.resolve(href, base);
-			if (uri == null)
-			{
-				throw new TransformerException(String.format("not a valid URI ; href = %s ; base = %s", href, base));
-			}
-
-			final InputSource inputSource = new InputSource(inputResolver.resolveInputStream(uri));
-			inputSource.setSystemId(uri.toString());
-
-			try
-			{
-				final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-				xmlReader.setEntityResolver(entityResolver);
-
-				final SAXSource source = new SAXSource(xmlReader, inputSource);
-				source.setSystemId(uri.toString());
-
-				return source;
-			}
-			catch (final SAXException e)
-			{
-				Sax.closeQuietly(inputSource);
-				throw new TransformerException(String.format("href = %s ; base = %s", href, base), e);
-			}
-		}
-	}
+                return source;
+            }
+            catch (final SAXException e)
+            {
+                Sax.closeQuietly(inputSource);
+                throw new TransformerException(String.format("href = %s ; base = %s", href, base), e);
+            }
+        }
+    }
 }

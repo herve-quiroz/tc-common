@@ -25,8 +25,7 @@ package org.trancecode.function;
  */
 public interface Pair<L, R>
 {
-	L left();
+    L left();
 
-
-	R right();
+    R right();
 }

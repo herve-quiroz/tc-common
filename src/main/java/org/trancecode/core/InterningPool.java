@@ -24,41 +24,37 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-
 /**
- * Similar to {@link String#intern()} but for any {@link Object} regardless of its class and non-static in order to
- * reduce PermGen space use.
+ * Similar to {@link String#intern()} but for any {@link Object} regardless of
+ * its class and non-static in order to reduce PermGen space use.
  * 
  * @author Herve Quiroz
  * @version $Revision: 3842 $
  */
 public final class InterningPool<T>
 {
-	private final Map<T, Reference<T>> internMap = new WeakHashMap<T, Reference<T>>();
+    private final Map<T, Reference<T>> internMap = new WeakHashMap<T, Reference<T>>();
 
+    public static <T> InterningPool<T> newInstance()
+    {
+        return new InterningPool<T>();
+    }
 
-	public static <T> InterningPool<T> newInstance()
-	{
-		return new InterningPool<T>();
-	}
+    private InterningPool()
+    {
+        super();
+    }
 
+    public T intern(final T key)
+    {
+        final Reference<T> internObject = internMap.get(key);
+        if (internObject != null)
+        {
+            return internObject.get();
+        }
 
-	private InterningPool()
-	{
-		super();
-	}
+        internMap.put(key, new WeakReference<T>(key));
 
-
-	public T intern(final T key)
-	{
-		final Reference<T> internObject = internMap.get(key);
-		if (internObject != null)
-		{
-			return internObject.get();
-		}
-
-		internMap.put(key, new WeakReference<T>(key));
-
-		return intern(key);
-	}
+        return intern(key);
+    }
 }

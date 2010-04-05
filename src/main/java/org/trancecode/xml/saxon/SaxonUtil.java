@@ -53,155 +53,141 @@ import net.sf.saxon.s9api.XsltTransformer;
 
 import org.w3c.dom.Document;
 
-
 /**
  * @author Herve Quiroz
  * @version $Revision$
  */
 public class SaxonUtil implements XmlAttributes
 {
-	private static final Logger LOG = Logger.getLogger(SaxonUtil.class);
+    private static final Logger LOG = Logger.getLogger(SaxonUtil.class);
 
+    private SaxonUtil()
+    {
+        // To prevent instantiation
+    }
 
-	private SaxonUtil()
-	{
-		// To prevent instantiation
-	}
+    public static Map<QName, String> attributes(final XdmNode node)
+    {
+        assert node != null;
 
+        return SaxonMaps.attributes(SaxonIterables.attributes(node));
+    }
 
-	public static Map<QName, String> attributes(final XdmNode node)
-	{
-		assert node != null;
+    public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
+    {
+        assert node != null;
 
-		return SaxonMaps.attributes(SaxonIterables.attributes(node));
-	}
+        return Iterables.filter(SaxonIterables.childElements(node), Predicates.compose(TranceCodePredicates
+                .matches(names), SaxonFunctions.getNodeName()));
+    }
 
+    public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
+    {
+        return childElements(node, ImmutableSet.of(names));
+    }
 
-	public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
-	{
-		assert node != null;
+    public static XdmNode childElement(final XdmNode node, final QName... names)
+    {
+        return childElement(node, ImmutableSet.of(names));
+    }
 
-		return Iterables.filter(SaxonIterables.childElements(node), Predicates.compose(TranceCodePredicates
-			.matches(names), SaxonFunctions.getNodeName()));
-	}
+    public static XdmNode childElement(final XdmNode node, final Collection<QName> names)
+    {
+        return Iterables.getOnlyElement(childElements(node, names));
+    }
 
+    public static QName getAttributeAsQName(final XdmNode node, final QName attributeName)
+    {
+        final String value = node.getAttributeValue(attributeName);
+        if (value != null)
+        {
+            return new QName(value, node);
+        }
 
-	public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
-	{
-		return childElements(node, ImmutableSet.of(names));
-	}
+        return null;
+    }
 
+    public static Document asDomDocument(final XdmNode node, final Processor processor)
+    {
+        try
+        {
+            final Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+            final DOMResult domResult = new DOMResult();
+            final XsltTransformer transformer = processor.newXsltCompiler().compile(null).load();
+            transformer.setSource(node.asSource());
+            transformer.setDestination(new DOMDestination(document));
+            transformer.transform();
 
-	public static XdmNode childElement(final XdmNode node, final QName... names)
-	{
-		return childElement(node, ImmutableSet.of(names));
-	}
+            return (Document) domResult.getNode();
+        }
+        catch (final Exception e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
 
+    public static Object nodesToString(final XdmNode... nodes)
+    {
+        return nodesToString(ImmutableList.of(nodes));
+    }
 
-	public static XdmNode childElement(final XdmNode node, final Collection<QName> names)
-	{
-		return Iterables.getOnlyElement(childElements(node, names));
-	}
+    public static Object nodesToString(final Iterable<XdmNode> nodes)
+    {
+        return new Object()
+        {
+            @Override
+            public String toString()
+            {
+                final List<QName> qnames = Lists.newArrayList();
+                for (final XdmNode node : nodes)
+                {
+                    if (node.getNodeKind() == XdmNodeKind.DOCUMENT)
+                    {
+                        qnames.add(new QName("document"));
+                    }
+                    else
+                    {
+                        qnames.add(node.getNodeName());
+                    }
+                }
 
+                return qnames.toString();
+            }
+        };
+    }
 
-	public static QName getAttributeAsQName(final XdmNode node, final QName attributeName)
-	{
-		final String value = node.getAttributeValue(attributeName);
-		if (value != null)
-		{
-			return new QName(value, node);
-		}
+    public static XdmNode parse(final String xmlContent, final Processor processor)
+    {
+        final StringReader reader = new StringReader(xmlContent);
+        try
+        {
+            return processor.newDocumentBuilder().build(new StreamSource(reader));
+        }
+        catch (final SaxonApiException e)
+        {
+            throw new IllegalStateException(e);
+        }
+        finally
+        {
+            IOUtil.closeQuietly(reader);
+        }
+    }
 
-		return null;
-	}
+    public static XdmNode getEmptyDocument(final Processor processor)
+    {
+        return parse("<?xml version=\"1.0\"?><document/>", processor);
+    }
 
-
-	public static Document asDomDocument(final XdmNode node, final Processor processor)
-	{
-		try
-		{
-			final Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-			final DOMResult domResult = new DOMResult();
-			final XsltTransformer transformer = processor.newXsltCompiler().compile(null).load();
-			transformer.setSource(node.asSource());
-			transformer.setDestination(new DOMDestination(document));
-			transformer.transform();
-
-			return (Document)domResult.getNode();
-		}
-		catch (final Exception e)
-		{
-			throw new IllegalStateException(e);
-		}
-	}
-
-
-	public static Object nodesToString(final XdmNode... nodes)
-	{
-		return nodesToString(ImmutableList.of(nodes));
-	}
-
-
-	public static Object nodesToString(final Iterable<XdmNode> nodes)
-	{
-		return new Object()
-		{
-			@Override
-			public String toString()
-			{
-				final List<QName> qnames = Lists.newArrayList();
-				for (final XdmNode node : nodes)
-				{
-					if (node.getNodeKind() == XdmNodeKind.DOCUMENT)
-					{
-						qnames.add(new QName("document"));
-					}
-					else
-					{
-						qnames.add(node.getNodeName());
-					}
-				}
-
-				return qnames.toString();
-			}
-		};
-	}
-
-
-	public static XdmNode parse(final String xmlContent, final Processor processor)
-	{
-		final StringReader reader = new StringReader(xmlContent);
-		try
-		{
-			return processor.newDocumentBuilder().build(new StreamSource(reader));
-		}
-		catch (final SaxonApiException e)
-		{
-			throw new IllegalStateException(e);
-		}
-		finally
-		{
-			IOUtil.closeQuietly(reader);
-		}
-	}
-
-
-	public static XdmNode getEmptyDocument(final Processor processor)
-	{
-		return parse("<?xml version=\"1.0\"?><document/>", processor);
-	}
-
-
-	public static XdmItem getUntypedXdmItem(final String value, final Processor processor)
-	{
-		try
-		{
-			return new XdmAtomicValue(value, new ItemTypeFactory(processor)
-				.getAtomicType(XmlSchemaTypes.UNTYPED_ATOMIC));
-		}
-		catch (final SaxonApiException e)
-		{
-			throw new IllegalStateException(e);
-		}
-	}
+    public static XdmItem getUntypedXdmItem(final String value, final Processor processor)
+    {
+        try
+        {
+            return new XdmAtomicValue(value, new ItemTypeFactory(processor)
+                    .getAtomicType(XmlSchemaTypes.UNTYPED_ATOMIC));
+        }
+        catch (final SaxonApiException e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
 }

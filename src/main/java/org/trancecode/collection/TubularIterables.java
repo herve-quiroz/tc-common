@@ -32,7 +32,6 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
-
 /**
  * Utility methods related to {@link Iterable}.
  * 
@@ -41,113 +40,113 @@ import com.google.common.collect.Iterables;
  */
 public final class TubularIterables
 {
-	private TubularIterables()
-	{
-		// No instantiation
-	}
+    private TubularIterables()
+    {
+        // No instantiation
+    }
 
+    /**
+     * Build an {@link Iterable} sequence of element from a {@link Iterator}
+     * provided by a {@link Supplier}.
+     */
+    public static <T> Iterable<T> newIterable(final Supplier<Iterator<T>> iteratorSupplier)
+    {
+        return new IteratorIterable<T>(iteratorSupplier);
+    }
 
-	/** Build an {@link Iterable} sequence of element from a {@link Iterator} provided by a {@link Supplier}. */
-	public static <T> Iterable<T> newIterable(final Supplier<Iterator<T>> iteratorSupplier)
-	{
-		return new IteratorIterable<T>(iteratorSupplier);
-	}
+    private static class IteratorIterable<T> extends AbstractImmutableObject implements Iterable<T>
+    {
+        private final Supplier<Iterator<T>> iteratorSupplier;
 
+        public IteratorIterable(final Supplier<Iterator<T>> iteratorSupplier)
+        {
+            super(iteratorSupplier);
+            Preconditions.checkNotNull(iteratorSupplier);
+            this.iteratorSupplier = iteratorSupplier;
+        }
 
-	private static class IteratorIterable<T> extends AbstractImmutableObject implements Iterable<T>
-	{
-		private final Supplier<Iterator<T>> iteratorSupplier;
+        @Override
+        public Iterator<T> iterator()
+        {
+            return iteratorSupplier.get();
+        }
+    }
 
+    /**
+     * Get the last argument from a sequence, or <code>null</code> if there is
+     * no such last element.
+     */
+    @ReturnsNullable
+    public static <T> T getLast(final Iterable<T> elements)
+    {
+        return getLast(elements, null);
+    }
 
-		public IteratorIterable(final Supplier<Iterator<T>> iteratorSupplier)
-		{
-			super(iteratorSupplier);
-			Preconditions.checkNotNull(iteratorSupplier);
-			this.iteratorSupplier = iteratorSupplier;
-		}
+    /**
+     * Get the last argument from a sequence, or <code>defaultElement</code> if
+     * there is no such last element.
+     */
+    @ReturnsNullable
+    public static <T> T getLast(final Iterable<T> elements, final T defaultElement)
+    {
+        try
+        {
+            return Iterables.getLast(elements);
+        }
+        catch (final NoSuchElementException e)
+        {
+            return defaultElement;
+        }
+    }
 
+    public static <T> Iterable<T> append(final Iterable<T> iterable, final T... elements)
+    {
+        return Iterables.concat(iterable, ImmutableList.of(elements));
+    }
 
-		@Override
-		public Iterator<T> iterator()
-		{
-			return iteratorSupplier.get();
-		}
-	}
+    public static <T> Iterable<T> prepend(final Iterable<T> iterable, final T... elements)
+    {
+        return Iterables.concat(ImmutableList.of(elements), iterable);
+    }
 
+    /**
+     * Compute a sequence of results by applying each function form the list to
+     * the same argument.
+     */
+    public static <F, T> Iterable<T> applyFunctions(final Iterable<Function<F, T>> functions, final F argument)
+    {
+        final Function<Function<F, T>, T> applyFunction = TranceCodeFunctions.applyTo(argument);
+        return Iterables.transform(functions, applyFunction);
+    }
 
-	/** Get the last argument from a sequence, or <code>null</code> if there is no such last element. */
-	@ReturnsNullable
-	public static <T> T getLast(final Iterable<T> elements)
-	{
-		return getLast(elements, null);
-	}
+    public static <T> Iterable<T> getDescendants(final Iterable<T> parentElements,
+            final Function<T, Iterable<T>> getChildFunction)
+    {
+        if (Iterables.isEmpty(parentElements))
+        {
+            return parentElements;
+        }
 
+        final Iterable<T> children = Iterables.concat(Iterables.transform(parentElements, getChildFunction));
 
-	/** Get the last argument from a sequence, or <code>defaultElement</code> if there is no such last element. */
-	@ReturnsNullable
-	public static <T> T getLast(final Iterable<T> elements, final T defaultElement)
-	{
-		try
-		{
-			return Iterables.getLast(elements);
-		}
-		catch (final NoSuchElementException e)
-		{
-			return defaultElement;
-		}
-	}
+        return Iterables.concat(parentElements, getDescendants(children, getChildFunction));
+    }
 
+    public static <T> Iterable<T> getDescendants(final T parentElement, final Function<T, Iterable<T>> getChildFunction)
+    {
+        return getDescendants(ImmutableList.of(parentElement), getChildFunction);
+    }
 
-	public static <T> Iterable<T> append(final Iterable<T> iterable, final T... elements)
-	{
-		return Iterables.concat(iterable, ImmutableList.of(elements));
-	}
+    public static boolean removeAll(final Iterable<?> iterable)
+    {
+        boolean removed = false;
+        for (final Iterator<?> iterator = iterable.iterator(); iterator.hasNext();)
+        {
+            iterator.next();
+            iterator.remove();
+            removed = true;
+        }
 
-
-	public static <T> Iterable<T> prepend(final Iterable<T> iterable, final T... elements)
-	{
-		return Iterables.concat(ImmutableList.of(elements), iterable);
-	}
-
-
-	/** Compute a sequence of results by applying each function form the list to the same argument. */
-	public static <F, T> Iterable<T> applyFunctions(final Iterable<Function<F, T>> functions, final F argument)
-	{
-		final Function<Function<F, T>, T> applyFunction = TranceCodeFunctions.applyTo(argument);
-		return Iterables.transform(functions, applyFunction);
-	}
-
-
-	public static <T> Iterable<T> getDescendants(
-		final Iterable<T> parentElements, final Function<T, Iterable<T>> getChildFunction)
-	{
-		if (Iterables.isEmpty(parentElements))
-		{
-			return parentElements;
-		}
-
-		final Iterable<T> children = Iterables.concat(Iterables.transform(parentElements, getChildFunction));
-
-		return Iterables.concat(parentElements, getDescendants(children, getChildFunction));
-	}
-
-
-	public static <T> Iterable<T> getDescendants(final T parentElement, final Function<T, Iterable<T>> getChildFunction)
-	{
-		return getDescendants(ImmutableList.of(parentElement), getChildFunction);
-	}
-
-
-	public static boolean removeAll(final Iterable<?> iterable)
-	{
-		boolean removed = false;
-		for (final Iterator<?> iterator = iterable.iterator(); iterator.hasNext();)
-		{
-			iterator.next();
-			iterator.remove();
-			removed = true;
-		}
-
-		return removed;
-	}
+        return removed;
+    }
 }
