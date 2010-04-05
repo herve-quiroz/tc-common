@@ -25,7 +25,6 @@ import org.trancecode.core.AbstractImmutableObject;
  * Utility methods related to {@link Pair}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class Pairs
 {

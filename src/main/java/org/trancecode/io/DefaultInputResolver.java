@@ -27,7 +27,6 @@ import java.net.URI;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public class DefaultInputResolver extends AbstractInputResolver
 {

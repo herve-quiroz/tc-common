@@ -34,7 +34,6 @@ import net.sf.saxon.s9api.XdmNodeKind;
  * Utility methods related to {@link Function} and Saxon.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class SaxonFunctions
 {

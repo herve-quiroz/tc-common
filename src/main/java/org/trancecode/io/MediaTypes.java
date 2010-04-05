@@ -21,7 +21,6 @@ package org.trancecode.io;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public interface MediaTypes
 {

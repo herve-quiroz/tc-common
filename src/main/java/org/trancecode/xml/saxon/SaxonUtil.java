@@ -55,7 +55,6 @@ import org.w3c.dom.Document;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public class SaxonUtil implements XmlAttributes
 {

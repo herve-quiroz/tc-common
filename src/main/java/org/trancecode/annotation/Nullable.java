@@ -29,7 +29,6 @@ import java.lang.annotation.Target;
  * Method argument that may be <code>null</code>.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

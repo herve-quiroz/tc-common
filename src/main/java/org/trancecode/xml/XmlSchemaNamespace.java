@@ -23,7 +23,6 @@ import net.sf.saxon.om.NamespaceConstant;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class XmlSchemaNamespace extends Namespace
 {

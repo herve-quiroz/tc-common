@@ -29,7 +29,6 @@ import com.google.common.base.Supplier;
  * Utility methods related to {@link Supplier}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TranceCodeSuppliers
 {

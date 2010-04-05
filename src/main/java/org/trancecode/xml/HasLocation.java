@@ -21,7 +21,6 @@ package org.trancecode.xml;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public interface HasLocation
 {

@@ -29,7 +29,6 @@ import java.lang.annotation.Target;
  * Method that may return a <code>null</code> value.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

@@ -29,7 +29,6 @@ import java.net.URISyntaxException;
  * Utility methods related to {@link URI}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class Uris
 {

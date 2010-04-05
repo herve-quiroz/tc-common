@@ -30,7 +30,6 @@ import java.lang.annotation.Target;
  * set of arguments.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

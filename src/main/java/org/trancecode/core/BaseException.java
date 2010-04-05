@@ -21,7 +21,6 @@ package org.trancecode.core;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public class BaseException extends RuntimeException
 {

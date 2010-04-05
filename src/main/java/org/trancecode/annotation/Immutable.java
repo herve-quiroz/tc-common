@@ -33,7 +33,6 @@ import java.lang.annotation.Target;
  * is the same at any given time.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

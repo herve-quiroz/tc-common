@@ -23,7 +23,6 @@ import javax.xml.XMLConstants;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class XmlNamespace extends Namespace
 {

@@ -31,7 +31,6 @@ import com.google.common.base.Preconditions;
  * {@link Function} implementations related to {@link URI}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class UriFunctions
 {

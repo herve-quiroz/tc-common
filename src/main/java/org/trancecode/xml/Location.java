@@ -25,7 +25,6 @@ import javax.xml.transform.SourceLocator;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public interface Location extends SourceLocator, Serializable
 {

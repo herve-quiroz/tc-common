@@ -30,7 +30,6 @@ import org.testng.annotations.BeforeTest;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public abstract class AbstractTest
 {

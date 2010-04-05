@@ -23,7 +23,6 @@ package org.trancecode.io;
  * Utility methods related to file paths handling.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class Paths
 {

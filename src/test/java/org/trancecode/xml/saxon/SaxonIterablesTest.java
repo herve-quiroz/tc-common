@@ -40,7 +40,6 @@ import org.testng.annotations.Test;
  * Tests for {@link SaxonIterables}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 @Test
 public class SaxonIterablesTest extends AbstractTest

@@ -31,7 +31,6 @@ import net.sf.saxon.s9api.XdmNode;
  * Utility methods related to {@link Iterable} and Saxon.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class SaxonIterables
 {

@@ -23,7 +23,6 @@ import java.io.OutputStream;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public interface OutputResolver
 {

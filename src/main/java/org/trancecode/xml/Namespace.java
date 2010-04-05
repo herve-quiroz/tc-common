@@ -25,7 +25,6 @@ import net.sf.saxon.s9api.QName;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 @Immutable
 public class Namespace

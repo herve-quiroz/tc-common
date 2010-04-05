@@ -33,7 +33,6 @@ import net.sf.saxon.s9api.XdmNode;
  * Utility methods related to {@link Supplier} and Saxon.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class SaxonSuppliers
 {

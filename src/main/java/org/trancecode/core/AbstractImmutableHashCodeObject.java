@@ -21,7 +21,6 @@ package org.trancecode.core;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public abstract class AbstractImmutableHashCodeObject extends AbstractImmutableObject
 {

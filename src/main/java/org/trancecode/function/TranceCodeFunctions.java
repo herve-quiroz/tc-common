@@ -33,7 +33,6 @@ import com.google.common.collect.MapMaker;
  * Utility methods related to {@link Function}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TranceCodeFunctions
 {

@@ -24,7 +24,6 @@ import java.net.URI;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public abstract class AbstractInputResolver implements InputResolver
 {

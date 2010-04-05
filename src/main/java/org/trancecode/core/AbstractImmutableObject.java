@@ -23,7 +23,6 @@ package org.trancecode.core;
  * Base class for immutable objects.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public abstract class AbstractImmutableObject
 {

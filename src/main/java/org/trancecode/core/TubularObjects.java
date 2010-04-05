@@ -28,7 +28,6 @@ import java.util.WeakHashMap;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TubularObjects
 {

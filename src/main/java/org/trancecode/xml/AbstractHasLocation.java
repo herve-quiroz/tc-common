@@ -23,7 +23,6 @@ import org.trancecode.annotation.Stateless;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public abstract class AbstractHasLocation implements HasLocation
 {

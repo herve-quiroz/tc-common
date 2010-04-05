@@ -23,7 +23,6 @@ import net.sf.saxon.s9api.QName;
 
 /**
  * @author Hzrve Quiroz
- * @version $Revision$
  */
 public interface XmlSchemaTypes
 {

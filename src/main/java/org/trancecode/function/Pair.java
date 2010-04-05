@@ -21,7 +21,6 @@ package org.trancecode.function;
 
 /**
  * @author Herve Quiroz
- * @version $Revision$
  */
 public interface Pair<L, R>
 {

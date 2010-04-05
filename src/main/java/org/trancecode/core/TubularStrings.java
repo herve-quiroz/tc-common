@@ -23,7 +23,6 @@ package org.trancecode.core;
  * Utility methods related to {@link String} objects.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TubularStrings
 {

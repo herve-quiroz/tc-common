@@ -36,7 +36,6 @@ import com.google.common.collect.Iterables;
  * Utility methods related to {@link Iterable}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TubularIterables
 {

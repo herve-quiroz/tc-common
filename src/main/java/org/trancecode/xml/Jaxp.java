@@ -31,7 +31,6 @@ import javax.xml.transform.stream.StreamSource;
  * Utility methods related to JAXP (Java API for XML Processing).
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class Jaxp
 {

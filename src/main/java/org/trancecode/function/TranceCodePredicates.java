@@ -32,7 +32,6 @@ import com.google.common.base.Predicates;
  * Utility methods related to {@link Predicate}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TranceCodePredicates
 {

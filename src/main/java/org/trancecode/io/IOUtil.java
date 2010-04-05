@@ -30,7 +30,6 @@ import java.io.InputStream;
  * Utilty methods related to I/O.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class IOUtil
 {

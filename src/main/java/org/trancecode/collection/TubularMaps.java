@@ -28,7 +28,6 @@ import com.google.common.collect.Maps;
  * Utility methods related to {@link Map}.
  * 
  * @author Herve Quiroz
- * @version $Revision$
  */
 public final class TubularMaps
 {
