@@ -19,9 +19,8 @@
  */
 package org.trancecode.xml;
 
-import org.trancecode.annotation.Immutable;
-
 import net.sf.saxon.s9api.QName;
+import org.trancecode.annotation.Immutable;
 
 /**
  * @author Herve Quiroz

@@ -19,10 +19,9 @@
  */
 package org.trancecode.core;
 
-import org.trancecode.AbstractTest;
-
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
+import org.trancecode.AbstractTest;
 
 /**
  * Tests for {@link InterningPool}.

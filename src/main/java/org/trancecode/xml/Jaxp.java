@@ -19,13 +19,13 @@
  */
 package org.trancecode.xml;
 
-import org.trancecode.io.IOUtil;
-import org.trancecode.logging.Logger;
-
 import java.io.IOException;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
+
+import org.trancecode.io.IOUtil;
+import org.trancecode.logging.Logger;
 
 /**
  * Utility methods related to JAXP (Java API for XML Processing).

@@ -19,15 +19,14 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.function.TranceCodeSuppliers;
+import com.google.common.base.Supplier;
 
 import java.util.Iterator;
-
-import com.google.common.base.Supplier;
 
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
+import org.trancecode.function.TranceCodeSuppliers;
 
 /**
  * Utility methods related to {@link Supplier} and Saxon.

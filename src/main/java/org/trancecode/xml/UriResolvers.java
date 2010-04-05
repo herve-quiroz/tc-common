@@ -19,9 +19,7 @@
  */
 package org.trancecode.xml;
 
-import org.trancecode.core.AbstractImmutableObject;
-import org.trancecode.io.InputResolver;
-import org.trancecode.io.Uris;
+import com.google.common.base.Preconditions;
 
 import java.net.URI;
 
@@ -30,8 +28,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
 import javax.xml.transform.sax.SAXSource;
 
-import com.google.common.base.Preconditions;
-
+import org.trancecode.core.AbstractImmutableObject;
+import org.trancecode.io.InputResolver;
+import org.trancecode.io.Uris;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

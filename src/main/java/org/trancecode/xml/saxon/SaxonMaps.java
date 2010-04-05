@@ -19,10 +19,10 @@
  */
 package org.trancecode.xml.saxon;
 
-import java.util.Map;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+
+import java.util.Map;
 
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmNode;

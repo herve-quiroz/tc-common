@@ -20,7 +20,6 @@
 package org.trancecode.xml;
 
 import org.trancecode.io.IOUtil;
-
 import org.xml.sax.InputSource;
 
 /**

@@ -19,14 +19,14 @@
  */
 package org.trancecode.function;
 
-import org.trancecode.core.AbstractImmutableObject;
-
-import java.util.Collection;
-
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+
+import java.util.Collection;
+
+import org.trancecode.core.AbstractImmutableObject;
 
 /**
  * Utility methods related to {@link Predicate}.

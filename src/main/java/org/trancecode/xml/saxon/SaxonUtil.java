@@ -19,11 +19,11 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.function.TranceCodePredicates;
-import org.trancecode.io.IOUtil;
-import org.trancecode.logging.Logger;
-import org.trancecode.xml.XmlAttributes;
-import org.trancecode.xml.XmlSchemaTypes;
+import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import java.io.StringReader;
 import java.util.Collection;
@@ -33,12 +33,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
-
-import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 import net.sf.saxon.s9api.DOMDestination;
 import net.sf.saxon.s9api.ItemTypeFactory;
@@ -50,7 +44,11 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
-
+import org.trancecode.function.TranceCodePredicates;
+import org.trancecode.io.IOUtil;
+import org.trancecode.logging.Logger;
+import org.trancecode.xml.XmlAttributes;
+import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
 /**

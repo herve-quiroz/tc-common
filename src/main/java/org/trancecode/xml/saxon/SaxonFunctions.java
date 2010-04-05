@@ -19,10 +19,10 @@
  */
 package org.trancecode.xml.saxon;
 
-import java.util.Iterator;
-
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+
+import java.util.Iterator;
 
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;

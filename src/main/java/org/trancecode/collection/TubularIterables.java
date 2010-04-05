@@ -19,18 +19,18 @@
  */
 package org.trancecode.collection;
 
-import org.trancecode.annotation.ReturnsNullable;
-import org.trancecode.core.AbstractImmutableObject;
-import org.trancecode.function.TranceCodeFunctions;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import org.trancecode.annotation.ReturnsNullable;
+import org.trancecode.core.AbstractImmutableObject;
+import org.trancecode.function.TranceCodeFunctions;
 
 /**
  * Utility methods related to {@link Iterable}.

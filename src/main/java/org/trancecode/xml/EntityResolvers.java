@@ -19,16 +19,15 @@
  */
 package org.trancecode.xml;
 
-import org.trancecode.io.IOUtil;
-import org.trancecode.io.InputResolver;
-import org.trancecode.logging.Logger;
+import com.google.common.base.Preconditions;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.google.common.base.Preconditions;
-
+import org.trancecode.io.IOUtil;
+import org.trancecode.io.InputResolver;
+import org.trancecode.logging.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

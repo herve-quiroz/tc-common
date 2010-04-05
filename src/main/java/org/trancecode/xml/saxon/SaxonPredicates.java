@@ -21,7 +21,6 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 

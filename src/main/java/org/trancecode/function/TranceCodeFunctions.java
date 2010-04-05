@@ -19,15 +19,15 @@
  */
 package org.trancecode.function;
 
-import org.trancecode.core.AbstractImmutableObject;
-
-import java.util.Map;
-
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.MapMaker;
+
+import java.util.Map;
+
+import org.trancecode.core.AbstractImmutableObject;
 
 /**
  * Utility methods related to {@link Function}.

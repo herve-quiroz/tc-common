@@ -19,22 +19,20 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.AbstractTest;
+import com.google.common.collect.Iterables;
 
 import java.io.StringReader;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import com.google.common.collect.Iterables;
-
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmNode;
-
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.trancecode.AbstractTest;
 
 /**
  * Tests for {@link SaxonIterables}.

@@ -19,11 +19,10 @@
  */
 package org.trancecode.function;
 
-import org.trancecode.core.AbstractImmutableObject;
-
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
+import org.trancecode.core.AbstractImmutableObject;
 
 /**
  * Utility methods related to {@link Supplier}.

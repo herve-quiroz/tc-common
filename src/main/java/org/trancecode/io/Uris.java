@@ -19,11 +19,11 @@
  */
 package org.trancecode.io;
 
-import org.trancecode.annotation.Nullable;
-import org.trancecode.annotation.ReturnsNullable;
-
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import org.trancecode.annotation.Nullable;
+import org.trancecode.annotation.ReturnsNullable;
 
 /**
  * Utility methods related to {@link URI}.

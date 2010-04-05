@@ -19,13 +19,11 @@
  */
 package org.trancecode.xml.saxon;
 
-import org.trancecode.collection.TubularIterables;
-
 import com.google.common.collect.Iterables;
-
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
+import org.trancecode.collection.TubularIterables;
 
 /**
  * Utility methods related to {@link Iterable} and Saxon.

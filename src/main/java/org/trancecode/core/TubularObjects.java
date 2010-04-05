@@ -19,12 +19,12 @@
  */
 package org.trancecode.core;
 
-import org.trancecode.annotation.Nullable;
-
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import org.trancecode.annotation.Nullable;
 
 /**
  * @author Herve Quiroz

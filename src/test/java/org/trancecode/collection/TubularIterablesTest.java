@@ -19,14 +19,11 @@
  */
 package org.trancecode.collection;
 
-import org.trancecode.AbstractTest;
-import org.trancecode.collection.TubularIterables;
-
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
+import org.trancecode.AbstractTest;
 
 /**
  * Tests for {@link TubularIterables}.

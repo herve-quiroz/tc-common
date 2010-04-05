@@ -19,13 +19,13 @@
  */
 package org.trancecode.io;
 
-import org.trancecode.core.AbstractImmutableHashCodeObject;
-
-import java.net.URI;
-
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
+
+import java.net.URI;
+
+import org.trancecode.core.AbstractImmutableHashCodeObject;
 
 /**
  * {@link Function} implementations related to {@link URI}.
