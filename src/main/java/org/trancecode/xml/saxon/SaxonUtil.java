@@ -46,7 +46,6 @@ import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
 import org.trancecode.function.TranceCodePredicates;
 import org.trancecode.io.IOUtil;
-import org.trancecode.logging.Logger;
 import org.trancecode.xml.XmlAttributes;
 import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
@@ -56,8 +55,6 @@ import org.w3c.dom.Document;
  */
 public class SaxonUtil implements XmlAttributes
 {
-    private static final Logger LOG = Logger.getLogger(SaxonUtil.class);
-
     private SaxonUtil()
     {
         // To prevent instantiation
