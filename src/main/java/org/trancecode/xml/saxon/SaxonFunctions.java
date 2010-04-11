@@ -47,14 +47,9 @@ public final class SaxonFunctions
         return GetNodeKindFunction.INSTANCE;
     }
 
-    private static class GetNodeKindFunction implements Function<XdmNode, XdmNodeKind>
+    private static final class GetNodeKindFunction implements Function<XdmNode, XdmNodeKind>
     {
         private static GetNodeKindFunction INSTANCE = new GetNodeKindFunction();
-
-        private GetNodeKindFunction()
-        {
-            // Singleton
-        }
 
         @Override
         public XdmNodeKind apply(final XdmNode node)
@@ -68,15 +63,13 @@ public final class SaxonFunctions
         return new AxisIteratorFunction(axis);
     }
 
-    private static class AxisIteratorFunction implements Function<XdmNode, Iterator<XdmItem>>
+    private static final class AxisIteratorFunction implements Function<XdmNode, Iterator<XdmItem>>
     {
         private final Axis axis;
 
         public AxisIteratorFunction(final Axis axis)
         {
-            super();
-            Preconditions.checkNotNull(axis);
-            this.axis = axis;
+            this.axis = Preconditions.checkNotNull(axis);
         }
 
         @Override
@@ -91,14 +84,9 @@ public final class SaxonFunctions
         return GetStringValueFunction.INSTANCE;
     }
 
-    private static class GetStringValueFunction implements Function<XdmNode, String>
+    private static final class GetStringValueFunction implements Function<XdmNode, String>
     {
         private static GetStringValueFunction INSTANCE = new GetStringValueFunction();
-
-        private GetStringValueFunction()
-        {
-            // Singleton
-        }
 
         @Override
         public String apply(final XdmNode node)
@@ -112,14 +100,9 @@ public final class SaxonFunctions
         return GetNodeNameFunction.INSTANCE;
     }
 
-    private static class GetNodeNameFunction implements Function<XdmNode, QName>
+    private static final class GetNodeNameFunction implements Function<XdmNode, QName>
     {
         private static GetNodeNameFunction INSTANCE = new GetNodeNameFunction();
-
-        private GetNodeNameFunction()
-        {
-            // Singleton
-        }
 
         @Override
         public QName apply(final XdmNode node)
