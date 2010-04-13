@@ -20,7 +20,6 @@
 package org.trancecode.core;
 
 import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -96,27 +95,6 @@ public final class TubularObjects
         }
 
         return true;
-    }
-
-    /**
-     * Similar to {@link String#intern()} but for any {@link Object} regardless
-     * of its class.
-     */
-    public static <T> T intern(final T key)
-    {
-        // TODO not classloader-friendly
-
-        @SuppressWarnings("unchecked")
-        final Reference<T> internObject = (Reference<T>) internMap.get(key);
-        if (internObject != null)
-        {
-            return internObject.get();
-        }
-
-        final Reference<Object> wrappedKey = new WeakReference<Object>(key);
-        internMap.put(key, wrappedKey);
-
-        return intern(key);
     }
 
     public static <T> T conditional(final boolean condition, final T ifTrue, final T ifFalse)

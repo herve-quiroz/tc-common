@@ -19,7 +19,6 @@
  */
 package org.trancecode.core;
 
-import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
 
@@ -32,40 +31,4 @@ import org.trancecode.AbstractTest;
 @Test
 public class TubularObjectsTest extends AbstractTest
 {
-    private static final int TOO_MANY_INSTANCES = 1024 * 1024;
-
-    /** Check that memory from internalized objects gets reclaimed. */
-    @Test
-    public void internMemoryReclaim()
-    {
-        for (int i = 0; i < TOO_MANY_INSTANCES; i++)
-        {
-            final Object object = new Object();
-            final Object intern = TubularObjects.intern(object);
-            AssertJUnit.assertEquals(object, intern);
-        }
-    }
-
-    /** Check that internalized object is indeed internalized. */
-    @Test
-    public void internIdentity()
-    {
-        final String string = new StringBuilder().append("a").append("bc").toString();
-        final String internString = TubularObjects.intern(string);
-        AssertJUnit.assertEquals(string, internString);
-        AssertJUnit.assertSame(internString, string);
-
-        for (int i = 0; i < TOO_MANY_INSTANCES; i++)
-        {
-            final Object object = new Object();
-            final Object intern = TubularObjects.intern(object);
-            AssertJUnit.assertEquals(object, intern);
-        }
-
-        final String stringAfter = new StringBuilder().append("ab").append("c").toString();
-        assert stringAfter != string;
-        final String internStringAfter = TubularObjects.intern(stringAfter);
-        AssertJUnit.assertEquals(string, internStringAfter);
-        AssertJUnit.assertSame(string, internStringAfter);
-    }
 }
