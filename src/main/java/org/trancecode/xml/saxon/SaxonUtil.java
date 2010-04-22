@@ -120,6 +120,18 @@ public class SaxonUtil implements XmlAttributes
         }
     }
 
+    public static XdmNode asDocumentNode(final XdmNode node, final Processor processor)
+    {
+        try
+        {
+            return processor.newDocumentBuilder().build(node.asSource());
+        }
+        catch (final Exception e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
     public static Object nodesToString(final XdmNode... nodes)
     {
         return nodesToString(ImmutableList.of(nodes));
