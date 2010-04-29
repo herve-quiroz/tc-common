@@ -122,6 +122,10 @@ public class SaxonUtil implements XmlAttributes
 
     public static XdmNode asDocumentNode(final XdmNode node, final Processor processor)
     {
+        if (node.getNodeKind() == XdmNodeKind.DOCUMENT)
+        {
+            return node;
+        }
         try
         {
             return processor.newDocumentBuilder().build(node.asSource());
