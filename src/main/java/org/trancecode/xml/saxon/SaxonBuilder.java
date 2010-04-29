@@ -17,6 +17,7 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.collect.ImmutableSet;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.event.TreeReceiver;
 import net.sf.saxon.om.NamePool;
@@ -241,6 +242,14 @@ public class SaxonBuilder
      * Appends the given nodes to the document being built.
      */
     public void nodes(final XdmNode... nodes)
+    {
+        nodes(ImmutableSet.of(nodes));
+    }
+
+    /**
+     * Appends the given nodes to the document being built.
+     */
+    public void nodes(final Iterable<XdmNode> nodes)
     {
         try
         {

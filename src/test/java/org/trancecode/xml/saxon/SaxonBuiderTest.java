@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
 
 /**
- * @author Romain
+ * @author Romain Deltour
  */
 @Test
 public class SaxonBuiderTest extends AbstractTest
@@ -55,22 +55,6 @@ public class SaxonBuiderTest extends AbstractTest
     {
         Assert.assertNull(builder.getNode(), "unused builder should returned null node");
     }
-
-    // @Test(expectedExceptions = { IllegalStateException.class })
-    // public void illegalState_docNotStarted() throws Exception
-    // {
-    // builder.startElement(new QName("root"));
-    // builder.getNode();
-    // }
-    //
-    // @Test
-    // public void getNode_unfinishedBuild() throws Exception
-    // {
-    // final XdmNode expected = newDocument("<root/>");
-    // builder.startDocument();
-    // builder.startElement(new QName("root"));
-    // assertEquals(expected, builder.getNode(), processor);
-    // }
 
     @Test
     public void document() throws Exception
@@ -183,7 +167,7 @@ public class SaxonBuiderTest extends AbstractTest
     }
 
     @Test
-    public void nodes_asDocument()
+    public void appendNode_asDocument()
     {
         final XdmNode expected = newDocument("<root><elem att='value'><subelem/></elem></root>");
         final XdmNode content = newDocument("<elem att='value'><subelem/></elem>");
@@ -205,7 +189,7 @@ public class SaxonBuiderTest extends AbstractTest
     }
 
     @Test
-    public void nodes_asElement()
+    public void appendNode_asElement()
     {
         final XdmNode expected = newDocument("<root><elem att='value'><subelem/></elem></root>");
         final XdmNode content = (XdmNode) newDocument("<elem att='value'><subelem/></elem>").axisIterator(Axis.CHILD)
@@ -215,6 +199,21 @@ public class SaxonBuiderTest extends AbstractTest
         builder.startElement(new QName("root"));
         builder.startContent();
         builder.nodes(content);
+        builder.endElement();
+        builder.endDocument();
+        assertXmlEquals(expected, builder.getNode(), processor);
+    }
+
+    @Test
+    public void appendNodes()
+    {
+        final XdmNode expected = newDocument("<root><elem1/><elem2/></root>");
+        final XdmNode content1 = newDocument("<elem1/>");
+        final XdmNode content2 = newDocument("<elem2/>");
+        builder.startDocument();
+        builder.startElement(new QName("root"));
+        builder.startContent();
+        builder.nodes(content1, content2);
         builder.endElement();
         builder.endDocument();
         assertXmlEquals(expected, builder.getNode(), processor);
