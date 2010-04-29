@@ -29,16 +29,26 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.trans.XPathException;
 
 /**
+ * A builder to create new XdmNode documents using a push API. It provides a
+ * facade to the lower-level Saxon Receiver API.
+ * 
+ * @see Receiver
+ * @see TreeReceiver
  * @author Romain Deltour
  */
 public class SaxonBuilder
 {
-    // TODO check null params
-    // TODO handle exceptions
     private final XdmDestination destination = new XdmDestination();
     private final TreeReceiver receiver;
     private final NamePool namePool;
 
+    /**
+     * Creates a new builder based on the given Saxon configuration.
+     * 
+     * @param configuration
+     *            The Saxon configuration. In particular, the name pool of the
+     *            configuration will be used to construct the new item codes.
+     */
     public SaxonBuilder(final Configuration configuration)
     {
         try
@@ -50,30 +60,32 @@ public class SaxonBuilder
         }
         catch (final SaxonApiException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Starts a document node.
+     */
     public void startDocument()
     {
         try
         {
-            // receiver.open();
             receiver.startDocument(0);
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Ends the document node.
+     */
     public void endDocument()
     {
         try
@@ -82,11 +94,16 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Starts a new element with the given QName.
+     * 
+     * @param qname
+     *            The QName of the new element.
+     */
     public void startElement(final QName qname)
     {
         try
@@ -96,11 +113,20 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Start a new element with the given QName, and adds the in-scope
+     * namespaces of the given node to the new element.
+     * 
+     * @param qname
+     *            The QName of the new element.
+     * @param nsContext
+     *            A node whose in-scope namespaces are copied to the new
+     *            element.
+     */
     public void startElement(final QName qname, final XdmNode nsContext)
     {
         try
@@ -114,11 +140,13 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Ends the current element node.
+     */
     public void endElement()
     {
         try
@@ -127,11 +155,15 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Starts the content of the current element. Must be called after the
+     * declaration of namespaces and attributes, before adding text or node
+     * children to the element.
+     */
     public void startContent()
     {
         try
@@ -140,11 +172,18 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Adds an attribute to the current element.
+     * 
+     * @param qname
+     *            The QName of the attribute
+     * @param value
+     *            The value of the attribute
+     */
     public void attribute(final QName qname, final String value)
     {
         try
@@ -155,11 +194,16 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Adds a new comment node.
+     * 
+     * @param The
+     *            comment text
+     */
     public void comment(final String comment)
     {
         try
@@ -168,11 +212,18 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Declares a new namespace in the current element
+     * 
+     * @param prefix
+     *            The namespace prefix
+     * @param uri
+     *            The namespace URI
+     */
     public void namespace(final String prefix, final String uri)
     {
         try
@@ -182,11 +233,13 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Appends the given nodes to the document being built.
+     */
     public void nodes(final XdmNode... nodes)
     {
         try
@@ -198,11 +251,18 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Adds a processing instruction.
+     * 
+     * @param name
+     *            The processing instruction name
+     * @param data
+     *            The processing instruction data
+     */
     public void processingInstruction(final String name, final String data)
     {
         try
@@ -211,11 +271,16 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Adds a text node
+     * 
+     * @param text
+     *            The text content
+     */
     public void text(final String text)
     {
         try
@@ -224,11 +289,13 @@ public class SaxonBuilder
         }
         catch (final XPathException e)
         {
-            // TODO Auto-generated catch block
             throw new IllegalStateException(e);
         }
     }
 
+    /**
+     * Returns the result node built by this builder.
+     */
     public XdmNode getNode()
     {
         return destination.getXdmNode();
