@@ -19,6 +19,7 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.XdmItem;
@@ -58,8 +59,19 @@ public final class SaxonIterables
         return Iterables.filter(childNodes(node), SaxonPredicates.isElement());
     }
 
+    public static Iterable<XdmNode> childNodesNoAttributes(final XdmNode node)
+    {
+        return Iterables.filter(childNodes(node), Predicates.not(SaxonPredicates.isAttribute()));
+    }
+
     public static Iterable<XdmNode> attributes(final XdmNode node)
     {
         return Iterables.filter(childNodes(node), SaxonPredicates.isAttribute());
+    }
+
+    public static Iterable<XdmNode> namespaces(final XdmNode node)
+    {
+        return Iterables.filter(TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.NAMESPACE)),
+                XdmNode.class);
     }
 }
