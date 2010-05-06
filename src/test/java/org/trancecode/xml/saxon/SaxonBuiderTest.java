@@ -17,15 +17,9 @@
  */
 package org.trancecode.xml.saxon;
 
-import java.io.StringReader;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
-import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XdmSequenceIterator;
@@ -67,6 +61,7 @@ public class SaxonBuiderTest extends AbstractTest
         Assert.assertFalse(result.axisIterator(Axis.CHILD).hasNext());
     }
 
+    @Test
     public void element()
     {
         final XdmNode expected = newDocument("<root/>");
@@ -221,16 +216,7 @@ public class SaxonBuiderTest extends AbstractTest
 
     private XdmNode newDocument(final String documentString)
     {
-        final Source source = new StreamSource(new StringReader(documentString));
-        try
-        {
-            return processor.newDocumentBuilder().build(source);
-        }
-        catch (final SaxonApiException e)
-        {
-            throw new IllegalArgumentException("Couldn't parse XML", e);
-        }
-
+        return SaxonUtil.parse(documentString, processor);
     }
 
     private static void assertXmlEquals(final XdmNode expected, final XdmNode actual, final Processor processor)
