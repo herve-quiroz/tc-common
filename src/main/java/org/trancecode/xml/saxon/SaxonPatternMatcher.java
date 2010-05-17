@@ -91,7 +91,7 @@ public class SaxonPatternMatcher
         }
         catch (final SaxonApiException e)
         {
-            LOG.warn("Unexpected {}: {}", e.getClass().getName(), e.getMessage());
+            LOG.warn("Unexpected {class.simpleName}: {message}", e, e);
             return false;
         }
     }
