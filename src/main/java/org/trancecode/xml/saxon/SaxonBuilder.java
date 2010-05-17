@@ -203,8 +203,8 @@ public class SaxonBuilder
     /**
      * Adds a new comment node.
      * 
-     * @param The
-     *            comment text
+     * @param comment
+     *            The comment text
      */
     public void comment(final String comment)
     {
