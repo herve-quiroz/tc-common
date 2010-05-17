@@ -19,6 +19,7 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.collect.ImmutableList;
 import net.sf.saxon.Configuration;
+import net.sf.saxon.event.Receiver;
 import net.sf.saxon.event.TreeReceiver;
 import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NamespaceIterator;
