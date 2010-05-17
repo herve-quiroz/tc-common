@@ -35,7 +35,7 @@ import org.trancecode.logging.Logger;
  * thread</a> for more information).
  * </p>
  * 
- * @See {@link XPathCompiler#compilePattern(String)}
+ * @see XPathCompiler#compilePattern(String)
  * @author Romain Deltour
  */
 public class SaxonPatternMatcher
@@ -50,7 +50,7 @@ public class SaxonPatternMatcher
      * @param processor
      *            The Saxon processor used to create the internal
      *            {@link XPathCompiler}
-     * @param patter
+     * @param pattern
      *            The XSLT pattern evaluated by this matcher
      * @throws NullPointerException
      *             is <code>processor</code> or <code>pattern</code> is
