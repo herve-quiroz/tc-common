@@ -40,7 +40,6 @@ import org.trancecode.logging.Logger;
  */
 public class SaxonPatternMatcher
 {
-
     private static final Logger LOG = Logger.getLogger(SaxonPatternMatcher.class);
     private XPathExecutable xpathExec;
 
@@ -95,6 +94,5 @@ public class SaxonPatternMatcher
             LOG.warn("Unexpected {}: {}", e.getClass().getName(), e.getMessage());
             return false;
         }
-
     }
 }
