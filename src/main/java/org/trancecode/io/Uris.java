@@ -19,6 +19,8 @@
  */
 package org.trancecode.io;
 
+import com.google.common.base.Preconditions;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -81,5 +83,28 @@ public final class Uris
         {
             return false;
         }
+    }
+
+    public static URI setPath(final URI uri, final String path)
+    {
+        Preconditions.checkNotNull(uri);
+        Preconditions.checkArgument(!uri.isOpaque(), "URI must be hierarchical: %s", uri);
+        Preconditions.checkArgument(uri.isAbsolute(), "URI must be absolute: %s", uri);
+        try
+        {
+            return new URI(uri.getScheme(), uri.getAuthority(), path, uri.getQuery(), uri.getFragment());
+        }
+        catch (final URISyntaxException e)
+        {
+            throw new IllegalStateException(String.format("uri = %s ; path = %s", uri, path), e);
+        }
+    }
+
+    public static URI asDirectory(final URI uri)
+    {
+        Preconditions.checkNotNull(uri);
+        Preconditions.checkArgument(!uri.isOpaque(), "URI must be hierarchical: %s", uri);
+        Preconditions.checkArgument(uri.isAbsolute(), "URI must be absolute: %s", uri);
+        return setPath(uri, Paths.asDirectory(uri.getPath()));
     }
 }
