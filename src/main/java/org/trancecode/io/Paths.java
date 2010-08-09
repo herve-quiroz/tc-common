@@ -26,30 +26,33 @@ package org.trancecode.io;
  */
 public final class Paths
 {
-    private static final String PATH_DELIMITER = "/";
-
     private Paths()
     {
         // No instantiation
     }
 
+    public static String delimiter()
+    {
+        return "/";
+    }
+
     public static String asAbsolutePath(final String path)
     {
-        if (path.startsWith(PATH_DELIMITER))
+        if (path.startsWith(delimiter()))
         {
             return path;
         }
 
-        return PATH_DELIMITER + path;
+        return delimiter() + path;
     }
 
     public static String asDirectory(final String path)
     {
-        if (path.endsWith(PATH_DELIMITER))
+        if (path.endsWith(delimiter()))
         {
             return path;
         }
 
-        return path + PATH_DELIMITER;
+        return path + delimiter();
     }
 }
