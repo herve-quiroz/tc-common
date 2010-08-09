@@ -42,4 +42,14 @@ public final class Paths
 
         return PATH_DELIMITER + path;
     }
+
+    public static String asDirectory(final String path)
+    {
+        if (path.endsWith(PATH_DELIMITER))
+        {
+            return path;
+        }
+
+        return path + PATH_DELIMITER;
+    }
 }
