@@ -244,7 +244,7 @@ public class SaxonBuilder
      */
     public void nodes(final XdmNode... nodes)
     {
-        nodes(ImmutableList.of(nodes));
+        nodes(ImmutableList.copyOf(nodes));
     }
 
     /**

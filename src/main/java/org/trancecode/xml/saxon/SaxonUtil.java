@@ -77,12 +77,12 @@ public class SaxonUtil implements XmlAttributes
 
     public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
     {
-        return childElements(node, ImmutableSet.of(names));
+        return childElements(node, ImmutableSet.copyOf(names));
     }
 
     public static XdmNode childElement(final XdmNode node, final QName... names)
     {
-        return childElement(node, ImmutableSet.of(names));
+        return childElement(node, ImmutableSet.copyOf(names));
     }
 
     public static XdmNode childElement(final XdmNode node, final Collection<QName> names)
@@ -138,7 +138,7 @@ public class SaxonUtil implements XmlAttributes
 
     public static Object nodesToString(final XdmNode... nodes)
     {
-        return nodesToString(ImmutableList.of(nodes));
+        return nodesToString(ImmutableList.copyOf(nodes));
     }
 
     public static Object nodesToString(final Iterable<XdmNode> nodes)

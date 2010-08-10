@@ -100,12 +100,12 @@ public final class TubularIterables
 
     public static <T> Iterable<T> append(final Iterable<T> iterable, final T... elements)
     {
-        return Iterables.concat(iterable, ImmutableList.of(elements));
+        return Iterables.concat(iterable, ImmutableList.copyOf(elements));
     }
 
     public static <T> Iterable<T> prepend(final Iterable<T> iterable, final T... elements)
     {
-        return Iterables.concat(ImmutableList.of(elements), iterable);
+        return Iterables.concat(ImmutableList.copyOf(elements), iterable);
     }
 
     /**
