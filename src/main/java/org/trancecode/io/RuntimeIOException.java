@@ -22,7 +22,7 @@ package org.trancecode.io;
 import org.trancecode.core.BaseException;
 
 /**
- * @author Herve
+ * @author Herve Quiroz
  */
 public class RuntimeIOException extends BaseException
 {

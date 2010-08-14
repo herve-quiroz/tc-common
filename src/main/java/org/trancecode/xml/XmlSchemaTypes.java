@@ -22,7 +22,7 @@ package org.trancecode.xml;
 import net.sf.saxon.s9api.QName;
 
 /**
- * @author Hzrve Quiroz
+ * @author Herve Quiroz
  */
 public interface XmlSchemaTypes
 {
