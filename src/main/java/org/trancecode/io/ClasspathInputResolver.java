@@ -30,7 +30,7 @@ public final class ClasspathInputResolver extends AbstractInputResolver
     public static final String URI_SCHEME = "classpath";
     private static final ClasspathInputResolver INSTANCE = new ClasspathInputResolver();
 
-    public static final ClasspathInputResolver instance()
+    public static ClasspathInputResolver instance()
     {
         return INSTANCE;
     }
