@@ -19,10 +19,6 @@
  */
 package org.trancecode.core;
 
-import java.lang.ref.Reference;
-import java.util.Map;
-import java.util.WeakHashMap;
-
 import org.trancecode.annotation.Nullable;
 
 /**
@@ -30,8 +26,6 @@ import org.trancecode.annotation.Nullable;
  */
 public final class TubularObjects
 {
-    private static final Map<Object, Reference<Object>> internMap = new WeakHashMap<Object, Reference<Object>>();
-
     private TubularObjects()
     {
         // No instantiation
