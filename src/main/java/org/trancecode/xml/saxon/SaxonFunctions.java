@@ -58,6 +58,27 @@ public final class SaxonFunctions
         }
     }
 
+    public static Function<XdmNode, Iterable<XdmItem>> axis(final Axis axis)
+    {
+        return new AxisFunction(axis);
+    }
+
+    private static final class AxisFunction implements Function<XdmNode, Iterable<XdmItem>>
+    {
+        private final Axis axis;
+
+        public AxisFunction(final Axis axis)
+        {
+            this.axis = Preconditions.checkNotNull(axis);
+        }
+
+        @Override
+        public Iterable<XdmItem> apply(final XdmNode node)
+        {
+            return SaxonIterables.axis(node, axis);
+        }
+    }
+
     public static Function<XdmNode, Iterator<XdmItem>> axisIterator(final Axis axis)
     {
         return new AxisIteratorFunction(axis);
