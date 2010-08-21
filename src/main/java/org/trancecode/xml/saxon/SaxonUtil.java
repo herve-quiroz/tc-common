@@ -46,14 +46,13 @@ import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
 import org.trancecode.function.TranceCodePredicates;
 import org.trancecode.io.IOUtil;
-import org.trancecode.xml.XmlAttributes;
 import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
 /**
  * @author Herve Quiroz
  */
-public class SaxonUtil implements XmlAttributes
+public class SaxonUtil
 {
     private SaxonUtil()
     {
@@ -71,8 +70,8 @@ public class SaxonUtil implements XmlAttributes
     {
         assert node != null;
 
-        return Iterables.filter(SaxonIterables.childElements(node), Predicates.compose(TranceCodePredicates
-                .matches(names), SaxonFunctions.getNodeName()));
+        return Iterables.filter(SaxonIterables.childElements(node),
+                Predicates.compose(TranceCodePredicates.matches(names), SaxonFunctions.getNodeName()));
     }
 
     public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
@@ -192,8 +191,8 @@ public class SaxonUtil implements XmlAttributes
     {
         try
         {
-            return new XdmAtomicValue(value, new ItemTypeFactory(processor)
-                    .getAtomicType(XmlSchemaTypes.UNTYPED_ATOMIC));
+            return new XdmAtomicValue(value,
+                    new ItemTypeFactory(processor).getAtomicType(XmlSchemaTypes.UNTYPED_ATOMIC));
         }
         catch (final SaxonApiException e)
         {
