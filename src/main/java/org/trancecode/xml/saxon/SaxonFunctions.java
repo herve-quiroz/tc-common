@@ -21,9 +21,6 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-
-import java.util.Iterator;
-
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmItem;
@@ -76,27 +73,6 @@ public final class SaxonFunctions
         public Iterable<XdmItem> apply(final XdmNode node)
         {
             return SaxonIterables.axis(node, axis);
-        }
-    }
-
-    public static Function<XdmNode, Iterator<XdmItem>> axisIterator(final Axis axis)
-    {
-        return new AxisIteratorFunction(axis);
-    }
-
-    private static final class AxisIteratorFunction implements Function<XdmNode, Iterator<XdmItem>>
-    {
-        private final Axis axis;
-
-        public AxisIteratorFunction(final Axis axis)
-        {
-            this.axis = Preconditions.checkNotNull(axis);
-        }
-
-        @Override
-        public Iterator<XdmItem> apply(final XdmNode node)
-        {
-            return node.axisIterator(axis);
         }
     }
 
