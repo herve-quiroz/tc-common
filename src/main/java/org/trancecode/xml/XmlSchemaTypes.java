@@ -24,7 +24,12 @@ import net.sf.saxon.s9api.QName;
 /**
  * @author Herve Quiroz
  */
-public interface XmlSchemaTypes
+public final class XmlSchemaTypes
 {
-    QName UNTYPED_ATOMIC = XmlSchemaNamespace.INSTANCE.newSaxonQName("untypedAtomic");
+    public static final QName UNTYPED_ATOMIC = XmlSchemaNamespace.INSTANCE.newSaxonQName("untypedAtomic");
+
+    private XmlSchemaTypes()
+    {
+        // No instantiation
+    }
 }

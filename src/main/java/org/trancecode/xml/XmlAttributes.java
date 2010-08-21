@@ -24,7 +24,12 @@ import net.sf.saxon.s9api.QName;
 /**
  * @author Herve Quiroz
  */
-public interface XmlAttributes
+public final class XmlAttributes
 {
-    QName BASE = XmlNamespace.INSTANCE.newSaxonQName("base");
+    public static final QName BASE = XmlNamespace.INSTANCE.newSaxonQName("base");
+
+    private XmlAttributes()
+    {
+        // No instantiation
+    }
 }
