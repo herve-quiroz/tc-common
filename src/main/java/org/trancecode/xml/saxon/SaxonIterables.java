@@ -21,10 +21,12 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
+
+import java.util.Iterator;
+
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
-import org.trancecode.collection.TubularIterables;
 
 /**
  * Utility methods related to {@link Iterable} and Saxon.
@@ -38,10 +40,21 @@ public final class SaxonIterables
         // No instantiation
     }
 
+    public static Iterable<XdmItem> axis(final XdmNode node, final Axis axis)
+    {
+        return new Iterable<XdmItem>()
+        {
+            @Override
+            public Iterator<XdmItem> iterator()
+            {
+                return node.axisIterator(axis);
+            }
+        };
+    }
+
     public static Iterable<XdmItem> childXdmItems(final XdmNode node)
     {
-        return Iterables.concat(TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.ATTRIBUTE)),
-                TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.CHILD)));
+        return Iterables.concat(axis(node, Axis.ATTRIBUTE), axis(node, Axis.CHILD));
     }
 
     public static Iterable<XdmNode> childNodes(final XdmNode node)
@@ -71,7 +84,6 @@ public final class SaxonIterables
 
     public static Iterable<XdmNode> namespaces(final XdmNode node)
     {
-        return Iterables.filter(TubularIterables.newIterable(SaxonSuppliers.axisIterator(node, Axis.NAMESPACE)),
-                XdmNode.class);
+        return Iterables.filter(axis(node, Axis.NAMESPACE), XdmNode.class);
     }
 }
