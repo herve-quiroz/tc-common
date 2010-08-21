@@ -25,7 +25,7 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 
 /**
- * Utility methods related to {@link Predicate} and Saxon.
+ * {@link Predicate} implementations related to Saxon.
  * 
  * @author Herve Quiroz
  */
