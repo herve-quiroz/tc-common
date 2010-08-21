@@ -36,15 +36,19 @@ public final class SaxonPredicates
         // No instantiation
     }
 
+    private static final Predicate<XdmNode> IS_ELEMENT = Predicates.compose(Predicates.equalTo(XdmNodeKind.ELEMENT),
+            SaxonFunctions.getNodeKind());
+
     public static Predicate<XdmNode> isElement()
     {
-        // TODO memoize?
-        return Predicates.compose(Predicates.equalTo(XdmNodeKind.ELEMENT), SaxonFunctions.getNodeKind());
+        return IS_ELEMENT;
     }
+
+    private static final Predicate<XdmNode> IS_ATTRIBUTE = Predicates.compose(
+            Predicates.equalTo(XdmNodeKind.ATTRIBUTE), SaxonFunctions.getNodeKind());
 
     public static Predicate<XdmNode> isAttribute()
     {
-        // TODO memoize?
-        return Predicates.compose(Predicates.equalTo(XdmNodeKind.ATTRIBUTE), SaxonFunctions.getNodeKind());
+        return IS_ATTRIBUTE;
     }
 }
