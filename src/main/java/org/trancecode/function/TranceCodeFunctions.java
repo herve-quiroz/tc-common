@@ -113,12 +113,9 @@ public final class TranceCodeFunctions
                 final Function<? super F, T> ifFalse)
         {
             super();
-            Preconditions.checkNotNull(predicate);
-            Preconditions.checkNotNull(ifTrue);
-            Preconditions.checkNotNull(ifFalse);
-            this.predicate = predicate;
-            this.ifTrue = ifTrue;
-            this.ifFalse = ifFalse;
+            this.predicate = Preconditions.checkNotNull(predicate);
+            this.ifTrue = Preconditions.checkNotNull(ifTrue);
+            this.ifFalse = Preconditions.checkNotNull(ifFalse);
         }
 
         @Override
@@ -159,8 +156,7 @@ public final class TranceCodeFunctions
         public PredicateAsFunction(final Predicate<T> predicate)
         {
             super();
-            Preconditions.checkNotNull(predicate);
-            this.predicate = predicate;
+            this.predicate = Preconditions.checkNotNull(predicate);
         }
 
         @Override
