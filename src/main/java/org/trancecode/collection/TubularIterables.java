@@ -26,6 +26,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.trancecode.annotation.ReturnsNullable;
@@ -147,5 +148,20 @@ public final class TubularIterables
         }
 
         return removed;
+    }
+
+    /**
+     * @see TcIterators#concurrentModifiable(List)
+     */
+    public static <T> Iterable<T> concurrentModifiable(final List<T> sequence)
+    {
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                return TcIterators.concurrentModifiable(sequence);
+            }
+        };
     }
 }
