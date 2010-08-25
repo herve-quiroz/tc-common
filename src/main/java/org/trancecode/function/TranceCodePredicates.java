@@ -62,8 +62,7 @@ public final class TranceCodePredicates
         public IsContainedByPredicate(final Collection<T> collection)
         {
             super(collection);
-            Preconditions.checkNotNull(collection);
-            this.collections = collection;
+            this.collections = Preconditions.checkNotNull(collection);
         }
 
         @Override
@@ -85,8 +84,7 @@ public final class TranceCodePredicates
         public FunctionAsPredicate(final Function<T, Boolean> function)
         {
             super();
-            Preconditions.checkNotNull(function);
-            this.function = function;
+            this.function = Preconditions.checkNotNull(function);
         }
 
         @Override
@@ -94,6 +92,5 @@ public final class TranceCodePredicates
         {
             return function.apply(input);
         }
-
     }
 }
