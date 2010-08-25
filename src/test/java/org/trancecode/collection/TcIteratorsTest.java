@@ -19,8 +19,8 @@ package org.trancecode.collection;
 
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -37,7 +37,7 @@ public final class TcIteratorsTest extends AbstractTest
     @Test
     public void concurrentModifiable()
     {
-        final ArrayList<String> sequence = Lists.newArrayList();
+        final List<String> sequence = Lists.newArrayList();
         final Iterator<String> iterator = TcIterators.concurrentModifiable(sequence);
         assert !iterator.hasNext();
 

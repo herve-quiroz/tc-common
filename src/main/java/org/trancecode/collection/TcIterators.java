@@ -19,8 +19,8 @@ package org.trancecode.collection;
 
 import com.google.common.base.Preconditions;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -43,7 +43,7 @@ public final class TcIterators
      * up the client application to avoid inserting or removing elements to the
      * part of the sequence that has already been iterated over.
      */
-    public static <T> Iterator<T> concurrentModifiable(final ArrayList<T> sequence)
+    public static <T> Iterator<T> concurrentModifiable(final List<T> sequence)
     {
         Preconditions.checkNotNull(sequence);
 
