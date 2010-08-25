@@ -49,10 +49,8 @@ public final class TranceCodeSuppliers
         public FunctionSupplier(final Function<F, T> function, final F argument)
         {
             super(function, argument);
-            Preconditions.checkNotNull(function);
-            Preconditions.checkNotNull(argument);
-            this.function = function;
-            this.argument = argument;
+            this.function = Preconditions.checkNotNull(function);
+            this.argument = Preconditions.checkNotNull(argument);
         }
 
         @Override
