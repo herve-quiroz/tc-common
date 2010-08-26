@@ -55,6 +55,11 @@ public final class SaxonFunctions
         }
     }
 
+    public static Function<XdmNode, Iterable<XdmItem>> childAxis()
+    {
+        return AxisFunction.CHILD;
+    }
+
     public static Function<XdmNode, Iterable<XdmItem>> axis(final Axis axis)
     {
         return new AxisFunction(axis);
@@ -62,6 +67,8 @@ public final class SaxonFunctions
 
     private static final class AxisFunction implements Function<XdmNode, Iterable<XdmItem>>
     {
+        private static final AxisFunction CHILD = new AxisFunction(Axis.CHILD);
+
         private final Axis axis;
 
         public AxisFunction(final Axis axis)
