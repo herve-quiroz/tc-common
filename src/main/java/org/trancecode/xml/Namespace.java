@@ -28,13 +28,23 @@ import org.trancecode.annotation.Immutable;
 @Immutable
 public class Namespace
 {
-    public final String uri;
-    public final String prefix;
+    private final String uri;
+    private final String prefix;
 
     public Namespace(final String uri, final String prefix)
     {
         this.uri = uri;
         this.prefix = prefix;
+    }
+
+    public String uri()
+    {
+        return uri;
+    }
+
+    public String prefix()
+    {
+        return prefix;
     }
 
     public QName newSaxonQName(final String localName)
