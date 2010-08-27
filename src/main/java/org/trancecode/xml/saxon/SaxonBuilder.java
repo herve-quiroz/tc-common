@@ -190,7 +190,6 @@ public class SaxonBuilder
     {
         try
         {
-
             final int nameCode = namePool.allocate(qname.getPrefix(), qname.getNamespaceURI(), qname.getLocalName());
             receiver.attribute(nameCode, -1, value, 0, 0);
         }
