@@ -19,16 +19,15 @@
  */
 package org.trancecode.core;
 
-import org.testng.annotations.Test;
-import org.trancecode.AbstractTest;
-
 /**
- * Tests for {@link TcObjects}.
+ * Utility methods related to {@link String} objects.
  * 
  * @author Herve Quiroz
- * @version $Revision: 3842 $
  */
-@Test
-public class TubularObjectsTest extends AbstractTest
+public final class TcStrings
 {
+    private TcStrings()
+    {
+        // No instantiation
+    }
 }

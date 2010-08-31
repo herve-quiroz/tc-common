@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
 
 /**
- * Tests for {@link TranceCodeFunctions}.
+ * Tests for {@link TcFunctions}.
  * 
  * @author Herve Quiroz
  * @version $Revision: 3842 $
@@ -38,7 +38,7 @@ public class TubularFunctionsTest extends AbstractTest
     public void toIterable()
     {
         final Iterable<String> iterable = Iterables.concat(Iterables.transform(ImmutableList.of("abc", "def"),
-                TranceCodeFunctions.toIterable(String.class)));
+                TcFunctions.toIterable(String.class)));
         AssertJUnit.assertEquals(ImmutableList.of("abc", "def"), ImmutableList.copyOf(iterable));
     }
 }

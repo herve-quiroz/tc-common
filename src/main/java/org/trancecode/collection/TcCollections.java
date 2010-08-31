@@ -17,16 +17,18 @@
  *
  * $Id$
  */
-package org.trancecode.core;
+package org.trancecode.collection;
+
+import java.util.Collection;
 
 /**
- * Utility methods related to {@link String} objects.
+ * Utility methods related to {@link Collection}.
  * 
  * @author Herve Quiroz
  */
-public final class TubularStrings
+public final class TcCollections
 {
-    private TubularStrings()
+    private TcCollections()
     {
         // No instantiation
     }

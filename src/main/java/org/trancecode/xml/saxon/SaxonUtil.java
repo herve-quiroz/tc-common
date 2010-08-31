@@ -45,7 +45,7 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
-import org.trancecode.function.TranceCodePredicates;
+import org.trancecode.function.TcPredicates;
 import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
@@ -71,7 +71,7 @@ public class SaxonUtil
         assert node != null;
 
         return Iterables.filter(SaxonIterables.childElements(node),
-                Predicates.compose(TranceCodePredicates.matches(names), SaxonFunctions.getNodeName()));
+                Predicates.compose(TcPredicates.matches(names), SaxonFunctions.getNodeName()));
     }
 
     public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)

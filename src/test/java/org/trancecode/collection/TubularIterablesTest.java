@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
 
 /**
- * Tests for {@link TubularIterables}.
+ * Tests for {@link TcIterables}.
  * 
  * @author Herve Quiroz
  * @version $Revision: 3842 $
@@ -54,7 +54,7 @@ public class TubularIterablesTest extends AbstractTest
         AssertJUnit.assertEquals(ImmutableList.of("a", "bcd"), ImmutableList.copyOf(split.apply("abcd")));
         AssertJUnit.assertEquals(ImmutableList.of(), ImmutableList.copyOf(split.apply("a")));
 
-        final Iterable<String> elements = TubularIterables.getDescendants("abcd", split);
+        final Iterable<String> elements = TcIterables.getDescendants("abcd", split);
 
         AssertJUnit.assertEquals(ImmutableList.of("abcd", "a", "bcd", "b", "cd", "c", "d"), ImmutableList
                 .copyOf(elements));

@@ -24,9 +24,9 @@ import org.trancecode.annotation.Nullable;
 /**
  * @author Herve Quiroz
  */
-public final class TubularObjects
+public final class TcObjects
 {
-    private TubularObjects()
+    private TcObjects()
     {
         // No instantiation
     }

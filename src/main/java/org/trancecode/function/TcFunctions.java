@@ -34,9 +34,9 @@ import org.trancecode.core.AbstractImmutableObject;
  * 
  * @author Herve Quiroz
  */
-public final class TranceCodeFunctions
+public final class TcFunctions
 {
-    private TranceCodeFunctions()
+    private TcFunctions()
     {
         // No instantiation
     }

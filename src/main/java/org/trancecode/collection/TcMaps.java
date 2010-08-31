@@ -19,17 +19,43 @@
  */
 package org.trancecode.collection;
 
-import java.util.Collection;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
 
 /**
- * Utility methods related to {@link Collection}.
+ * Utility methods related to {@link Map}.
  * 
  * @author Herve Quiroz
  */
-public final class TubularCollections
+public final class TcMaps
 {
-    private TubularCollections()
+    private TcMaps()
     {
         // No instantiation
+    }
+
+    public static <K, V> Map<K, V> newSmallWriteOnceMap()
+    {
+        // TODO
+        return Maps.newLinkedHashMap();
+    }
+
+    public static <K, V> Map<K, V> merge(final Map<K, V> map1, final Map<? extends K, ? extends V> map2)
+    {
+        final Map<K, V> map = Maps.newHashMapWithExpectedSize(map1.size() + map2.size());
+        map.putAll(map1);
+        map.putAll(map2);
+
+        return ImmutableMap.copyOf(map);
+    }
+
+    public static <K, V> Map<K, V> copyAndPut(final Map<K, V> map1, final K key, final V value)
+    {
+        final Map<K, V> map = Maps.newHashMap(map1);
+        map.put(key, value);
+
+        return ImmutableMap.copyOf(map);
     }
 }

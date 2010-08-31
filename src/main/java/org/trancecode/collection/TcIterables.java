@@ -31,16 +31,16 @@ import java.util.NoSuchElementException;
 
 import org.trancecode.annotation.ReturnsNullable;
 import org.trancecode.core.AbstractImmutableObject;
-import org.trancecode.function.TranceCodeFunctions;
+import org.trancecode.function.TcFunctions;
 
 /**
  * Utility methods related to {@link Iterable}.
  * 
  * @author Herve Quiroz
  */
-public final class TubularIterables
+public final class TcIterables
 {
-    private TubularIterables()
+    private TcIterables()
     {
         // No instantiation
     }
@@ -115,7 +115,7 @@ public final class TubularIterables
      */
     public static <F, T> Iterable<T> applyFunctions(final Iterable<Function<F, T>> functions, final F argument)
     {
-        final Function<Function<F, T>, T> applyFunction = TranceCodeFunctions.applyTo(argument);
+        final Function<Function<F, T>, T> applyFunction = TcFunctions.applyTo(argument);
         return Iterables.transform(functions, applyFunction);
     }
 

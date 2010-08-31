@@ -29,9 +29,9 @@ import org.trancecode.core.AbstractImmutableObject;
  * 
  * @author Herve Quiroz
  */
-public final class TranceCodeSuppliers
+public final class TcSuppliers
 {
-    private TranceCodeSuppliers()
+    private TcSuppliers()
     {
         // No instantiation
     }
