@@ -19,7 +19,7 @@
  */
 package org.trancecode.xml;
 
-import org.trancecode.io.IOUtil;
+import com.google.common.io.Closeables;
 import org.xml.sax.InputSource;
 
 /**
@@ -42,7 +42,7 @@ public final class Sax
             return;
         }
 
-        IOUtil.closeQuietly(inputSource.getByteStream());
-        IOUtil.closeQuietly(inputSource.getCharacterStream());
+        Closeables.closeQuietly(inputSource.getByteStream());
+        Closeables.closeQuietly(inputSource.getCharacterStream());
     }
 }

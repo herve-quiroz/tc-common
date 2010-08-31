@@ -19,12 +19,13 @@
  */
 package org.trancecode.xml;
 
+import com.google.common.io.Closeables;
+
 import java.io.IOException;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import org.trancecode.io.IOUtil;
 import org.trancecode.logging.Logger;
 
 /**
@@ -51,8 +52,8 @@ public final class Jaxp
             final StreamSource streamSource = (StreamSource) source;
             try
             {
-                IOUtil.close(streamSource.getInputStream());
-                IOUtil.close(streamSource.getReader());
+                Closeables.close(streamSource.getInputStream(), false);
+                Closeables.close(streamSource.getReader(), false);
             }
             catch (final IOException e)
             {

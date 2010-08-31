@@ -24,6 +24,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
 
 import java.io.StringReader;
 import java.util.Collection;
@@ -45,7 +46,6 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
 import org.trancecode.function.TranceCodePredicates;
-import org.trancecode.io.IOUtil;
 import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
@@ -178,7 +178,7 @@ public class SaxonUtil
         }
         finally
         {
-            IOUtil.closeQuietly(reader);
+            Closeables.closeQuietly(reader);
         }
     }
 
