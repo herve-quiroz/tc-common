@@ -63,14 +63,14 @@ public class SaxonUtil
     {
         assert node != null;
 
-        return SaxonMaps.attributes(SaxonIterables.attributes(node));
+        return SaxonMaps.attributes(SaxonAxis.attributes(node));
     }
 
     public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
     {
         assert node != null;
 
-        return Iterables.filter(SaxonIterables.childElements(node),
+        return Iterables.filter(SaxonAxis.childElements(node),
                 Predicates.compose(TcPredicates.matches(names), SaxonFunctions.getNodeName()));
     }
 

@@ -79,7 +79,7 @@ public final class SaxonFunctions
         @Override
         public Iterable<XdmItem> apply(final XdmNode node)
         {
-            return SaxonIterables.axis(node, axis);
+            return SaxonAxis.axis(node, axis);
         }
     }
 

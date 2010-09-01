@@ -29,13 +29,13 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 
 /**
- * Utility methods related to {@link Iterable} and Saxon.
+ * Utility methods to retrieve node sequences through axis in Saxon.
  * 
  * @author Herve Quiroz
  */
-public final class SaxonIterables
+public final class SaxonAxis
 {
-    private SaxonIterables()
+    private SaxonAxis()
     {
         // No instantiation
     }

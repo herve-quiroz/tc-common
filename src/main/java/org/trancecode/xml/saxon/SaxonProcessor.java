@@ -97,7 +97,7 @@ public class SaxonProcessor implements Function<XdmNode, XdmNode>
                 final boolean processChildren = delegate.startDocument(node, builder);
                 if (processChildren)
                 {
-                    for (final XdmNode child : SaxonIterables.childNodes(node))
+                    for (final XdmNode child : SaxonAxis.childNodes(node))
                     {
                         doProcess(child, builder, delegate);
                     }
@@ -108,7 +108,7 @@ public class SaxonProcessor implements Function<XdmNode, XdmNode>
                 final EnumSet<NextSteps> nextSteps = delegate.startElement(node, builder);
                 if (nextSteps.contains(NextSteps.PROCESS_ATTRIBUTES))
                 {
-                    for (final XdmNode child : SaxonIterables.attributes(node))
+                    for (final XdmNode child : SaxonAxis.attributes(node))
                     {
                         doProcess(child, builder, delegate);
                     }
@@ -119,7 +119,7 @@ public class SaxonProcessor implements Function<XdmNode, XdmNode>
                 }
                 if (nextSteps.contains(NextSteps.PROCESS_CHILDREN))
                 {
-                    for (final XdmNode child : SaxonIterables.childNodesNoAttributes(node))
+                    for (final XdmNode child : SaxonAxis.childNodesNoAttributes(node))
                     {
                         doProcess(child, builder, delegate);
                     }
