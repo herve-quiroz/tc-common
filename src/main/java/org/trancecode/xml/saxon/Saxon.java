@@ -44,13 +44,15 @@ import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
 /**
+ * Utility methods related to Saxon.
+ * 
  * @author Herve Quiroz
  */
-public class SaxonUtil
+public class Saxon
 {
-    private SaxonUtil()
+    private Saxon()
     {
-        // To prevent instantiation
+        // No instantiation
     }
 
     public static QName getAttributeAsQName(final XdmNode node, final QName attributeName)

@@ -216,15 +216,15 @@ public class SaxonBuiderTest extends AbstractTest
 
     private XdmNode newDocument(final String documentString)
     {
-        return SaxonUtil.parse(documentString, processor);
+        return Saxon.parse(documentString, processor);
     }
 
     private static void assertXmlEquals(final XdmNode expected, final XdmNode actual, final Processor processor)
     {
         assert expected != null;
         assert actual != null;
-        final XdmNode docExpected = SaxonUtil.asDocumentNode(expected, processor);
-        final XdmNode docActual = SaxonUtil.asDocumentNode(actual, processor);
+        final XdmNode docExpected = Saxon.asDocumentNode(expected, processor);
+        final XdmNode docActual = Saxon.asDocumentNode(actual, processor);
         final String message = String.format("expected:\n%s\nactual:\n%s", docExpected, docActual);
         try
         {

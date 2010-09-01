@@ -56,7 +56,7 @@ public class SaxonPatternMatcherTest extends AbstractTest
     @Test
     public void match() throws Exception
     {
-        final XdmNode doc = SaxonUtil.parse("<doc><elem/></doc>", processor);
+        final XdmNode doc = Saxon.parse("<doc><elem/></doc>", processor);
         final XdmNode node = select("/doc/elem", doc);
         final SaxonPatternMatcher matcher = new SaxonPatternMatcher(processor, "elem");
         Assert.assertTrue(matcher.match(node));
@@ -65,7 +65,7 @@ public class SaxonPatternMatcherTest extends AbstractTest
     @Test
     public void noMatch() throws Exception
     {
-        final XdmNode doc = SaxonUtil.parse("<doc><elem/></doc>", processor);
+        final XdmNode doc = Saxon.parse("<doc><elem/></doc>", processor);
         final XdmNode node = select("/doc/elem", doc);
         final SaxonPatternMatcher matcher = new SaxonPatternMatcher(processor, "item");
         Assert.assertFalse(matcher.match(node));
