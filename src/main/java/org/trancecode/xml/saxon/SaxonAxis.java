@@ -44,6 +44,11 @@ public final class SaxonAxis
         // No instantiation
     }
 
+    public static Iterable<XdmNode> attributes(final XdmNode node)
+    {
+        return Iterables.filter(childNodes(node), SaxonPredicates.isAttribute());
+    }
+
     public static Iterable<XdmItem> axis(final XdmNode node, final Axis axis)
     {
         return new Iterable<XdmItem>()
@@ -56,19 +61,19 @@ public final class SaxonAxis
         };
     }
 
-    public static Iterable<XdmItem> childXdmItems(final XdmNode node)
-    {
-        return Iterables.concat(axis(node, Axis.ATTRIBUTE), axis(node, Axis.CHILD));
-    }
-
-    public static Iterable<XdmNode> childNodes(final XdmNode node)
-    {
-        return Iterables.filter(childXdmItems(node), XdmNode.class);
-    }
-
     public static XdmNode childElement(final XdmNode node)
     {
         return Iterables.getOnlyElement(childElements(node));
+    }
+
+    public static XdmNode childElement(final XdmNode node, final Collection<QName> elementNames)
+    {
+        return Iterables.getOnlyElement(childElements(node, elementNames));
+    }
+
+    public static XdmNode childElement(final XdmNode node, final QName... elementNames)
+    {
+        return childElement(node, ImmutableSet.copyOf(elementNames));
     }
 
     public static Iterable<XdmNode> childElements(final XdmNode node)
@@ -76,41 +81,34 @@ public final class SaxonAxis
         return Iterables.filter(childNodes(node), SaxonPredicates.isElement());
     }
 
+    public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> elementNames)
+    {
+        return Iterables.filter(childElements(node),
+                Predicates.compose(TcPredicates.matches(elementNames), SaxonFunctions.getNodeName()));
+    }
+
+    public static Iterable<XdmNode> childElements(final XdmNode node, final QName... elementNames)
+    {
+        return childElements(node, ImmutableSet.copyOf(elementNames));
+    }
+
+    public static Iterable<XdmNode> childNodes(final XdmNode node)
+    {
+        return Iterables.filter(childXdmItems(node), XdmNode.class);
+    }
+
     public static Iterable<XdmNode> childNodesNoAttributes(final XdmNode node)
     {
         return Iterables.filter(childNodes(node), Predicates.not(SaxonPredicates.isAttribute()));
     }
 
-    public static Iterable<XdmNode> attributes(final XdmNode node)
+    public static Iterable<XdmItem> childXdmItems(final XdmNode node)
     {
-        return Iterables.filter(childNodes(node), SaxonPredicates.isAttribute());
+        return Iterables.concat(axis(node, Axis.ATTRIBUTE), axis(node, Axis.CHILD));
     }
 
     public static Iterable<XdmNode> namespaces(final XdmNode node)
     {
         return Iterables.filter(axis(node, Axis.NAMESPACE), XdmNode.class);
-    }
-
-    public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
-    {
-        assert node != null;
-    
-        return Iterables.filter(childElements(node),
-                Predicates.compose(TcPredicates.matches(names), SaxonFunctions.getNodeName()));
-    }
-
-    public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
-    {
-        return childElements(node, ImmutableSet.copyOf(names));
-    }
-
-    public static XdmNode childElement(final XdmNode node, final QName... names)
-    {
-        return childElement(node, ImmutableSet.copyOf(names));
-    }
-
-    public static XdmNode childElement(final XdmNode node, final Collection<QName> names)
-    {
-        return Iterables.getOnlyElement(childElements(node, names));
     }
 }
