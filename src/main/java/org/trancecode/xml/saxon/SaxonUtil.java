@@ -19,15 +19,11 @@
  */
 package org.trancecode.xml.saxon;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 
 import java.io.StringReader;
-import java.util.Collection;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,7 +40,6 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
-import org.trancecode.function.TcPredicates;
 import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
@@ -56,29 +51,6 @@ public class SaxonUtil
     private SaxonUtil()
     {
         // To prevent instantiation
-    }
-
-    public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
-    {
-        assert node != null;
-
-        return Iterables.filter(SaxonAxis.childElements(node),
-                Predicates.compose(TcPredicates.matches(names), SaxonFunctions.getNodeName()));
-    }
-
-    public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
-    {
-        return childElements(node, ImmutableSet.copyOf(names));
-    }
-
-    public static XdmNode childElement(final XdmNode node, final QName... names)
-    {
-        return childElement(node, ImmutableSet.copyOf(names));
-    }
-
-    public static XdmNode childElement(final XdmNode node, final Collection<QName> names)
-    {
-        return Iterables.getOnlyElement(childElements(node, names));
     }
 
     public static QName getAttributeAsQName(final XdmNode node, final QName attributeName)

@@ -20,13 +20,17 @@
 package org.trancecode.xml.saxon;
 
 import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import net.sf.saxon.s9api.Axis;
+import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
+import org.trancecode.function.TcPredicates;
 
 /**
  * Utility methods to retrieve node sequences through axis in Saxon.
@@ -85,5 +89,28 @@ public final class SaxonAxis
     public static Iterable<XdmNode> namespaces(final XdmNode node)
     {
         return Iterables.filter(axis(node, Axis.NAMESPACE), XdmNode.class);
+    }
+
+    public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
+    {
+        assert node != null;
+    
+        return Iterables.filter(childElements(node),
+                Predicates.compose(TcPredicates.matches(names), SaxonFunctions.getNodeName()));
+    }
+
+    public static Iterable<XdmNode> childElements(final XdmNode node, final QName... names)
+    {
+        return childElements(node, ImmutableSet.copyOf(names));
+    }
+
+    public static XdmNode childElement(final XdmNode node, final QName... names)
+    {
+        return childElement(node, ImmutableSet.copyOf(names));
+    }
+
+    public static XdmNode childElement(final XdmNode node, final Collection<QName> names)
+    {
+        return Iterables.getOnlyElement(childElements(node, names));
     }
 }
