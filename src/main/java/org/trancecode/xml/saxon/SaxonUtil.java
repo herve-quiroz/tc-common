@@ -29,7 +29,6 @@ import com.google.common.io.Closeables;
 import java.io.StringReader;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
@@ -57,13 +56,6 @@ public class SaxonUtil
     private SaxonUtil()
     {
         // To prevent instantiation
-    }
-
-    public static Map<QName, String> attributes(final XdmNode node)
-    {
-        assert node != null;
-
-        return SaxonMaps.attributes(SaxonAxis.attributes(node));
     }
 
     public static Iterable<XdmNode> childElements(final XdmNode node, final Collection<QName> names)
