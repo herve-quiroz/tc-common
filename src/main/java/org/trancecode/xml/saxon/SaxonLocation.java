@@ -31,13 +31,21 @@ public class SaxonLocation implements Location
 {
     private static final long serialVersionUID = 7136827002407040675L;
 
-    public final XdmNode node;
+    private final XdmNode node;
 
-    private String toString;
+    public static SaxonLocation of(final XdmNode node)
+    {
+        return new SaxonLocation(node);
+    }
 
-    public SaxonLocation(final XdmNode node)
+    private SaxonLocation(final XdmNode node)
     {
         this.node = node;
+    }
+
+    public XdmNode node()
+    {
+        return node;
     }
 
     public String getSystemId()
@@ -63,11 +71,6 @@ public class SaxonLocation implements Location
     @Override
     public String toString()
     {
-        if (toString == null)
-        {
-            toString = String.format("line %s, column %s in %s", getLineNumber(), getColumnNumber(), getSystemId());
-        }
-
-        return toString;
+        return String.format("line %s, column %s in %s", getLineNumber(), getColumnNumber(), getSystemId());
     }
 }
