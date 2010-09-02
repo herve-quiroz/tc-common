@@ -21,8 +21,14 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+
+import javax.xml.transform.Source;
+
 import net.sf.saxon.s9api.Axis;
+import net.sf.saxon.s9api.DocumentBuilder;
+import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
+import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
@@ -113,5 +119,33 @@ public final class SaxonFunctions
         {
             return node.getNodeName();
         }
+    }
+
+    public static Function<Source, XdmNode> buildDocument(final Processor processor)
+    {
+        return new Function<Source, XdmNode>()
+        {
+            private DocumentBuilder documentBuilder;
+
+            @Override
+            public XdmNode apply(final Source source)
+            {
+                Preconditions.checkNotNull(source);
+
+                if (documentBuilder == null)
+                {
+                    documentBuilder = processor.newDocumentBuilder();
+                }
+
+                try
+                {
+                    return documentBuilder.build(source);
+                }
+                catch (final SaxonApiException e)
+                {
+                    throw new IllegalStateException("error building document from: " + source.getSystemId(), e);
+                }
+            }
+        };
     }
 }
