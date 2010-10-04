@@ -21,6 +21,7 @@ package org.trancecode.collection;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
@@ -161,6 +162,29 @@ public final class TcIterables
             public Iterator<T> iterator()
             {
                 return TcIterators.concurrentModifiable(sequence);
+            }
+        };
+    }
+
+    /**
+     * Returns the elements from the passed sequence up to the first element
+     * that matches the passed predicate (this element is excluded from the
+     * result sequence).
+     * <p>
+     * Returned {@link Iterable} will throw {@link NoSuchElementException} if
+     * the predicate does not match for any element from the sequence.
+     */
+    public static <T> Iterable<T> until(final Iterable<T> elements, final Predicate<T> predicate)
+    {
+        Preconditions.checkNotNull(elements);
+        Preconditions.checkNotNull(predicate);
+
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                return TcIterators.until(elements.iterator(), predicate);
             }
         };
     }

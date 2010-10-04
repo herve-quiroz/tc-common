@@ -18,6 +18,8 @@
 package org.trancecode.collection;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
+import com.google.common.collect.AbstractIterator;
 
 import java.util.Iterator;
 import java.util.List;
@@ -72,6 +74,40 @@ public final class TcIterators
             public void remove()
             {
                 throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    /**
+     * Returns the elements from the passed sequence up to the first element
+     * that matches the passed predicate (this element is excluded from the
+     * result sequence).
+     * <p>
+     * Returned {@link Iterator} will throw {@link NoSuchElementException} if
+     * the predicate does not match for any element from the sequence.
+     */
+    public static <T> Iterator<T> until(final Iterator<T> elements, final Predicate<T> predicate)
+    {
+        Preconditions.checkNotNull(elements);
+        Preconditions.checkNotNull(predicate);
+
+        return new AbstractIterator<T>()
+        {
+            @Override
+            protected T computeNext()
+            {
+                if (elements.hasNext())
+                {
+                    final T next = elements.next();
+                    if (predicate.apply(next))
+                    {
+                        return endOfData();
+                    }
+
+                    return next;
+                }
+
+                throw new NoSuchElementException();
             }
         };
     }
