@@ -29,6 +29,6 @@ import org.trancecode.AbstractTest;
  * @version $Revision: 3842 $
  */
 @Test
-public class TubularObjectsTest extends AbstractTest
+public class TcObjectsTest extends AbstractTest
 {
 }
