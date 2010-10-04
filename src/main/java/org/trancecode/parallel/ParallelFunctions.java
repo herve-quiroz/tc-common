@@ -21,6 +21,7 @@ import com.google.common.base.Function;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
@@ -28,11 +29,6 @@ import java.util.concurrent.Future;
  */
 public final class ParallelFunctions
 {
-    private ParallelFunctions()
-    {
-        // No instantiation
-    }
-
     public static <T> Function<Future<T>, T> get()
     {
         @SuppressWarnings("unchecked")
@@ -85,5 +81,41 @@ public final class ParallelFunctions
                 throw new IllegalStateException(e);
             }
         }
+    }
+
+    public static <F, T> Function<F, Callable<T>> apply(final Function<? super F, ? extends T> function)
+    {
+        return new Function<F, Callable<T>>()
+        {
+            @Override
+            public Callable<T> apply(final F from)
+            {
+                return new Callable<T>()
+                {
+                    @Override
+                    public T call() throws Exception
+                    {
+                        return function.apply(from);
+                    }
+                };
+            }
+        };
+    }
+
+    public static <T> Function<Callable<T>, Future<T>> submit(final ExecutorService executor)
+    {
+        return new Function<Callable<T>, Future<T>>()
+        {
+            @Override
+            public Future<T> apply(final Callable<T> task)
+            {
+                return executor.submit(task);
+            }
+        };
+    }
+
+    private ParallelFunctions()
+    {
+        // No instantiation
     }
 }
