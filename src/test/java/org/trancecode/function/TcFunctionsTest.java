@@ -32,7 +32,7 @@ import org.trancecode.AbstractTest;
  * @version $Revision: 3842 $
  */
 @Test
-public class TubularFunctionsTest extends AbstractTest
+public class TcFunctionsTest extends AbstractTest
 {
     @Test
     public void toIterable()
