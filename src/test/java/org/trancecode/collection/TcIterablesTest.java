@@ -17,6 +17,7 @@
  */
 package org.trancecode.collection;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
 
@@ -52,5 +54,31 @@ public final class TcIterablesTest extends AbstractTest
     public void untilError()
     {
         ImmutableList.copyOf(TcIterables.until(ImmutableList.of("a", "b", "c"), Predicates.equalTo("d")));
+    }
+
+    @Test
+    public void getDescendants()
+    {
+        final Function<String, Iterable<String>> split = new Function<String, Iterable<String>>()
+        {
+            @Override
+            public Iterable<String> apply(final String string)
+            {
+                if (string.length() == 1)
+                {
+                    return ImmutableList.of();
+                }
+
+                return ImmutableList.of(string.substring(0, 1), string.substring(1));
+            }
+        };
+
+        AssertJUnit.assertEquals(ImmutableList.of("a", "bcd"), ImmutableList.copyOf(split.apply("abcd")));
+        AssertJUnit.assertEquals(ImmutableList.of(), ImmutableList.copyOf(split.apply("a")));
+
+        final Iterable<String> elements = TcIterables.getDescendants("abcd", split);
+
+        AssertJUnit.assertEquals(ImmutableList.of("abcd", "a", "bcd", "b", "cd", "c", "d"),
+                ImmutableList.copyOf(elements));
     }
 }
