@@ -93,4 +93,25 @@ public final class TcPredicates
             return function.apply(input);
         }
     }
+
+    public static <T> Predicate<T> identicalTo(final T target)
+    {
+        return new IdenticalToPredicate<T>(target);
+    }
+
+    private static final class IdenticalToPredicate<T> implements Predicate<T>
+    {
+        private final T target;
+
+        public IdenticalToPredicate(final T target)
+        {
+            this.target = Preconditions.checkNotNull(target);
+        }
+
+        @Override
+        public boolean apply(final T input)
+        {
+            return input == target;
+        }
+    }
 }
