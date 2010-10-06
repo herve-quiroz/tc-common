@@ -18,6 +18,7 @@
 package org.trancecode.parallel;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 
 import java.util.concurrent.Future;
@@ -33,6 +34,26 @@ public final class TcFutures
     {
         final Predicate<Future<T>> filter = FuturePredicates.isCancelled();
         return Iterables.filter(tasks, filter);
+    }
+
+    public static <T> Iterable<Future<T>> done(final Iterable<Future<T>> tasks)
+    {
+        final Predicate<Future<T>> filter = FuturePredicates.isDone();
+        return Iterables.filter(tasks, filter);
+    }
+
+    public static <T> Iterable<Future<T>> notDone(final Iterable<Future<T>> tasks)
+    {
+        final Predicate<Future<T>> filter = FuturePredicates.isDone();
+        return Iterables.filter(tasks, Predicates.not(filter));
+    }
+
+    public static <T> void cancel(final Iterable<Future<T>> tasks)
+    {
+        for (final Future<T> future : notDone(tasks))
+        {
+            future.cancel(true);
+        }
     }
 
     private TcFutures()
