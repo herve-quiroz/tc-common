@@ -49,11 +49,11 @@ public final class ParallelFunctions
             }
             catch (final InterruptedException e)
             {
-                throw new IllegalStateException(e);
+                throw new RuntimeInterruptedException(e);
             }
             catch (final ExecutionException e)
             {
-                throw new IllegalStateException(e);
+                throw new RuntimeExecutionException(e);
             }
         }
     }
