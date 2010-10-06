@@ -19,17 +19,14 @@ package org.trancecode.parallel;
 
 import com.google.common.base.Predicate;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
- * {@link Predicate} implementations related to concurrent processing.
+ * {@link Predicate} implementations related to {@link Future}.
  * 
  * @author Herve Quiroz
- * @see Future
- * @see Callable
  */
-public final class ParallelPredicates
+public final class FuturePredicates
 {
     /**
      * @see Future#isCancelled()
@@ -52,7 +49,7 @@ public final class ParallelPredicates
         }
     }
 
-    private ParallelPredicates()
+    private FuturePredicates()
     {
         // No instantiation
     }
