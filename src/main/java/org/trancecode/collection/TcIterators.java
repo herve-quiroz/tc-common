@@ -24,6 +24,7 @@ import com.google.common.collect.AbstractIterator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Utility methods related to {@link Iterator}.
@@ -108,6 +109,34 @@ public final class TcIterators
                 }
 
                 throw new NoSuchElementException();
+            }
+        };
+    }
+
+    /**
+     * Returns an {@link Iterator} that contains the elements from the queue.
+     * <p>
+     * The {@link Iterator#next()} method delegates to
+     * {@link BlockingQueue#take()} and thus will block while the queue is
+     * empty. The {@link Iterator} has an unbound size and
+     * {@link Iterator#hasNext()} will only return {@code false} if the
+     * {@link BlockingQueue#take()} call is interrupted.
+     */
+    public static <T> Iterator<T> removeAll(final BlockingQueue<T> fromQueue)
+    {
+        return new AbstractIterator<T>()
+        {
+            @Override
+            protected T computeNext()
+            {
+                try
+                {
+                    return fromQueue.take();
+                }
+                catch (final InterruptedException e)
+                {
+                    return endOfData();
+                }
             }
         };
     }
