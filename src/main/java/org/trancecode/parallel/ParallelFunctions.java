@@ -25,7 +25,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
+ * {@link Function} implementations related to concurrent processing.
+ * 
  * @author Herve Quiroz
+ * @see Future
+ * @see Callable
  */
 public final class ParallelFunctions
 {
