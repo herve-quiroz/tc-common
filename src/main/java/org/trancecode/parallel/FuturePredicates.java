@@ -49,6 +49,27 @@ public final class FuturePredicates
         }
     }
 
+    /**
+     * @see Future#isDone()
+     */
+    public static <T> Predicate<Future<T>> isDone()
+    {
+        @SuppressWarnings("unchecked")
+        final IsDonePredicate<T> predicate = (IsDonePredicate<T>) IsDonePredicate.INSTANCE;
+        return predicate;
+    }
+
+    private static final class IsDonePredicate<T> implements Predicate<Future<T>>
+    {
+        private static final IsDonePredicate<?> INSTANCE = new IsDonePredicate<Object>();
+
+        @Override
+        public boolean apply(final Future<T> task)
+        {
+            return task.isDone();
+        }
+    }
+
     private FuturePredicates()
     {
         // No instantiation
