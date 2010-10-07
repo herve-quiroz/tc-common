@@ -59,4 +59,16 @@ public final class TcSuppliers
             return function.apply(argument);
         }
     }
+
+    public static <T> Supplier<T> singleton(final T value)
+    {
+        return new Supplier<T>()
+        {
+            @Override
+            public T get()
+            {
+                return value;
+            }
+        };
+    }
 }
