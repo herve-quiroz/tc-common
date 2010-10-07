@@ -22,6 +22,7 @@ import org.trancecode.function.TcSuppliers;
 
 /**
  * @author Herve Quiroz
+ * @see <a href="http://en.wikipedia.org/wiki/Thunk">Thunk</a>
  */
 public abstract class AbstractThunk<T> implements Supplier<T>
 {
