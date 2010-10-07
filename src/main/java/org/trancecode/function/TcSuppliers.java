@@ -23,6 +23,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
 import org.trancecode.core.AbstractImmutableObject;
+import org.trancecode.core.SupplierThunk;
 
 /**
  * Utility methods related to {@link Supplier}.
@@ -70,5 +71,10 @@ public final class TcSuppliers
                 return value;
             }
         };
+    }
+
+    public static <T> Supplier<T> memoize(final Supplier<T> supplier)
+    {
+        return new SupplierThunk<T>(supplier);
     }
 }
