@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TranceCode Software
+ * Copyright (C) 2008 TranceCode Software
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,35 +14,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+ *
+ * $Id$
  */
-package org.trancecode.core;
+package org.trancecode.annotation;
 
-import com.google.common.base.Supplier;
-import org.trancecode.annotation.Idempotent;
-import org.trancecode.function.TcSuppliers;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * Method that may be invoked multiple times without changing the result.
+ * 
  * @author Herve Quiroz
- * @see <a href="http://en.wikipedia.org/wiki/Thunk">Thunk</a>
+ * @see <a href="http://en.wikipedia.org/wiki/Idempotence">Idempotence</a>
  */
-public abstract class AbstractThunk<T> implements Supplier<T>
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Idempotent
 {
-    private Supplier<T> value = new Supplier<T>()
-    {
-        @Override
-        public T get()
-        {
-            final T computedValue = compute();
-            value = TcSuppliers.singleton(computedValue);
-            return computedValue;
-        }
-    };
-
-    @Idempotent
-    public final T get()
-    {
-        return value.get();
-    }
-
-    protected abstract T compute();
 }
