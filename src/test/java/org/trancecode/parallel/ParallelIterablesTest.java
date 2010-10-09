@@ -47,8 +47,8 @@ public final class ParallelIterablesTest extends AbstractTest
     @Test
     public void transform()
     {
-        final List<String> strings = ImmutableList.of("1", "2", "3", "4", "5");
-        final List<Integer> integers = ImmutableList.of(1, 2, 3, 4, 5);
+        final List<String> strings = buildInputList(5);
+        final List<Integer> integers = ImmutableList.of(0, 1, 2, 3, 4);
 
         final ExecutorService executor = Executors.newFixedThreadPool(3);
         final Iterable<Integer> result = ParallelIterables.transform(strings, NumberFunctions.parseInt(), executor);
@@ -68,14 +68,20 @@ public final class ParallelIterablesTest extends AbstractTest
         transformMany(Executors.newSingleThreadExecutor());
     }
 
-    private void transformMany(final ExecutorService executor)
+    private static void transformMany(final ExecutorService executor)
+    {
+        final List<String> strings = buildInputList(MANY_ELEMENTS);
+        final Iterable<Integer> result = ParallelIterables.transform(strings, NumberFunctions.parseInt(), executor);
+        Assert.assertEquals(Iterables.size(result), MANY_ELEMENTS);
+    }
+
+    private static List<String> buildInputList(final int numberOfElements)
     {
         final List<String> strings = Lists.newArrayList();
-        for (int i = 0; i < MANY_ELEMENTS; i++)
+        for (int i = 0; i < numberOfElements; i++)
         {
             strings.add(Integer.toString(i));
         }
-        final Iterable<Integer> result = ParallelIterables.transform(strings, NumberFunctions.parseInt(), executor);
-        Assert.assertEquals(Iterables.size(result), MANY_ELEMENTS);
+        return strings;
     }
 }
