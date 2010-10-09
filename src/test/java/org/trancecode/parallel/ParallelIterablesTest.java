@@ -18,6 +18,8 @@
 package org.trancecode.parallel;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -35,6 +37,8 @@ import org.trancecode.math.NumberFunctions;
  */
 public final class ParallelIterablesTest extends AbstractTest
 {
+    private static final int MANY_ELEMENTS = 1000;
+
     private static void assertEquals(final Iterable<?> actual, final Iterable<?> expected)
     {
         Assert.assertEquals(ImmutableList.copyOf(actual), ImmutableList.copyOf(expected));
@@ -50,5 +54,28 @@ public final class ParallelIterablesTest extends AbstractTest
         final Iterable<Integer> result = ParallelIterables.transform(strings, NumberFunctions.parseInt(), executor);
 
         assertEquals(result, integers);
+    }
+
+    @Test
+    public void transformMany()
+    {
+        transformMany(Executors.newFixedThreadPool(3));
+    }
+
+    @Test
+    public void transformManyWithSingleThread()
+    {
+        transformMany(Executors.newSingleThreadExecutor());
+    }
+
+    private void transformMany(final ExecutorService executor)
+    {
+        final List<String> strings = Lists.newArrayList();
+        for (int i = 0; i < MANY_ELEMENTS; i++)
+        {
+            strings.add(Integer.toString(i));
+        }
+        final Iterable<Integer> result = ParallelIterables.transform(strings, NumberFunctions.parseInt(), executor);
+        Assert.assertEquals(Iterables.size(result), MANY_ELEMENTS);
     }
 }
