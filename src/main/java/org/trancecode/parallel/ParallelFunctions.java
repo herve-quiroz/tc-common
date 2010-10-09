@@ -18,6 +18,7 @@
 package org.trancecode.parallel;
 
 import com.google.common.base.Function;
+import com.google.common.base.Throwables;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -57,6 +58,7 @@ public final class ParallelFunctions
             }
             catch (final ExecutionException e)
             {
+                Throwables.propagateIfPossible(e.getCause());
                 throw new RuntimeExecutionException(e);
             }
         }
