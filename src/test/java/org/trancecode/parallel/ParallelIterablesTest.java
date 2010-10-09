@@ -17,6 +17,7 @@
  */
 package org.trancecode.parallel;
 
+import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -24,6 +25,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -83,5 +85,43 @@ public final class ParallelIterablesTest extends AbstractTest
             strings.add(Integer.toString(i));
         }
         return strings;
+    }
+
+    @Test
+    public void transformCancel()
+    {
+        final int limit = MANY_ELEMENTS / 10;
+        final List<String> strings = buildInputList(MANY_ELEMENTS);
+        final AtomicInteger count = new AtomicInteger();
+        final RuntimeException expectedError = new IllegalStateException();
+        final Function<String, String> function = new Function<String, String>()
+        {
+            @Override
+            public String apply(final String string)
+            {
+                if (count.get() == limit)
+                {
+                    throw expectedError;
+                }
+
+                count.incrementAndGet();
+                return string;
+            }
+        };
+
+        final ExecutorService executor = Executors.newSingleThreadExecutor();
+        try
+        {
+            Iterables.size(ParallelIterables.transform(strings, function, executor));
+        }
+        catch (final Exception e)
+        {
+            if (e != expectedError)
+            {
+                throw new IllegalStateException(e);
+            }
+        }
+
+        Assert.assertEquals(count.get(), limit);
     }
 }
