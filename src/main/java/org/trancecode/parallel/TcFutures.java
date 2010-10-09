@@ -21,10 +21,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
-
-import org.trancecode.collection.TcIterables;
 
 /**
  * Utility methods related to {@link Future}.
@@ -57,11 +54,6 @@ public final class TcFutures
         {
             future.cancel(true);
         }
-    }
-
-    public static <T> void cancel(final BlockingQueue<Future<T>> tasks)
-    {
-        cancel(TcIterables.removeAll(tasks));
     }
 
     private TcFutures()
