@@ -29,6 +29,7 @@ import com.google.common.collect.Iterables;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.BlockingQueue;
 
 import org.trancecode.annotation.ReturnsNullable;
 import org.trancecode.core.AbstractImmutableObject;
@@ -185,6 +186,23 @@ public final class TcIterables
             public Iterator<T> iterator()
             {
                 return TcIterators.until(elements.iterator(), predicate);
+            }
+        };
+    }
+
+    /**
+     * Returns an {@link Iterable} that contains the elements from the queue.
+     * 
+     * @see TcIterators#removeAll(BlockingQueue)
+     */
+    public static <T> Iterable<T> removeAll(final BlockingQueue<T> fromQueue)
+    {
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                return TcIterators.removeAll(fromQueue);
             }
         };
     }
