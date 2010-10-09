@@ -18,15 +18,16 @@
 package org.trancecode.parallel;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterators;
 import com.google.common.util.concurrent.ValueFuture;
 
 import java.util.Iterator;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import org.trancecode.collection.TcIterators;
 import org.trancecode.function.TcPredicates;
@@ -38,6 +39,8 @@ import org.trancecode.function.TcPredicates;
  */
 public final class ParallelIterators
 {
+    private static final int MAXIMUM_NUMBER_OF_ELEMENTS_IN_ADVANCE = 1024;
+
     private static Future<?> LAST = ValueFuture.create();
 
     private static <T> Future<T> last()
@@ -56,7 +59,8 @@ public final class ParallelIterators
         final Function<F, Callable<T>> applyFunction = ParallelFunctions.apply(function);
         final Iterator<Callable<T>> callables = Iterators.transform(fromIterable, applyFunction);
 
-        final BlockingQueue<Future<T>> futures = new LinkedBlockingQueue<Future<T>>();
+        final BlockingQueue<Future<T>> futures = new ArrayBlockingQueue<Future<T>>(
+                MAXIMUM_NUMBER_OF_ELEMENTS_IN_ADVANCE);
         final Function<Callable<T>, Future<T>> submitFunction = new Function<Callable<T>, Future<T>>()
         {
             @Override
@@ -81,18 +85,21 @@ public final class ParallelIterators
             }
         };
 
-        executor.submit(new Runnable()
+        final Future<T> submitTask = executor.submit(new Callable<T>()
         {
             @Override
-            public void run()
+            public T call()
             {
                 Iterators.addAll(futures, Iterators.transform(callables, submitFunction));
                 final Future<T> last = last();
                 futures.add(last);
+                return null;
             }
         });
+        futures.add(submitTask);
 
-        return getUntilLast(TcIterators.removeAll(futures));
+        return getUntilLast(Iterators.filter(TcIterators.removeAll(futures),
+                Predicates.not(TcPredicates.identicalTo(submitTask))));
     }
 
     private static <T> Iterator<T> getUntilLast(final Iterator<Future<T>> futures)
