@@ -17,8 +17,10 @@
  */
 package org.trancecode.collection;
 
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
+import com.google.common.base.Throwables;
 import com.google.common.collect.AbstractIterator;
 
 import java.util.Iterator;
@@ -136,6 +138,35 @@ public final class TcIterators
                 catch (final InterruptedException e)
                 {
                     return endOfData();
+                }
+            }
+        };
+    }
+
+    public static <T> Iterator<T> handleErrors(final Iterator<T> fromIterator,
+            final Function<Throwable, Void> errorHandlingFunction)
+    {
+        return new AbstractIterator<T>()
+        {
+            @Override
+            protected T computeNext()
+            {
+                try
+                {
+                    if (fromIterator.hasNext())
+                    {
+                        return fromIterator.next();
+                    }
+                    else
+                    {
+                        return endOfData();
+                    }
+                }
+                catch (final Exception e)
+                {
+                    errorHandlingFunction.apply(e);
+                    Throwables.propagateIfPossible(e);
+                    throw new IllegalStateException(e);
                 }
             }
         };
