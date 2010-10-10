@@ -104,7 +104,15 @@ public final class ParallelIterators
             }
         }));
 
-        return getUntilLast(TcIterators.removeAll(futures));
+        return TcIterators.handleErrors(getUntilLast(TcIterators.removeAll(futures)), new Function<Throwable, Void>()
+        {
+            @Override
+            public Void apply(final Throwable error)
+            {
+                TcFutures.cancel(futures);
+                return null;
+            }
+        });
     }
 
     private static <T> Iterator<T> getUntilLast(final Iterator<Future<T>> futures)
