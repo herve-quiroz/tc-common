@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
-import org.trancecode.concurrent.ParallelIterables;
+import org.trancecode.core.StringPredicates;
 import org.trancecode.math.NumberFunctions;
 
 /**
@@ -45,6 +45,17 @@ public final class ParallelIterablesTest extends AbstractTest
     private static void assertEquals(final Iterable<?> actual, final Iterable<?> expected)
     {
         Assert.assertEquals(ImmutableList.copyOf(actual), ImmutableList.copyOf(expected));
+    }
+
+    @Test
+    public void filter()
+    {
+        final List<String> unfiltered = buildInputList(50);
+        final ExecutorService executor = Executors.newFixedThreadPool(3);
+        final Iterable<String> filtered = ParallelIterables
+                .filter(unfiltered, StringPredicates.endsWith("2"), executor);
+        assertEquals(filtered, ImmutableList.of("2", "12", "22", "32", "42"));
+
     }
 
     @Test

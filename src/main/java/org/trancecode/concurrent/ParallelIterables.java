@@ -52,10 +52,16 @@ public final class ParallelIterables
      * @see Iterables#filter(Iterable, Predicate)
      */
     public static <T> Iterable<T> filter(final Iterable<T> unfiltered, final Predicate<? super T> predicate,
-            final ExecutorService executorService)
+            final ExecutorService executor)
     {
-        // TODO
-        return Iterables.filter(unfiltered, predicate);
+        return new Iterable<T>()
+        {
+            @Override
+            public Iterator<T> iterator()
+            {
+                return ParallelIterators.filter(unfiltered.iterator(), predicate, executor);
+            }
+        };
     }
 
     public static <T> Iterable<T> get(final Iterable<Future<T>> futures)

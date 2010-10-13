@@ -18,10 +18,13 @@
 package org.trancecode.concurrent;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ValueFuture;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -29,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.trancecode.collection.MapFunctions;
 import org.trancecode.collection.TcIterators;
 import org.trancecode.function.TcPredicates;
 
@@ -121,6 +125,31 @@ public final class ParallelIterators
         final Iterator<Future<T>> futuresUntilLast = TcIterators.until(futures, TcPredicates.identicalTo(last));
         final Function<Future<T>, T> function = FutureFunctions.get();
         return Iterators.transform(futuresUntilLast, function);
+    }
+
+    /**
+     * @see Iterators#filter(Iterable, Predicate)
+     */
+    public static <T> Iterator<T> filter(final Iterator<T> unfiltered, final Predicate<? super T> predicate,
+            final ExecutorService executor)
+    {
+        final Function<? super T, Entry<T, Boolean>> evaluateFunction = new Function<T, Entry<T, Boolean>>()
+        {
+            @Override
+            public Entry<T, Boolean> apply(final T element)
+            {
+                return Maps.immutableEntry(element, predicate.apply(element));
+            }
+        };
+
+        final Iterator<Entry<T, Boolean>> unfilteredWithPredicateEvaluated = transform(unfiltered, evaluateFunction,
+                executor);
+        final Function<Entry<T, Boolean>, Boolean> getValueFunction = MapFunctions.getValue();
+        final Iterator<Entry<T, Boolean>> filtered = Iterators.filter(unfilteredWithPredicateEvaluated,
+                TcPredicates.asPredicate(getValueFunction));
+
+        final Function<Entry<T, Boolean>, T> getKeyFunction = MapFunctions.getKey();
+        return Iterators.transform(filtered, getKeyFunction);
     }
 
     private ParallelIterators()
