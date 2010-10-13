@@ -29,6 +29,9 @@ import java.util.Map.Entry;
  */
 public final class MapFunctions
 {
+    /**
+     * @see Entry#getValue()
+     */
     public static final <K, V> Function<Entry<K, V>, V> getValue()
     {
         @SuppressWarnings("unchecked")
