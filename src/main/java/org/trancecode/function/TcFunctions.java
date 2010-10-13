@@ -75,16 +75,16 @@ public final class TcFunctions
         }
     }
 
-    public static <F, T> Function<F, T> cache(final Function<F, T> function)
+    public static <F, T> Function<F, T> memoize(final Function<F, T> function)
     {
-        return new CacheFunction<F, T>(function);
+        return new MemoizeFunction<F, T>(function);
     }
 
-    private static class CacheFunction<F, T> extends AbstractImmutableObject implements Function<F, T>
+    private static class MemoizeFunction<F, T> extends AbstractImmutableObject implements Function<F, T>
     {
         private final Map<F, T> cache;
 
-        private CacheFunction(final Function<F, T> function)
+        private MemoizeFunction(final Function<F, T> function)
         {
             super(function);
             cache = new MapMaker().softValues().makeComputingMap(function);
