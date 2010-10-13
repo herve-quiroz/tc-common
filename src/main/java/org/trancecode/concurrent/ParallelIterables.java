@@ -60,7 +60,7 @@ public final class ParallelIterables
 
     public static <T> Iterable<T> get(final Iterable<Future<T>> futures)
     {
-        final Function<Future<T>, T> function = ParallelFunctions.get();
+        final Function<Future<T>, T> function = FutureFunctions.get();
         return Iterables.transform(futures, function);
     }
 

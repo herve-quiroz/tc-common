@@ -56,7 +56,7 @@ public final class ParallelIterators
     public static <F, T> Iterator<T> transform(final Iterator<F> fromIterable,
             final Function<? super F, ? extends T> function, final ExecutorService executor)
     {
-        final Function<F, Callable<T>> applyFunction = ParallelFunctions.apply(function);
+        final Function<F, Callable<T>> applyFunction = CallableFunctions.apply(function);
         final Iterator<Callable<T>> callables = Iterators.transform(fromIterable, applyFunction);
 
         final AtomicReference<Future<?>> submitTask = new AtomicReference<Future<?>>();
@@ -119,7 +119,7 @@ public final class ParallelIterators
     {
         final Future<T> last = last();
         final Iterator<Future<T>> futuresUntilLast = TcIterators.until(futures, TcPredicates.identicalTo(last));
-        final Function<Future<T>, T> function = ParallelFunctions.get();
+        final Function<Future<T>, T> function = FutureFunctions.get();
         return Iterators.transform(futuresUntilLast, function);
     }
 

@@ -22,17 +22,16 @@ import com.google.common.base.Throwables;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
- * {@link Function} implementations related to concurrent processing.
+ * {@link Function} implementations related to {@link Future}.
  * 
  * @author Herve Quiroz
  * @see Future
  * @see Callable
  */
-public final class ParallelFunctions
+public final class FutureFunctions
 {
     public static <T> Function<Future<T>, T> get()
     {
@@ -64,63 +63,7 @@ public final class ParallelFunctions
         }
     }
 
-    public static <T> Function<Callable<T>, T> call()
-    {
-        @SuppressWarnings("unchecked")
-        final CallFunction<T> function = (CallFunction<T>) CallFunction.INSTANCE;
-        return function;
-    }
-
-    private static final class CallFunction<T> implements Function<Callable<T>, T>
-    {
-        private static final CallFunction<Object> INSTANCE = new CallFunction<Object>();
-
-        @Override
-        public T apply(final Callable<T> callable)
-        {
-            try
-            {
-                return callable.call();
-            }
-            catch (final Exception e)
-            {
-                throw new IllegalStateException(e);
-            }
-        }
-    }
-
-    public static <F, T> Function<F, Callable<T>> apply(final Function<? super F, ? extends T> function)
-    {
-        return new Function<F, Callable<T>>()
-        {
-            @Override
-            public Callable<T> apply(final F from)
-            {
-                return new Callable<T>()
-                {
-                    @Override
-                    public T call() throws Exception
-                    {
-                        return function.apply(from);
-                    }
-                };
-            }
-        };
-    }
-
-    public static <T> Function<Callable<T>, Future<T>> submit(final ExecutorService executor)
-    {
-        return new Function<Callable<T>, Future<T>>()
-        {
-            @Override
-            public Future<T> apply(final Callable<T> task)
-            {
-                return executor.submit(task);
-            }
-        };
-    }
-
-    private ParallelFunctions()
+    private FutureFunctions()
     {
         // No instantiation
     }
