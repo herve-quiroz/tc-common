@@ -15,7 +15,7 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
  */
-package org.trancecode.parallel;
+package org.trancecode.concurrent;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
+import org.trancecode.concurrent.ParallelIterables;
 import org.trancecode.math.NumberFunctions;
 
 /**

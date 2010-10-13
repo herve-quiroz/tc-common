@@ -15,22 +15,20 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
  */
-package org.trancecode.parallel;
-
-import java.util.concurrent.ExecutionException;
+package org.trancecode.concurrent;
 
 import org.trancecode.core.BaseException;
 
 /**
- * Unchecked wrapper for {@link ExecutionException}.
+ * Unchecked wrapper for {@link InterruptedException}.
  * 
  * @author Herve Quiroz
  */
-public final class RuntimeExecutionException extends BaseException
+public final class RuntimeInterruptedException extends BaseException
 {
-    private static final long serialVersionUID = 7370912874115990677L;
+    private static final long serialVersionUID = 6802418010270826831L;
 
-    public RuntimeExecutionException(final ExecutionException cause)
+    public RuntimeInterruptedException(final InterruptedException cause)
     {
         super(cause);
     }
