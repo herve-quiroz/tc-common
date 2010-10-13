@@ -75,6 +75,9 @@ public final class TcFunctions
         }
     }
 
+    /**
+     * @see <a href="http://en.wikipedia.org/wiki/Memoization">Memoization</a>
+     */
     public static <F, T> Function<F, T> memoize(final Function<F, T> function)
     {
         return new MemoizeFunction<F, T>(function);
