@@ -30,6 +30,27 @@ import java.util.Map.Entry;
 public final class MapFunctions
 {
     /**
+     * @see Entry#getKey()
+     */
+    public static final <K, V> Function<Entry<K, V>, K> getKey()
+    {
+        @SuppressWarnings("unchecked")
+        final GetKeyFunction<K, V> function = (GetKeyFunction<K, V>) GetKeyFunction.INSTANCE;
+        return function;
+    }
+
+    private static final class GetKeyFunction<K, V> implements Function<Entry<K, V>, K>
+    {
+        private static final GetKeyFunction<?, ?> INSTANCE = new GetKeyFunction<Object, Object>();
+
+        @Override
+        public K apply(final Entry<K, V> entry)
+        {
+            return entry.getKey();
+        }
+    }
+
+    /**
      * @see Entry#getValue()
      */
     public static final <K, V> Function<Entry<K, V>, V> getValue()
