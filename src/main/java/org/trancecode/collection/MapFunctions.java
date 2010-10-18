@@ -32,7 +32,7 @@ public final class MapFunctions
     /**
      * @see Entry#getKey()
      */
-    public static final <K, V> Function<Entry<K, V>, K> getKey()
+    public static <K, V> Function<Entry<K, V>, K> getKey()
     {
         @SuppressWarnings("unchecked")
         final GetKeyFunction<K, V> function = (GetKeyFunction<K, V>) GetKeyFunction.INSTANCE;
@@ -53,7 +53,7 @@ public final class MapFunctions
     /**
      * @see Entry#getValue()
      */
-    public static final <K, V> Function<Entry<K, V>, V> getValue()
+    public static <K, V> Function<Entry<K, V>, V> getValue()
     {
         @SuppressWarnings("unchecked")
         final GetValueFunction<K, V> function = (GetValueFunction<K, V>) GetValueFunction.INSTANCE;
