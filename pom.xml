@@ -57,22 +57,8 @@
 
     <dependency>
       <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-s9api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-dom</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon-xpath</artifactId>
+      <artifactId>saxon-he</artifactId>
+      <version>${saxon9.version}</version>
     </dependency>
 
     <dependency>
