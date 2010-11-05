@@ -9,7 +9,6 @@
     <groupId>org.trancecode</groupId>
     <artifactId>tubular</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
 
   <artifactId>trancecode-util</artifactId>
