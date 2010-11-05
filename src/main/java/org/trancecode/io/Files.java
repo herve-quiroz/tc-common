@@ -17,10 +17,14 @@
  */
 package org.trancecode.io;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.List;
 
 /**
  * Utility methods related to {@link File}.
@@ -56,5 +60,11 @@ public final class Files
         {
             throw new IllegalStateException(file.toString(), e);
         }
+    }
+
+    public static List<File> listDirectories(final File directory)
+    {
+        Preconditions.checkNotNull(directory);
+        return ImmutableList.copyOf(directory.listFiles(FileFilters.isDirectory()));
     }
 }
