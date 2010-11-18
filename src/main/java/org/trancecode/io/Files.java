@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -66,5 +67,17 @@ public final class Files
     {
         Preconditions.checkNotNull(directory);
         return ImmutableList.copyOf(directory.listFiles(FileFilters.isDirectory()));
+    }
+
+    public static File createTempFile(final Object caller)
+    {
+        try
+        {
+            return File.createTempFile(caller.getClass().getSimpleName(), "");
+        }
+        catch (final IOException e)
+        {
+            throw new IllegalStateException(e);
+        }
     }
 }
