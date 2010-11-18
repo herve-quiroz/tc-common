@@ -39,4 +39,18 @@ public final class TcThreads
 
         return false;
     }
+
+    public static boolean join(final Thread thread)
+    {
+        try
+        {
+            thread.join();
+        }
+        catch (final InterruptedException e)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
