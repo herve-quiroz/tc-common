@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.trancecode.core.TcThreads;
+
 /**
  * Utility methods related to {@link InputStream} and {@link OutputStream}.
  * 
@@ -73,14 +75,7 @@ public final class TcByteStreams
             @Override
             public File get()
             {
-                try
-                {
-                    thread.join();
-                }
-                catch (final InterruptedException e)
-                {
-                    throw new IllegalStateException(e);
-                }
+                TcThreads.join(thread);
                 return file;
             }
         };
