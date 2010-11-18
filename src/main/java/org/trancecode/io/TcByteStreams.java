@@ -17,9 +17,11 @@
  */
 package org.trancecode.io;
 
+import com.google.common.base.Supplier;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -52,6 +54,36 @@ public final class TcByteStreams
                 Closeables.closeQuietly(out);
             }
         }
+    }
+
+    public static Supplier<File> copyToTempFile(final InputStream in)
+    {
+        final File file = Files.createTempFile(TcByteStreams.class);
+        final Thread thread = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                TcByteStreams.copy(in, Files.newFileOutputStream(file), true);
+            }
+        });
+        thread.start();
+        return new Supplier<File>()
+        {
+            @Override
+            public File get()
+            {
+                try
+                {
+                    thread.join();
+                }
+                catch (final InterruptedException e)
+                {
+                    throw new IllegalStateException(e);
+                }
+                return file;
+            }
+        };
     }
 
     private TcByteStreams()
