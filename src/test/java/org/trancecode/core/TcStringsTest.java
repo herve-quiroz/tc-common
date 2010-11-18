@@ -36,5 +36,7 @@ public final class TcStringsTest extends AbstractTest
         TcAssert.assertIterableEquals(TcStrings.split("ab_c_", "_"), ImmutableList.of("ab", "c", ""));
         TcAssert.assertIterableEquals(TcStrings.split("a___b", "_"), ImmutableList.of("a", "", "", "b"));
         TcAssert.assertIterableEquals(TcStrings.split("___", "_"), ImmutableList.of("", "", "", ""));
+        TcAssert.assertIterableEquals(TcStrings.split("_", "_"), ImmutableList.of("", ""));
+        TcAssert.assertIterableEquals(TcStrings.split("", "_"), ImmutableList.of(""));
     }
 }
