@@ -18,6 +18,7 @@
 package org.trancecode.core;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
 /**
  * {@link Predicate} implementations related to {@link String}.
@@ -39,6 +40,25 @@ public final class StringPredicates
                 return string.endsWith(suffix);
             }
         };
+    }
+
+    public static Predicate<String> isEmpty()
+    {
+        // TODO singleton
+        return new Predicate<String>()
+        {
+            @Override
+            public boolean apply(final String string)
+            {
+                return string.isEmpty();
+            }
+        };
+    }
+
+    public static Predicate<String> isNotEmpty()
+    {
+        // TODO singleton
+        return Predicates.not(isEmpty());
     }
 
     private StringPredicates()
