@@ -71,9 +71,14 @@ public final class Files
 
     public static File createTempFile(final Object caller)
     {
+        return createTempFile(caller.getClass());
+    }
+
+    public static File createTempFile(final Class callerClass)
+    {
         try
         {
-            return File.createTempFile(caller.getClass().getSimpleName(), "");
+            return File.createTempFile(callerClass.getSimpleName(), "");
         }
         catch (final IOException e)
         {
