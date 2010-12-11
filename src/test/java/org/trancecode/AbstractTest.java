@@ -32,8 +32,7 @@ import org.testng.annotations.BeforeTest;
  */
 public abstract class AbstractTest
 {
-    public static final String PROPERTY_QUIET = AbstractTest.class.getName() + ".QUIET";
-
+    public static final String PROPERTY_QUIET = "test.quiet";
     public static final boolean QUIET = Boolean.getBoolean(PROPERTY_QUIET);
 
     protected final org.trancecode.logging.Logger log = org.trancecode.logging.Logger.getLogger(getClass());
