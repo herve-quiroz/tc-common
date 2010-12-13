@@ -58,4 +58,14 @@ public final class TcMaps
 
         return ImmutableMap.copyOf(map);
     }
+
+    public static <K, V> V get(final Map<K, V> map, final K key, final V defaultValue)
+    {
+        if (map.containsKey(key))
+        {
+            return map.get(key);
+        }
+
+        return defaultValue;
+    }
 }
