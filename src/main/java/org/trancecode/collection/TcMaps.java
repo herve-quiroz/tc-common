@@ -19,10 +19,12 @@
  */
 package org.trancecode.collection;
 
+import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Utility methods related to {@link Map}.
@@ -67,5 +69,13 @@ public final class TcMaps
         }
 
         return defaultValue;
+    }
+
+    public static <K, V> Map<K, V> fromEntries(final Iterable<Entry<K, V>> entries)
+    {
+        final Function<Entry<K, V>, K> keyFunction = MapFunctions.getKey();
+        final Function<Entry<K, V>, V> valueFunction = MapFunctions.getValue();
+        final Map<K, Entry<K, V>> intermediate = Maps.uniqueIndex(entries, keyFunction);
+        return Maps.transformValues(intermediate, valueFunction);
     }
 }
