@@ -53,9 +53,32 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     public MatchSaxonProcessorDelegate(final Processor processor, final String pattern,
             final SaxonProcessorDelegate matchDelegate, final SaxonProcessorDelegate nomatchDelegate)
     {
+        this(processor, pattern, null, matchDelegate, nomatchDelegate);
+    }
+
+    /**
+     * Creates a new instance that uses the given XSLT match pattern to dispatch
+     * events to the two given delegates.
+     * 
+     * @param processor
+     *            The Saxon processor used to initialize a new
+     *            {@link SaxonBuilder} for each new document processing.
+     * @param pattern
+     *            The XSLT match pattern evaluated for each node
+     * @param namespaceContext
+     *            A node from which to retrieve namespaces.
+     * @param matchDelegate
+     *            The processor delegate called if the pattern matches a node
+     * @param nomatchDelegate
+     *            The processor delegate called if the pattern does not match a
+     *            node
+     */
+    public MatchSaxonProcessorDelegate(final Processor processor, final String pattern, final XdmNode namespaceContext,
+            final SaxonProcessorDelegate matchDelegate, final SaxonProcessorDelegate nomatchDelegate)
+    {
         this.matchDelegate = matchDelegate;
         this.nomatchDelegate = nomatchDelegate;
-        this.matcher = new SaxonPatternMatcher(processor, pattern);
+        this.matcher = new SaxonPatternMatcher(processor, pattern, namespaceContext);
     }
 
     @Override
