@@ -18,6 +18,11 @@
 package org.trancecode.xml.saxon;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XPathCompiler;
@@ -28,7 +33,7 @@ import org.trancecode.logging.Logger;
 
 /**
  * A utility class to evaluate an XSLT Match pattern against nodes.
- *<p>
+ * <p>
  * The implementation is based on the s9api front-end to the Saxon pattern
  * engine (see this <a
  * href="http://markmail.org/message/cy6n4zffsh3zw5mz"/>saxon-help email
@@ -40,7 +45,9 @@ import org.trancecode.logging.Logger;
  */
 public class SaxonPatternMatcher
 {
+    private static final Map<String, String> NO_NAMESPACES = ImmutableMap.of();
     private static final Logger LOG = Logger.getLogger(SaxonPatternMatcher.class);
+
     private XPathExecutable xpathExec;
 
     /**
@@ -57,11 +64,34 @@ public class SaxonPatternMatcher
      */
     public SaxonPatternMatcher(final Processor processor, final String pattern)
     {
+        this(processor, pattern, NO_NAMESPACES);
+    }
+
+    /**
+     * Creates a new matcher for the given XSLT match pattern.
+     * 
+     * @param processor
+     *            The Saxon processor used to create the internal
+     *            {@link XPathCompiler}
+     * @param pattern
+     *            The XSLT pattern evaluated by this matcher
+     * @param namespaces
+     *            The namespaces to declare with prefixes as keys and URIs as
+     *            values.
+     * @throws NullPointerException
+     *             is <code>processor</code> or <code>pattern</code> is
+     *             <code>null</code>
+     */
+    public SaxonPatternMatcher(final Processor processor, final String pattern, final Map<String, String> namespaces)
+    {
         Preconditions.checkNotNull(processor);
         Preconditions.checkNotNull(pattern);
 
         final XPathCompiler xpathCompiler = processor.newXPathCompiler();
-        // TODO declare namespaces ?
+        for (final Entry<String, String> namespace : namespaces.entrySet())
+        {
+            xpathCompiler.declareNamespace(namespace.getKey(), namespace.getValue());
+        }
         try
         {
             xpathExec = xpathCompiler.compilePattern(pattern);
