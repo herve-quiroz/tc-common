@@ -29,6 +29,7 @@ import net.sf.saxon.s9api.XPathCompiler;
 import net.sf.saxon.s9api.XPathExecutable;
 import net.sf.saxon.s9api.XPathSelector;
 import net.sf.saxon.s9api.XdmNode;
+import org.trancecode.annotation.Nullable;
 import org.trancecode.logging.Logger;
 
 /**
@@ -64,7 +65,7 @@ public class SaxonPatternMatcher
      */
     public SaxonPatternMatcher(final Processor processor, final String pattern)
     {
-        this(processor, pattern, NO_NAMESPACES);
+        this(processor, pattern, null);
     }
 
     /**
@@ -75,22 +76,24 @@ public class SaxonPatternMatcher
      *            {@link XPathCompiler}
      * @param pattern
      *            The XSLT pattern evaluated by this matcher
-     * @param namespaces
-     *            The namespaces to declare with prefixes as keys and URIs as
-     *            values.
+     * @param namespaceContext
+     *            A node from which to retrieve namespaces. values.
      * @throws NullPointerException
      *             is <code>processor</code> or <code>pattern</code> is
      *             <code>null</code>
      */
-    public SaxonPatternMatcher(final Processor processor, final String pattern, final Map<String, String> namespaces)
+    public SaxonPatternMatcher(final Processor processor, final String pattern, @Nullable final XdmNode namespaceContext)
     {
         Preconditions.checkNotNull(processor);
         Preconditions.checkNotNull(pattern);
 
         final XPathCompiler xpathCompiler = processor.newXPathCompiler();
-        for (final Entry<String, String> namespace : namespaces.entrySet())
+        if (namespaceContext != null)
         {
-            xpathCompiler.declareNamespace(namespace.getKey(), namespace.getValue());
+            for (final Entry<String, String> namespace : SaxonNamespaces.namespaceSequence(namespaceContext))
+            {
+                xpathCompiler.declareNamespace(namespace.getKey(), namespace.getValue());
+            }
         }
         try
         {
