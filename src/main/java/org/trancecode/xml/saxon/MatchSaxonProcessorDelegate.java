@@ -31,7 +31,6 @@ import net.sf.saxon.s9api.XdmNode;
  */
 public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
 {
-
     private final SaxonPatternMatcher matcher;
     private final SaxonProcessorDelegate matchDelegate;
     private final SaxonProcessorDelegate nomatchDelegate;
@@ -162,5 +161,4 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
             nomatchDelegate.text(node, builder);
         }
     }
-
 }
