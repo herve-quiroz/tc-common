@@ -26,7 +26,7 @@ import net.sf.saxon.s9api.XdmNode;
  * 
  * @author Herve Quiroz
  */
-public final class DeleteSaxonProcessorDelegate implements SaxonProcessorDelegate
+public class DeleteSaxonProcessorDelegate implements SaxonProcessorDelegate
 {
     @Override
     public boolean startDocument(final XdmNode node, final SaxonBuilder builder)
