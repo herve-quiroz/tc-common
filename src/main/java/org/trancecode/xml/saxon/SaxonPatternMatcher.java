@@ -19,9 +19,7 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableMap;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sf.saxon.s9api.Processor;
@@ -48,7 +46,6 @@ import org.trancecode.logging.Logger;
  */
 public class SaxonPatternMatcher implements Predicate<XdmNode>
 {
-    private static final Map<String, String> NO_NAMESPACES = ImmutableMap.of();
     private static final Logger LOG = Logger.getLogger(SaxonPatternMatcher.class);
 
     private XPathExecutable xpathExec;
