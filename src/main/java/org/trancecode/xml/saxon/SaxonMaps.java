@@ -19,6 +19,7 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 
@@ -39,10 +40,16 @@ public final class SaxonMaps
         // No instantiation
     }
 
-    public static Map<QName, String> attributes(final Iterable<XdmNode> nodes)
+    public static Map<QName, String> attributes(final XdmNode element)
     {
-        assert Iterables.all(nodes, SaxonPredicates.isAttribute());
-        final Map<QName, XdmNode> nodeMap = Maps.uniqueIndex(nodes, SaxonFunctions.getNodeName());
+        Preconditions.checkArgument(Saxon.isElement(element));
+        return attributes(SaxonAxis.attributes(element));
+    }
+
+    public static Map<QName, String> attributes(final Iterable<XdmNode> attributes)
+    {
+        assert Iterables.all(attributes, SaxonPredicates.isAttribute());
+        final Map<QName, XdmNode> nodeMap = Maps.uniqueIndex(attributes, SaxonFunctions.getNodeName());
         return Maps.transformValues(nodeMap, SaxonFunctions.getStringValue());
     }
 }
