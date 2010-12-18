@@ -19,6 +19,7 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
@@ -164,5 +165,10 @@ public class Saxon
         {
             throw new IllegalStateException(e);
         }
+    }
+
+    public static boolean isElement(final XdmNode node)
+    {
+        return Preconditions.checkNotNull(node).getNodeKind().equals(XdmNodeKind.ELEMENT);
     }
 }
