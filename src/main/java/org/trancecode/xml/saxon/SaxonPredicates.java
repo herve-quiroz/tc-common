@@ -21,8 +21,10 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableSet;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
+import org.trancecode.function.TcPredicates;
 
 /**
  * {@link Predicate} implementations related to Saxon.
@@ -50,5 +52,11 @@ public final class SaxonPredicates
     public static Predicate<XdmNode> isAttribute()
     {
         return IS_ATTRIBUTE;
+    }
+
+    public static Predicate<XdmNode> hasNodeKind(final Iterable<XdmNodeKind> nodeKinds)
+    {
+        return Predicates.compose(TcPredicates.isContainedBy(ImmutableSet.copyOf(nodeKinds)),
+                SaxonFunctions.getNodeKind());
     }
 }
