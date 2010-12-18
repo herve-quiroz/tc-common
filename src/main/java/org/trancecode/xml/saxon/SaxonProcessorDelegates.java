@@ -17,8 +17,11 @@
  */
 package org.trancecode.xml.saxon;
 
+import java.util.Set;
+
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.s9api.XdmNodeKind;
 import org.trancecode.annotation.Nullable;
 
 /**
@@ -51,6 +54,27 @@ public final class SaxonProcessorDelegates
     {
         return new MatchSaxonProcessorDelegate(new SaxonPatternMatcher(processor, pattern, namespaceContext),
                 matchDelegate, nomatchDelegate);
+    }
+
+    /**
+     * Creates a new ${@link MatchSaxonProcessorDelegate} that dispatches events
+     * to the two given delegates based on the kind of the node (e.g.
+     * {@link XdmNodeKind#ELEMENT}).
+     * 
+     * @param nodeKinds
+     *            The list of node kinds for which the events should be
+     *            dispatched to {@code matchDelegate}.
+     * @param matchDelegate
+     *            The processor delegate called if the node is of one of the
+     *            specified kinds.
+     * @param nomatchDelegate
+     *            The processor delegate called if the node is not of one of the
+     *            specified kinds.
+     */
+    public static SaxonProcessorDelegate forNodeKinds(final Set<XdmNodeKind> nodeKinds,
+            final SaxonProcessorDelegate matchDelegate, final SaxonProcessorDelegate nomatchDelegate)
+    {
+        return new MatchSaxonProcessorDelegate(SaxonPredicates.hasNodeKind(nodeKinds), matchDelegate, nomatchDelegate);
     }
 
     private SaxonProcessorDelegates()
