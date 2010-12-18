@@ -17,31 +17,29 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.base.Predicate;
+
 import java.util.EnumSet;
 
-import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.XdmNode;
 
 /**
  * A processor delegate that dispatches to internal sub-delegates depending on
- * the evaluation on an XSLT match pattern.
+ * the evaluation of a predicate on the node.
  * 
  * @author Romain Deltour
- * @see SaxonPatternMatcher
+ * @author Herve Quiroz
  */
 public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
 {
-    private final SaxonPatternMatcher matcher;
+    private final Predicate<XdmNode> predicate;
     private final SaxonProcessorDelegate matchDelegate;
     private final SaxonProcessorDelegate nomatchDelegate;
 
     /**
-     * Creates a new instance that uses the given XSLT match pattern to dispatch
-     * events to the two given delegates.
+     * Creates a new instance that uses the given predicate to dispatch events
+     * to the two given delegates.
      * 
-     * @param processor
-     *            The Saxon processor used to initialize a new
-     *            {@link SaxonBuilder} for each new document processing.
      * @param pattern
      *            The XSLT match pattern evaluated for each node
      * @param matchDelegate
@@ -50,41 +48,18 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
      *            The processor delegate called if the pattern does not match a
      *            node
      */
-    public MatchSaxonProcessorDelegate(final Processor processor, final String pattern,
-            final SaxonProcessorDelegate matchDelegate, final SaxonProcessorDelegate nomatchDelegate)
-    {
-        this(processor, pattern, null, matchDelegate, nomatchDelegate);
-    }
-
-    /**
-     * Creates a new instance that uses the given XSLT match pattern to dispatch
-     * events to the two given delegates.
-     * 
-     * @param processor
-     *            The Saxon processor used to initialize a new
-     *            {@link SaxonBuilder} for each new document processing.
-     * @param pattern
-     *            The XSLT match pattern evaluated for each node
-     * @param namespaceContext
-     *            A node from which to retrieve namespaces.
-     * @param matchDelegate
-     *            The processor delegate called if the pattern matches a node
-     * @param nomatchDelegate
-     *            The processor delegate called if the pattern does not match a
-     *            node
-     */
-    public MatchSaxonProcessorDelegate(final Processor processor, final String pattern, final XdmNode namespaceContext,
-            final SaxonProcessorDelegate matchDelegate, final SaxonProcessorDelegate nomatchDelegate)
+    public MatchSaxonProcessorDelegate(final Predicate<XdmNode> predicate, final SaxonProcessorDelegate matchDelegate,
+            final SaxonProcessorDelegate nomatchDelegate)
     {
         this.matchDelegate = matchDelegate;
         this.nomatchDelegate = nomatchDelegate;
-        this.matcher = new SaxonPatternMatcher(processor, pattern, namespaceContext);
+        this.predicate = predicate;
     }
 
     @Override
     public void attribute(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             matchDelegate.attribute(node, builder);
         }
@@ -97,7 +72,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public void comment(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             matchDelegate.comment(node, builder);
         }
@@ -110,7 +85,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public void endDocument(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             matchDelegate.endDocument(node, builder);
         }
@@ -123,7 +98,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public void endElement(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             matchDelegate.endElement(node, builder);
         }
@@ -136,7 +111,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public void processingInstruction(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             matchDelegate.processingInstruction(node, builder);
         }
@@ -149,7 +124,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public boolean startDocument(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             return matchDelegate.startDocument(node, builder);
         }
@@ -162,7 +137,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public EnumSet<NextSteps> startElement(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             return matchDelegate.startElement(node, builder);
         }
@@ -175,7 +150,7 @@ public class MatchSaxonProcessorDelegate implements SaxonProcessorDelegate
     @Override
     public void text(final XdmNode node, final SaxonBuilder builder)
     {
-        if (matcher.match(node))
+        if (predicate.apply(node))
         {
             matchDelegate.text(node, builder);
         }
