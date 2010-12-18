@@ -17,6 +17,9 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.base.Function;
+
+import java.util.EnumSet;
 import java.util.Set;
 
 import net.sf.saxon.s9api.Processor;
@@ -32,7 +35,7 @@ import org.trancecode.annotation.Nullable;
 public final class SaxonProcessorDelegates
 {
     /**
-     * Creates a new ${@link MatchSaxonProcessorDelegate} that uses the given
+     * Creates a new {@link MatchSaxonProcessorDelegate} that uses the given
      * XSLT match pattern to dispatch events to the two given delegates.
      * 
      * @param processor
@@ -57,7 +60,7 @@ public final class SaxonProcessorDelegates
     }
 
     /**
-     * Creates a new ${@link MatchSaxonProcessorDelegate} that dispatches events
+     * Creates a new {@link MatchSaxonProcessorDelegate} that dispatches events
      * to the two given delegates based on the kind of the node (e.g.
      * {@link XdmNodeKind#ELEMENT}).
      * 
@@ -75,6 +78,68 @@ public final class SaxonProcessorDelegates
             final SaxonProcessorDelegate matchDelegate, final SaxonProcessorDelegate nomatchDelegate)
     {
         return new MatchSaxonProcessorDelegate(SaxonPredicates.hasNodeKind(nodeKinds), matchDelegate, nomatchDelegate);
+    }
+
+    /**
+     * Creates a new {@link SaxonProcessorDelegate} that throws a
+     * {@link RuntimeException} for any event.
+     * 
+     * @param exceptionFactory
+     *            a {@link Function} to build the exception that is to be thrown
+     *            based on the node.
+     */
+    public static SaxonProcessorDelegate error(final Function<XdmNode, ? extends RuntimeException> exceptionFactory)
+    {
+        return new SaxonProcessorDelegate()
+        {
+            @Override
+            public boolean startDocument(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public void endDocument(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public EnumSet<NextSteps> startElement(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public void endElement(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public void text(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public void comment(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public void processingInstruction(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+
+            @Override
+            public void attribute(final XdmNode node, final SaxonBuilder builder)
+            {
+                throw exceptionFactory.apply(node);
+            }
+        };
     }
 
     private SaxonProcessorDelegates()
