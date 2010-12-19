@@ -60,7 +60,33 @@ public final class TcAssert
         }
         catch (final AssertionFailedError e)
         {
-            Assert.fail(String.format("expected:\n%s\nactual:\n%s", docExpected, docActual), e);
+            throw new XdmNodeCompareAssertionError(docExpected, docActual, e);
+        }
+    }
+
+    public static final class XdmNodeCompareAssertionError extends AssertionError
+    {
+        private static final long serialVersionUID = -2668896379639848178L;
+        private final XdmNode expected;
+        private final XdmNode actual;
+
+        public XdmNodeCompareAssertionError(final XdmNode expected, final XdmNode actual,
+                final Throwable comparisonError)
+        {
+            super(String.format("expected:\n%s\nactual:\n%s", expected, actual));
+            this.expected = expected;
+            this.actual = actual;
+            initCause(comparisonError);
+        }
+
+        public XdmNode expected()
+        {
+            return expected;
+        }
+
+        public XdmNode actual()
+        {
+            return actual;
         }
     }
 }
