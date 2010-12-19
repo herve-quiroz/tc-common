@@ -217,7 +217,7 @@ public class SaxonBuiderTest extends AbstractTest
     @Test
     public void comment()
     {
-        final XdmNode expected = newDocument("<root><!-- comment --></root>");
+        final XdmNode expected = newDocument("<root><!--comment--></root>");
         builder.startDocument();
         builder.startElement(new QName("root"));
         builder.comment("comment");
