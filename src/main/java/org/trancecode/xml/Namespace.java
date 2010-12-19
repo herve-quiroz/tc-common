@@ -19,6 +19,7 @@
  */
 package org.trancecode.xml;
 
+import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.s9api.QName;
 import org.trancecode.annotation.Immutable;
 
@@ -60,5 +61,10 @@ public class Namespace
         }
 
         return new QName(localName);
+    }
+
+    public StructuredQName newStructuredQName(final String localName)
+    {
+        return new StructuredQName(prefix, uri, localName);
     }
 }
