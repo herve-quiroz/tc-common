@@ -209,7 +209,7 @@ public class SaxonBuilder
     {
         try
         {
-            receiver.characters(comment, 0, 0);
+            receiver.comment(comment, 0, 0);
         }
         catch (final XPathException e)
         {
