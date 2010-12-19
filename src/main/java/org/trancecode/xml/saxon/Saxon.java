@@ -102,6 +102,15 @@ public class Saxon
         }
     }
 
+    public static XdmNode asDocumentNode(final Processor processor, final Iterable<XdmNode> nodes)
+    {
+        final SaxonBuilder builder = new SaxonBuilder(processor.getUnderlyingConfiguration());
+        builder.startDocument();
+        builder.nodes(nodes);
+        builder.endDocument();
+        return builder.getNode();
+    }
+
     public static Object nodesToString(final XdmNode... nodes)
     {
         return nodesToString(ImmutableList.copyOf(nodes));
