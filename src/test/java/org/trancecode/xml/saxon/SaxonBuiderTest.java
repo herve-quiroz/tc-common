@@ -214,6 +214,18 @@ public class SaxonBuiderTest extends AbstractTest
         assertXmlEquals(expected, builder.getNode(), processor);
     }
 
+    @Test
+    public void comment()
+    {
+        final XdmNode expected = newDocument("<root><!-- comment --></root>");
+        builder.startDocument();
+        builder.startElement(new QName("root"));
+        builder.comment("comment");
+        builder.endElement();
+        builder.endDocument();
+        assertXmlEquals(expected, builder.getNode(), processor);
+    }
+
     private XdmNode newDocument(final String documentString)
     {
         return Saxon.parse(documentString, processor);
