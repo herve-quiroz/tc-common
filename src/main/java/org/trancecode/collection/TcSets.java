@@ -30,6 +30,11 @@ import java.util.Set;
  */
 public final class TcSets
 {
+    public static <T> ImmutableSet<T> immutableSet(final Set<T> set, final T element)
+    {
+        return ImmutableSet.copyOf(Iterables.concat(set, ImmutableSet.of(element)));
+    }
+
     public static <T> ImmutableSet<T> immutableSet(final Set<T> set1, final Set<T> set2)
     {
         Preconditions.checkNotNull(set1);
