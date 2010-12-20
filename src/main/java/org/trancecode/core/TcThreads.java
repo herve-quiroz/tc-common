@@ -17,6 +17,8 @@
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Utility methods related to {@link Thread} and {@link ThreadLocal}.
+ * 
  * @author Herve Quiroz
  */
 public final class TcThreads
@@ -52,5 +54,29 @@ public final class TcThreads
         }
 
         return false;
+    }
+
+    /**
+     * Sets the value of a {@link ThreadLocal} and return the previous value.
+     */
+    public static <T> T set(final ThreadLocal<T> threadLocal, final T value)
+    {
+        return set(threadLocal, value, null);
+    }
+
+    /**
+     * Sets the value of a {@link ThreadLocal} and return the previous value, or
+     * the specified default value if {@code null}.
+     */
+    public static <T> T set(final ThreadLocal<T> threadLocal, final T value, final T defaultValue)
+    {
+        final T oldValue = threadLocal.get();
+        threadLocal.set(value);
+        if (oldValue == null)
+        {
+            return defaultValue;
+        }
+
+        return oldValue;
     }
 }
