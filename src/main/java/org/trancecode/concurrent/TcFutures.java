@@ -17,10 +17,13 @@
  */
 package org.trancecode.concurrent;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
@@ -54,6 +57,12 @@ public final class TcFutures
         {
             future.cancel(true);
         }
+    }
+
+    public static <T> Iterable<Future<T>> submit(final ExecutorService executor, final Iterable<Callable<T>> tasks)
+    {
+        final Function<Callable<T>, Future<T>> submitFunction = CallableFunctions.submit(executor);
+        return Iterables.transform(tasks, submitFunction);
     }
 
     private TcFutures()
