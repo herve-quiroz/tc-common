@@ -65,6 +65,12 @@ public final class TcFutures
         return Iterables.transform(tasks, submitFunction);
     }
 
+    public static <T> Iterable<T> get(final Iterable<Future<T>> futures)
+    {
+        final Function<Future<T>, T> getFunction = FutureFunctions.get();
+        return Iterables.transform(futures, getFunction);
+    }
+
     private TcFutures()
     {
         // No instantiation
