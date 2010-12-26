@@ -65,6 +65,12 @@ public final class TcFutures
         return Iterables.transform(tasks, submitFunction);
     }
 
+    public static <T> Iterable<Future<T>> submit(final TaskExecutor executor, final Iterable<Callable<T>> tasks)
+    {
+        final Function<Callable<T>, Future<T>> submitFunction = CallableFunctions.submit(executor);
+        return Iterables.transform(tasks, submitFunction);
+    }
+
     public static <T> Iterable<T> get(final Iterable<Future<T>> futures)
     {
         final Function<Future<T>, T> getFunction = FutureFunctions.get();
