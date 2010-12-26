@@ -88,6 +88,18 @@ public final class CallableFunctions
         };
     }
 
+    public static <T> Function<Callable<T>, Future<T>> submit(final TaskExecutor executor)
+    {
+        return new Function<Callable<T>, Future<T>>()
+        {
+            @Override
+            public Future<T> apply(final Callable<T> task)
+            {
+                return executor.submit(task);
+            }
+        };
+    }
+
     private CallableFunctions()
     {
         // No instantiation
