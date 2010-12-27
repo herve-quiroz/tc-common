@@ -32,4 +32,10 @@ public final class RuntimeInterruptedException extends BaseException
     {
         super(cause);
     }
+
+    @Override
+    public InterruptedException getCause()
+    {
+        return (InterruptedException) super.getCause();
+    }
 }

@@ -82,11 +82,11 @@ public final class TcFutures
         }
         catch (final RuntimeInterruptedException e)
         {
-            throw (InterruptedException) e.getCause();
+            throw e.getCause();
         }
         catch (final RuntimeExecutionException e)
         {
-            throw (ExecutionException) e.getCause();
+            throw e.getCause();
         }
     }
 

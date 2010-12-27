@@ -34,4 +34,10 @@ public final class RuntimeExecutionException extends BaseException
     {
         super(cause);
     }
+
+    @Override
+    public ExecutionException getCause()
+    {
+        return (ExecutionException) super.getCause();
+    }
 }
