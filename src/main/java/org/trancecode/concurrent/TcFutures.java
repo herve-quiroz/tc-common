@@ -75,6 +75,12 @@ public final class TcFutures
     public static <T> Iterable<T> get(final Iterable<Future<T>> futures) throws ExecutionException,
             InterruptedException
     {
+        return get(futures, false);
+    }
+
+    public static <T> Iterable<T> get(final Iterable<Future<T>> futures, final boolean cancelOnError)
+            throws ExecutionException, InterruptedException
+    {
         final Function<Future<T>, T> getFunction = FutureFunctions.get();
         try
         {
@@ -82,10 +88,20 @@ public final class TcFutures
         }
         catch (final RuntimeInterruptedException e)
         {
+            if (cancelOnError)
+            {
+                cancel(futures);
+            }
+
             throw e.getCause();
         }
         catch (final RuntimeExecutionException e)
         {
+            if (cancelOnError)
+            {
+                cancel(futures);
+            }
+
             throw e.getCause();
         }
     }
