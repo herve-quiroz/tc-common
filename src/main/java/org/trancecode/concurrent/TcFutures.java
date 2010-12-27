@@ -23,6 +23,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -71,10 +72,22 @@ public final class TcFutures
         return Iterables.transform(tasks, submitFunction);
     }
 
-    public static <T> Iterable<T> get(final Iterable<Future<T>> futures)
+    public static <T> Iterable<T> get(final Iterable<Future<T>> futures) throws ExecutionException,
+            InterruptedException
     {
         final Function<Future<T>, T> getFunction = FutureFunctions.get();
-        return Iterables.transform(futures, getFunction);
+        try
+        {
+            return Iterables.transform(futures, getFunction);
+        }
+        catch (final RuntimeInterruptedException e)
+        {
+            throw (InterruptedException) e.getCause();
+        }
+        catch (final RuntimeExecutionException e)
+        {
+            throw (ExecutionException) e.getCause();
+        }
     }
 
     private TcFutures()
