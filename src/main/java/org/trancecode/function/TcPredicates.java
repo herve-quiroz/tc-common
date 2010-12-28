@@ -26,8 +26,6 @@ import com.google.common.base.Predicates;
 
 import java.util.Collection;
 
-import org.trancecode.core.AbstractImmutableObject;
-
 /**
  * Utility methods related to {@link Predicate}.
  * 
@@ -55,13 +53,12 @@ public final class TcPredicates
         return new IsContainedByPredicate<T>(collection);
     }
 
-    private static class IsContainedByPredicate<T> extends AbstractImmutableObject implements Predicate<T>
+    private static class IsContainedByPredicate<T> implements Predicate<T>
     {
         private final Collection<T> collections;
 
         public IsContainedByPredicate(final Collection<T> collection)
         {
-            super(collection);
             this.collections = Preconditions.checkNotNull(collection);
         }
 

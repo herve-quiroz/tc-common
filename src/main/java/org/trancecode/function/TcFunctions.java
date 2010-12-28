@@ -27,8 +27,6 @@ import com.google.common.collect.MapMaker;
 
 import java.util.Map;
 
-import org.trancecode.core.AbstractImmutableObject;
-
 /**
  * Utility methods related to {@link Function}.
  * 
@@ -58,14 +56,13 @@ public final class TcFunctions
         return new ApplyToFunction<F, T>(argument);
     }
 
-    private static class ApplyToFunction<F, T> extends AbstractImmutableObject implements Function<Function<F, T>, T>
+    private static class ApplyToFunction<F, T> implements Function<Function<F, T>, T>
     {
         private final F argument;
 
         public ApplyToFunction(final F argument)
         {
-            super(argument);
-            this.argument = argument;
+            this.argument = Preconditions.checkNotNull(argument);
         }
 
         @Override
@@ -83,13 +80,12 @@ public final class TcFunctions
         return new MemoizeFunction<F, T>(function);
     }
 
-    private static class MemoizeFunction<F, T> extends AbstractImmutableObject implements Function<F, T>
+    private static class MemoizeFunction<F, T> implements Function<F, T>
     {
         private final Map<F, T> cache;
 
         private MemoizeFunction(final Function<F, T> function)
         {
-            super(function);
             cache = new MapMaker().softValues().makeComputingMap(function);
         }
 

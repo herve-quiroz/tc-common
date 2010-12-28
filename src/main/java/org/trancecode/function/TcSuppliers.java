@@ -22,7 +22,6 @@ package org.trancecode.function;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
-import org.trancecode.core.AbstractImmutableObject;
 import org.trancecode.core.SupplierThunk;
 
 /**
@@ -42,14 +41,13 @@ public final class TcSuppliers
         return new FunctionSupplier<F, T>(function, argument);
     }
 
-    private static class FunctionSupplier<F, T> extends AbstractImmutableObject implements Supplier<T>
+    private static class FunctionSupplier<F, T> implements Supplier<T>
     {
         private final Function<F, T> function;
         private final F argument;
 
         public FunctionSupplier(final Function<F, T> function, final F argument)
         {
-            super(function, argument);
             this.function = Preconditions.checkNotNull(function);
             this.argument = Preconditions.checkNotNull(argument);
         }

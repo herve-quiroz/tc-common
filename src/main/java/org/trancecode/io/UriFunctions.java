@@ -25,8 +25,6 @@ import com.google.common.base.Preconditions;
 
 import java.net.URI;
 
-import org.trancecode.core.AbstractImmutableHashCodeObject;
-
 /**
  * {@link Function} implementations related to {@link URI}.
  * 
@@ -49,15 +47,13 @@ public final class UriFunctions
         return new ResolveUriFunction(baseUri);
     }
 
-    private static class ResolveUriFunction extends AbstractImmutableHashCodeObject implements Function<URI, URI>
+    private static class ResolveUriFunction implements Function<URI, URI>
     {
         private final URI baseUri;
 
         public ResolveUriFunction(final URI baseUri)
         {
-            super();
-            Preconditions.checkNotNull(baseUri);
-            this.baseUri = baseUri;
+            this.baseUri = Preconditions.checkNotNull(baseUri);
         }
 
         @Override

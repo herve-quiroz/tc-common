@@ -19,8 +19,6 @@
  */
 package org.trancecode.function;
 
-import org.trancecode.core.AbstractImmutableObject;
-
 /**
  * Utility methods related to {@link Pair}.
  * 
@@ -38,14 +36,13 @@ public final class Pairs
         return new ImmutablePair<L, R>(left, right);
     }
 
-    private static class ImmutablePair<L, R> extends AbstractImmutableObject implements Pair<L, R>
+    private static class ImmutablePair<L, R> implements Pair<L, R>
     {
         private final L left;
         private final R right;
 
         public ImmutablePair(final L left, final R right)
         {
-            super(left, right);
             this.left = left;
             this.right = right;
         }
@@ -61,5 +58,8 @@ public final class Pairs
         {
             return right;
         }
+
+        // TODO equals()
+        // TODO hashCode()
     }
 }

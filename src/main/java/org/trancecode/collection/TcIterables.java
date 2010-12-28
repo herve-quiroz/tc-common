@@ -32,7 +32,6 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.BlockingQueue;
 
 import org.trancecode.annotation.ReturnsNullable;
-import org.trancecode.core.AbstractImmutableObject;
 import org.trancecode.function.TcFunctions;
 
 /**
@@ -56,15 +55,13 @@ public final class TcIterables
         return new IteratorIterable<T>(iteratorSupplier);
     }
 
-    private static class IteratorIterable<T> extends AbstractImmutableObject implements Iterable<T>
+    private static class IteratorIterable<T> implements Iterable<T>
     {
         private final Supplier<Iterator<T>> iteratorSupplier;
 
         public IteratorIterable(final Supplier<Iterator<T>> iteratorSupplier)
         {
-            super(iteratorSupplier);
-            Preconditions.checkNotNull(iteratorSupplier);
-            this.iteratorSupplier = iteratorSupplier;
+            this.iteratorSupplier = Preconditions.checkNotNull(iteratorSupplier);
         }
 
         @Override
