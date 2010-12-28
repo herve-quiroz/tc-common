@@ -27,7 +27,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.trancecode.core.TcObjects;
+import org.trancecode.lang.TcObjects;
 
 /**
  * Utility methods related to {@link Map}.

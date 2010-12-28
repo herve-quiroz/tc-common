@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core;
+package org.trancecode.lang;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;

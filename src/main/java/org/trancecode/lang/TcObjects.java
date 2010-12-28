@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.core;
+package org.trancecode.lang;
 
 import org.trancecode.api.Nullable;
 

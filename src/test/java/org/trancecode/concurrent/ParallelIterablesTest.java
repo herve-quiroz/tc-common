@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
-import org.trancecode.core.StringPredicates;
+import org.trancecode.lang.StringPredicates;
 import org.trancecode.math.NumberFunctions;
 
 /**

@@ -17,10 +17,11 @@
  *
  * $Id$
  */
-package org.trancecode.core;
+package org.trancecode.lang;
 
 import org.testng.annotations.Test;
 import org.trancecode.AbstractTest;
+import org.trancecode.lang.TcObjects;
 
 /**
  * Tests for {@link TcObjects}.

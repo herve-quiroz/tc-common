@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.trancecode.core.TcThreads;
+import org.trancecode.lang.TcThreads;
 
 /**
  * Utility methods related to {@link InputStream} and {@link OutputStream}.
