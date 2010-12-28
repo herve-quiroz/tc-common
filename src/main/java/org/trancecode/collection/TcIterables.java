@@ -22,7 +22,6 @@ package org.trancecode.collection;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
@@ -44,31 +43,6 @@ public final class TcIterables
     private TcIterables()
     {
         // No instantiation
-    }
-
-    /**
-     * Build an {@link Iterable} sequence of element from a {@link Iterator}
-     * provided by a {@link Supplier}.
-     */
-    public static <T> Iterable<T> newIterable(final Supplier<Iterator<T>> iteratorSupplier)
-    {
-        return new IteratorIterable<T>(iteratorSupplier);
-    }
-
-    private static class IteratorIterable<T> implements Iterable<T>
-    {
-        private final Supplier<Iterator<T>> iteratorSupplier;
-
-        public IteratorIterable(final Supplier<Iterator<T>> iteratorSupplier)
-        {
-            this.iteratorSupplier = Preconditions.checkNotNull(iteratorSupplier);
-        }
-
-        @Override
-        public Iterator<T> iterator()
-        {
-            return iteratorSupplier.get();
-        }
     }
 
     /**
