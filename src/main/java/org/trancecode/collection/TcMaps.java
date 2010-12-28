@@ -20,11 +20,14 @@
 package org.trancecode.collection;
 
 import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.trancecode.core.TcObjects;
 
 /**
  * Utility methods related to {@link Map}.
@@ -53,12 +56,19 @@ public final class TcMaps
         return ImmutableMap.copyOf(map);
     }
 
-    public static <K, V> Map<K, V> copyAndPut(final Map<K, V> map1, final K key, final V value)
+    public static <K, V> Map<K, V> copyAndPut(final Map<K, V> map, final K key, final V value)
     {
-        final Map<K, V> map = Maps.newHashMap(map1);
-        map.put(key, value);
+        Preconditions.checkNotNull(map);
+        Preconditions.checkNotNull(key);
+        if (map instanceof ImmutableMap && TcObjects.equals(map.get(key), value))
+        {
+            return map;
+        }
 
-        return ImmutableMap.copyOf(map);
+        final Map<K, V> newMap = Maps.newHashMap(map);
+        newMap.put(key, value);
+
+        return ImmutableMap.copyOf(newMap);
     }
 
     public static <K, V> V get(final Map<K, V> map, final K key, final V defaultValue)
