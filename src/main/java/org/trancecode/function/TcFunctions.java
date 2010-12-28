@@ -39,18 +39,6 @@ public final class TcFunctions
         // No instantiation
     }
 
-    public static <E, P> E apply(final E initialElement, final Iterable<P> parameters,
-            final Function<Pair<E, P>, E> function)
-    {
-        E currentElement = initialElement;
-        for (final P parameter : parameters)
-        {
-            currentElement = function.apply(Pairs.newImmutablePair(currentElement, parameter));
-        }
-
-        return currentElement;
-    }
-
     public static <F, T> Function<Function<F, T>, T> applyTo(final F argument)
     {
         return new ApplyToFunction<F, T>(argument);
