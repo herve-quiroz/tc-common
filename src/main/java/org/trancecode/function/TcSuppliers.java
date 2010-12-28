@@ -22,7 +22,7 @@ package org.trancecode.function;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
-import org.trancecode.annotation.Idempotent;
+import org.trancecode.api.Idempotent;
 
 /**
  * Utility methods related to {@link Supplier}.

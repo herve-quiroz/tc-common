@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.annotation;
+package org.trancecode.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

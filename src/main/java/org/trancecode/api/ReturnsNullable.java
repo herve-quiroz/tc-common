@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.annotation;
+package org.trancecode.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -26,14 +26,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Method is stateless and thus returns the same exact value for the same exact
- * set of arguments.
+ * Method that may return a <code>null</code> value.
  * 
  * @author Herve Quiroz
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Stateless
+public @interface ReturnsNullable
 {
 }

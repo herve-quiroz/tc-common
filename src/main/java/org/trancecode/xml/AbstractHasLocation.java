@@ -19,7 +19,7 @@
  */
 package org.trancecode.xml;
 
-import org.trancecode.annotation.Stateless;
+import org.trancecode.api.Stateless;
 
 /**
  * @author Herve Quiroz

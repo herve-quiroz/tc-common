@@ -21,7 +21,7 @@ package org.trancecode.xml;
 
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.s9api.QName;
-import org.trancecode.annotation.Immutable;
+import org.trancecode.api.Immutable;
 
 /**
  * @author Herve Quiroz

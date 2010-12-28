@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.BlockingQueue;
 
-import org.trancecode.annotation.ReturnsNullable;
+import org.trancecode.api.ReturnsNullable;
 import org.trancecode.function.TcFunctions;
 
 /**

@@ -17,7 +17,7 @@
  *
  * $Id$
  */
-package org.trancecode.annotation;
+package org.trancecode.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -26,14 +26,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Method that may be invoked multiple times without changing the result.
+ * Method argument that may be <code>null</code>.
  * 
  * @author Herve Quiroz
- * @see <a href="http://en.wikipedia.org/wiki/Idempotence">Idempotence</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Idempotent
+@Target(ElementType.PARAMETER)
+public @interface Nullable
 {
 }

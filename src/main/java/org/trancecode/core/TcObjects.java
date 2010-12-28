@@ -19,7 +19,7 @@
  */
 package org.trancecode.core;
 
-import org.trancecode.annotation.Nullable;
+import org.trancecode.api.Nullable;
 
 /**
  * @author Herve Quiroz

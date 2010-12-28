@@ -24,8 +24,8 @@ import com.google.common.base.Preconditions;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.trancecode.annotation.Nullable;
-import org.trancecode.annotation.ReturnsNullable;
+import org.trancecode.api.Nullable;
+import org.trancecode.api.ReturnsNullable;
 
 /**
  * Utility methods related to {@link URI}.

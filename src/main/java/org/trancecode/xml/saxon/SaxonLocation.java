@@ -20,7 +20,7 @@
 package org.trancecode.xml.saxon;
 
 import net.sf.saxon.s9api.XdmNode;
-import org.trancecode.annotation.Immutable;
+import org.trancecode.api.Immutable;
 import org.trancecode.xml.Location;
 
 /**
