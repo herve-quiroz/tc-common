@@ -22,7 +22,7 @@ package org.trancecode.function;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
-import org.trancecode.core.SupplierThunk;
+import org.trancecode.annotation.Idempotent;
 
 /**
  * Utility methods related to {@link Supplier}.
@@ -73,6 +73,25 @@ public final class TcSuppliers
 
     public static <T> Supplier<T> memoize(final Supplier<T> supplier)
     {
-        return new SupplierThunk<T>(supplier);
+        return new Supplier<T>()
+        {
+            private Supplier<T> value = new Supplier<T>()
+            {
+                @Override
+                public T get()
+                {
+                    final T computedValue = supplier.get();
+                    value = singleton(computedValue);
+                    return computedValue;
+                }
+            };
+
+            @Override
+            @Idempotent
+            public T get()
+            {
+                return value.get();
+            }
+        };
     }
 }
