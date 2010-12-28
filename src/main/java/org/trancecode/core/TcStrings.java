@@ -24,6 +24,7 @@ import com.google.common.collect.Iterators;
 
 import java.util.Iterator;
 
+import org.trancecode.base.TcPreconditions;
 import org.trancecode.collection.TcIterables;
 
 /**

@@ -17,7 +17,7 @@
  */
 package org.trancecode.concurrent;
 
-import org.trancecode.core.BaseException;
+import org.trancecode.base.BaseException;
 
 /**
  * Unchecked wrapper for {@link InterruptedException}.
