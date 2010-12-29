@@ -94,4 +94,43 @@ public final class UriResolvers
             }
         }
     }
+
+    /**
+     * Resolves a pair of URIs as a {@link Source}.
+     * <p>
+     * This method is similar to {@link URIResolver#resolve(String, String)} but
+     * handles {@link URI} arguments and only throws unchecked exceptions. The
+     * method also handles {@code null} arguments silently.
+     */
+    public static Source resolve(final URIResolver resolver, final URI href, final URI base)
+    {
+        final String hrefString;
+        if (href != null)
+        {
+            hrefString = href.toString();
+        }
+        else
+        {
+            hrefString = "";
+        }
+
+        final String baseString;
+        if (base != null)
+        {
+            baseString = base.toString();
+        }
+        else
+        {
+            baseString = "";
+        }
+
+        try
+        {
+            return resolver.resolve(hrefString, baseString);
+        }
+        catch (final TransformerException e)
+        {
+            throw new XmlException(e, "cannot resolve '%' against '%s'", hrefString, baseString);
+        }
+    }
 }
