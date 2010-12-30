@@ -19,7 +19,10 @@
  */
 package org.trancecode.lang;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Supplier;
 import org.trancecode.api.Nullable;
+import org.trancecode.function.TcSuppliers;
 
 /**
  * @author Herve Quiroz
@@ -101,5 +104,33 @@ public final class TcObjects
         {
             return ifFalse;
         }
+    }
+
+    public static Supplier<Integer> immutableObjectHashCode(final Object... properties)
+    {
+        Preconditions.checkNotNull(properties);
+
+        return TcSuppliers.memoize(new Supplier<Integer>()
+        {
+            @Override
+            public Integer get()
+            {
+                return TcObjects.hashCode(properties);
+            }
+        });
+    }
+
+    public static Supplier<String> immutableObjectToString(final String format, final Object... args)
+    {
+        Preconditions.checkNotNull(format);
+
+        return TcSuppliers.memoize(new Supplier<String>()
+        {
+            @Override
+            public String get()
+            {
+                return String.format(format, args);
+            }
+        });
     }
 }
