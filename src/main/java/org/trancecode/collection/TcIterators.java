@@ -28,6 +28,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.BlockingQueue;
 
+import org.trancecode.api.Nullable;
+import org.trancecode.api.ReturnsNullable;
+
 /**
  * Utility methods related to {@link Iterator}.
  * 
@@ -170,5 +173,22 @@ public final class TcIterators
                 }
             }
         };
+    }
+
+    @ReturnsNullable
+    public static <T> T getFirst(final Iterator<T> elements)
+    {
+        return getFirst(elements, null);
+    }
+
+    @ReturnsNullable
+    public static <T> T getFirst(final Iterator<T> elements, @Nullable final T defaultElement)
+    {
+        if (elements.hasNext())
+        {
+            return elements.next();
+        }
+
+        return defaultElement;
     }
 }
