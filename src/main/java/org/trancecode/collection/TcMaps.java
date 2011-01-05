@@ -65,7 +65,7 @@ public final class TcMaps
             return map;
         }
 
-        final Map<K, V> newMap = Maps.newHashMap(map);
+        final Map<K, V> newMap = Maps.newLinkedHashMap(map);
         newMap.put(key, value);
 
         return ImmutableMap.copyOf(newMap);
