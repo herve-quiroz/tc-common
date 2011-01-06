@@ -21,6 +21,7 @@ import com.google.common.base.Function;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.XdmNode;
@@ -138,6 +139,62 @@ public final class SaxonProcessorDelegates
             public void attribute(final XdmNode node, final SaxonBuilder builder)
             {
                 throw exceptionFactory.apply(node);
+            }
+        };
+    }
+
+    public static SaxonProcessorDelegate countMatchingNodes(final AtomicInteger count)
+    {
+        return new SaxonProcessorDelegate()
+        {
+            @Override
+            public boolean startDocument(final XdmNode node, final SaxonBuilder builder)
+            {
+                count.incrementAndGet();
+                return false;
+            }
+
+            @Override
+            public void endDocument(final XdmNode node, final SaxonBuilder builder)
+            {
+                // Ignore
+            }
+
+            @Override
+            public EnumSet<NextSteps> startElement(final XdmNode node, final SaxonBuilder builder)
+            {
+                count.incrementAndGet();
+                return EnumSet.noneOf(NextSteps.class);
+            }
+
+            @Override
+            public void endElement(final XdmNode node, final SaxonBuilder builder)
+            {
+                // Ignore
+            }
+
+            @Override
+            public void text(final XdmNode node, final SaxonBuilder builder)
+            {
+                count.incrementAndGet();
+            }
+
+            @Override
+            public void comment(final XdmNode node, final SaxonBuilder builder)
+            {
+                count.incrementAndGet();
+            }
+
+            @Override
+            public void processingInstruction(final XdmNode node, final SaxonBuilder builder)
+            {
+                count.incrementAndGet();
+            }
+
+            @Override
+            public void attribute(final XdmNode node, final SaxonBuilder builder)
+            {
+                count.incrementAndGet();
             }
         };
     }
