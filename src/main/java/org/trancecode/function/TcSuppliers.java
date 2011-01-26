@@ -98,16 +98,18 @@ public final class TcSuppliers
         };
     }
 
-    public static <K, V> Supplier<V> getFromMap(final Map<K, V> map, final K key)
+    public static <T> Supplier<T> getFromMap(final Map<?, ?> map, final Object key)
     {
         Preconditions.checkNotNull(map);
         Preconditions.checkNotNull(key);
-        return new Supplier<V>()
+        return new Supplier<T>()
         {
             @Override
-            public V get()
+            public T get()
             {
-                return map.get(key);
+                @SuppressWarnings("unchecked")
+                final T value = (T) map.get(key);
+                return value;
             }
         };
     }
