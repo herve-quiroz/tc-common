@@ -22,6 +22,9 @@ package org.trancecode.function;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Supplier;
+
+import java.util.Map;
+
 import org.trancecode.api.Idempotent;
 
 /**
@@ -91,6 +94,20 @@ public final class TcSuppliers
             public T get()
             {
                 return value.get();
+            }
+        };
+    }
+
+    public static <K, V> Supplier<V> getFromMap(final Map<K, V> map, final K key)
+    {
+        Preconditions.checkNotNull(map);
+        Preconditions.checkNotNull(key);
+        return new Supplier<V>()
+        {
+            @Override
+            public V get()
+            {
+                return map.get(key);
             }
         };
     }
