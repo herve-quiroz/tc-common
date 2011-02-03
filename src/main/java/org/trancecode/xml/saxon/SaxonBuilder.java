@@ -22,13 +22,13 @@ import net.sf.saxon.Configuration;
 import net.sf.saxon.event.Receiver;
 import net.sf.saxon.event.TreeReceiver;
 import net.sf.saxon.om.NamePool;
-import net.sf.saxon.om.NamespaceIterator;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmDestination;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.NamespaceIterator;
 
 /**
  * A builder to create new XdmNode documents using a push API. It provides a
@@ -255,7 +255,7 @@ public class SaxonBuilder
         {
             for (final XdmNode node : nodes)
             {
-                receiver.append(node.getUnderlyingNode(), 0, NodeInfo.NO_NAMESPACES);
+                receiver.append(node.getUnderlyingNode(), 0, NodeInfo.LOCAL_NAMESPACES);
             }
         }
         catch (final XPathException e)
