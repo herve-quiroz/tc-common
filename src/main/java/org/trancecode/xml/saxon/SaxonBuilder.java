@@ -19,10 +19,12 @@ package org.trancecode.xml.saxon;
 
 import com.google.common.collect.ImmutableList;
 import net.sf.saxon.Configuration;
+import net.sf.saxon.event.NamespaceReducer;
 import net.sf.saxon.event.Receiver;
 import net.sf.saxon.event.TreeReceiver;
 import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmDestination;
@@ -35,13 +37,12 @@ import net.sf.saxon.tree.iter.NamespaceIterator;
  * facade to the lower-level Saxon Receiver API.
  * 
  * @see Receiver
- * @see TreeReceiver
  * @author Romain Deltour
  */
 public class SaxonBuilder
 {
     private final XdmDestination destination = new XdmDestination();
-    private final TreeReceiver receiver;
+    private final NamespaceReducer receiver;
     private final NamePool namePool;
 
     /**
@@ -55,7 +56,7 @@ public class SaxonBuilder
     {
         try
         {
-            receiver = new TreeReceiver(destination.getReceiver(configuration));
+            receiver = new NamespaceReducer(new TreeReceiver(destination.getReceiver(configuration)));
             receiver.setPipelineConfiguration(configuration.makePipelineConfiguration());
             namePool = configuration.getNamePool();
             receiver.open();
@@ -111,7 +112,7 @@ public class SaxonBuilder
         try
         {
             final int nameCode = namePool.allocate(qname.getPrefix(), qname.getNamespaceURI(), qname.getLocalName());
-            receiver.startElement(nameCode, -1, -1, 0);
+            receiver.startElement(nameCode, StandardNames.XS_UNTYPED, -1, 0);
         }
         catch (final XPathException e)
         {
@@ -191,7 +192,7 @@ public class SaxonBuilder
         try
         {
             final int nameCode = namePool.allocate(qname.getPrefix(), qname.getNamespaceURI(), qname.getLocalName());
-            receiver.attribute(nameCode, -1, value, 0, 0);
+            receiver.attribute(nameCode, StandardNames.XS_UNTYPED_ATOMIC , value, 0, 0);
         }
         catch (final XPathException e)
         {
