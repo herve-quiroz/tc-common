@@ -105,7 +105,9 @@ public final class TcAssert
             XMLUnit.setNormalize(true);
 		    String expectedDoc = getXMLDocument(expected);
 		    String actualDoc = getXMLDocument(actual);
-            XMLAssert.assertXMLEqual(expectedDoc, actualDoc);
+            if (!actualDoc.equals(expectedDoc)) {
+                XMLAssert.assertXMLEqual(expectedDoc, actualDoc);
+            }
         }
         catch (final AssertionFailedError afe)
         {
