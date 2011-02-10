@@ -18,7 +18,6 @@
 package org.trancecode;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.io.Closeables;
 import junit.framework.AssertionFailedError;
 import net.sf.saxon.dom.NodeOverNodeInfo;
 import net.sf.saxon.s9api.*;
@@ -35,7 +34,7 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * {@link Assert} extensions.
- * 
+ *
  * @author Herve Quiroz
  */
 public final class TcAssert
@@ -95,7 +94,8 @@ public final class TcAssert
         }
     }
 
-    public static void Compare(final XdmNode expected, final XdmNode actual) {
+    public static void compare(final XdmNode expected, final XdmNode actual)
+    {
         assert expected != null;
         assert actual != null;
         try {
@@ -103,43 +103,52 @@ public final class TcAssert
             XMLUnit.setIgnoreDiffBetweenTextAndCDATA(true);
             XMLUnit.setIgnoreWhitespace(true);
             XMLUnit.setNormalize(true);
-		    String expectedDoc = getXMLDocument(expected);
-		    String actualDoc = getXMLDocument(actual);
-            if (!actualDoc.equals(expectedDoc)) {
+            final String expectedDoc = getXmlDocument(expected);
+            final String actualDoc = getXmlDocument(actual);
+            if (!actualDoc.equals(expectedDoc))
+            {
                 XMLAssert.assertXMLEqual(expectedDoc, actualDoc);
             }
         }
         catch (final AssertionFailedError afe)
         {
             throw new XdmNodeCompareAssertionError(expected, actual, afe);
-        } catch (final SaxonApiException e) {
+        }
+        catch (final SaxonApiException e)
+        {
             throw new XdmNodeCompareAssertionError(expected, actual, e);
-        } catch (final SAXException e) {
+        }
+        catch (final SAXException e)
+        {
             throw new XdmNodeCompareAssertionError(expected, actual, e);
-        } catch (final IOException e) {
+        }
+        catch (final IOException e)
+        {
            throw new XdmNodeCompareAssertionError(expected, actual, e);
         }
     }
 
-    private static String getXMLDocument(XdmNode saxonNode) throws SaxonApiException
-	{
+    private static String getXmlDocument(XdmNode saxonNode) throws SaxonApiException
+    {
         final Processor processor = (Processor) saxonNode.getUnderlyingNode().getConfiguration().getProcessor();
         final Serializer serializer = new Serializer();
 
-		XQueryCompiler xqcomp = processor.newXQueryCompiler();
-		XQueryExecutable xqexec = xqcomp.compile(".");
-		XQueryEvaluator xqeval = xqexec.load();
-		xqeval.setContextItem(saxonNode);
+        final XQueryCompiler xqcomp = processor.newXQueryCompiler();
+        final XQueryEvaluator xqeval = xqcomp.compile(".").load();
+        xqeval.setContextItem(saxonNode);
 
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		serializer.setOutputStream(stream);
-		xqeval.setDestination(serializer);
-		xqeval.run();
+        final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        serializer.setOutputStream(stream);
+        xqeval.setDestination(serializer);
+        xqeval.run();
 
-		try {
-			return stream.toString("UTF-8");
-		} catch (UnsupportedEncodingException uee) {
-			throw new IllegalStateException(uee);
-		}
-	}
+        try
+        {
+            return stream.toString("UTF-8");
+        }
+        catch (UnsupportedEncodingException uee)
+        {
+            throw new IllegalStateException(uee);
+        }
+    }
 }
