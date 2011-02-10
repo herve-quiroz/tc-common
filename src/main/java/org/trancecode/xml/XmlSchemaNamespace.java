@@ -19,7 +19,7 @@
  */
 package org.trancecode.xml;
 
-import net.sf.saxon.om.NamespaceConstant;
+import net.sf.saxon.lib.NamespaceConstant;
 
 /**
  * @author Herve Quiroz
