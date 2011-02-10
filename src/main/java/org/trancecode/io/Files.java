@@ -74,7 +74,7 @@ public final class Files
         return createTempFile(caller.getClass());
     }
 
-    public static File createTempFile(final Class callerClass)
+    public static File createTempFile(final Class<?> callerClass)
     {
         try
         {
