@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public final class TcSets
 {
-    public static <T> ImmutableSet<T> immutableSet(final Set<T> set, final T element)
+    public static <T> ImmutableSet<T> immutableSet(final Iterable<T> set, final T element)
     {
         return ImmutableSet.copyOf(Iterables.concat(set, ImmutableSet.of(element)));
     }
