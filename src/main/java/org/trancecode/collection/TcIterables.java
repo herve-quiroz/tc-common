@@ -82,6 +82,11 @@ public final class TcIterables
         return TcIterators.getFirst(elements.iterator(), defaultElement);
     }
 
+    public static <T> Iterable<T> append(final Iterable<T> iterable, final T element)
+    {
+        return Iterables.concat(iterable, ImmutableList.of(element));
+    }
+
     public static <T> Iterable<T> append(final Iterable<T> iterable, final T... elements)
     {
         return Iterables.concat(iterable, ImmutableList.copyOf(elements));
