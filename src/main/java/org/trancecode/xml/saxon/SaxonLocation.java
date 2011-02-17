@@ -27,7 +27,7 @@ import org.trancecode.xml.Location;
  * @author Herve Quiroz
  */
 @Immutable
-public class SaxonLocation implements Location
+public final class SaxonLocation implements Location
 {
     private static final long serialVersionUID = 7136827002407040675L;
 

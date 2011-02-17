@@ -50,7 +50,7 @@ public final class EntityResolvers
         return new InputResolverEntityResolver(inputResolver);
     }
 
-    private static class InputResolverEntityResolver implements EntityResolver
+    private static final class InputResolverEntityResolver implements EntityResolver
     {
         private final InputResolver inputResolver;
 
@@ -85,7 +85,7 @@ public final class EntityResolvers
         return NullEntityResolver.INSTANCE;
     }
 
-    private static class NullEntityResolver implements EntityResolver
+    private static final class NullEntityResolver implements EntityResolver
     {
         public static final NullEntityResolver INSTANCE = new NullEntityResolver();
 

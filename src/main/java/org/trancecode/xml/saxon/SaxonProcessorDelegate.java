@@ -34,13 +34,12 @@ import net.sf.saxon.s9api.XdmNode;
  */
 public interface SaxonProcessorDelegate
 {
-
     /**
      * An enumeration used to indicate what to do after a delegate
      * {@link SaxonProcessorDelegate#startElement(XdmNode, SaxonBuilder)} method
      * has been called.
      */
-    public enum NextSteps {
+    enum NextSteps {
         PROCESS_CHILDREN, PROCESS_ATTRIBUTES, START_CONTENT
     }
 
@@ -54,7 +53,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public boolean startDocument(XdmNode node, SaxonBuilder builder);
+    boolean startDocument(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called after having processed a document.
@@ -64,7 +63,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public void endDocument(XdmNode node, SaxonBuilder builder);
+    void endDocument(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called when starting the processing of an element.
@@ -86,7 +85,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public void endElement(XdmNode node, SaxonBuilder builder);
+    void endElement(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called when starting the processing of a text node.
@@ -96,7 +95,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public void text(XdmNode node, SaxonBuilder builder);
+    void text(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called when starting the processing of a comment node.
@@ -106,7 +105,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public void comment(XdmNode node, SaxonBuilder builder);
+    void comment(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called when starting the processing of a processing instruction node
@@ -116,7 +115,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public void processingInstruction(XdmNode node, SaxonBuilder builder);
+    void processingInstruction(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called when starting the processing of an attribute node.
@@ -126,5 +125,5 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public void attribute(XdmNode node, SaxonBuilder builder);
+    void attribute(XdmNode node, SaxonBuilder builder);
 }

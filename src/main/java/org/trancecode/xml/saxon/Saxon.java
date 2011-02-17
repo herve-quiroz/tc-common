@@ -49,7 +49,7 @@ import org.w3c.dom.Document;
  * 
  * @author Herve Quiroz
  */
-public class Saxon
+public final class Saxon
 {
     private Saxon()
     {

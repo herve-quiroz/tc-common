@@ -47,7 +47,7 @@ public final class UriFunctions
         return new ResolveUriFunction(baseUri);
     }
 
-    private static class ResolveUriFunction implements Function<URI, URI>
+    private static final class ResolveUriFunction implements Function<URI, URI>
     {
         private final URI baseUri;
 
@@ -73,7 +73,7 @@ public final class UriFunctions
         return CreateUriFunction.INSTANCE;
     }
 
-    private static class CreateUriFunction implements Function<String, URI>
+    private static final class CreateUriFunction implements Function<String, URI>
     {
         public static final CreateUriFunction INSTANCE = new CreateUriFunction();
 

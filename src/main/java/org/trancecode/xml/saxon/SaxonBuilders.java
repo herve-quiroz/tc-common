@@ -35,7 +35,7 @@ public final class SaxonBuilders
 {
     private static final Logger LOG = Logger.getLogger(SaxonBuilders.class);
 
-    public static final QName addAttribute(final QName name, final String value, final XdmNode namespaceContext,
+    public static QName addAttribute(final QName name, final String value, final XdmNode namespaceContext,
             final SaxonBuilder builder)
     {
         // Namespace Fixup

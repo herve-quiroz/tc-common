@@ -29,7 +29,6 @@ import net.sf.saxon.s9api.XdmNode;
  */
 public class CopyingSaxonProcessorDelegate implements SaxonProcessorDelegate
 {
-
     @Override
     public void attribute(final XdmNode node, final SaxonBuilder builder)
     {
@@ -79,5 +78,4 @@ public class CopyingSaxonProcessorDelegate implements SaxonProcessorDelegate
     {
         builder.text(node.getStringValue());
     }
-
 }

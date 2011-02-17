@@ -28,7 +28,7 @@ import java.net.URI;
 /**
  * @author Herve Quiroz
  */
-public class DefaultOutputResolver implements OutputResolver
+public final class DefaultOutputResolver implements OutputResolver
 {
     public static final DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
 

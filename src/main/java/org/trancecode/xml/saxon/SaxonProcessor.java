@@ -44,7 +44,7 @@ import org.trancecode.xml.saxon.SaxonProcessorDelegate.NextSteps;
  * @see SaxonBuilder
  * @see SaxonProcessorDelegate
  */
-public class SaxonProcessor implements Function<XdmNode, XdmNode>
+public final class SaxonProcessor implements Function<XdmNode, XdmNode>
 {
     private static final Logger LOG = Logger.getLogger(SaxonProcessor.class);
 
@@ -143,5 +143,4 @@ public class SaxonProcessor implements Function<XdmNode, XdmNode>
                 break;
         }
     }
-
 }

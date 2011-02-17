@@ -28,7 +28,7 @@ import java.net.URI;
 /**
  * @author Herve Quiroz
  */
-public class DefaultInputResolver extends AbstractInputResolver
+public final class DefaultInputResolver extends AbstractInputResolver
 {
     public static final DefaultInputResolver INSTANCE = new DefaultInputResolver();
 

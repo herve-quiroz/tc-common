@@ -68,7 +68,7 @@ public final class TcFunctions
         return new MemoizeFunction<F, T>(function);
     }
 
-    private static class MemoizeFunction<F, T> implements Function<F, T>
+    private static final class MemoizeFunction<F, T> implements Function<F, T>
     {
         private final Map<F, T> cache;
 
@@ -90,7 +90,7 @@ public final class TcFunctions
         return new ConditionalFunction<F, T>(predicate, ifTrue, ifFalse);
     }
 
-    private static class ConditionalFunction<F, T> implements Function<F, T>
+    private static final class ConditionalFunction<F, T> implements Function<F, T>
     {
         private final Predicate<F> predicate;
         private final Function<? super F, T> ifTrue;
@@ -122,7 +122,7 @@ public final class TcFunctions
         return new ToIterableFunction<T>();
     }
 
-    private static class ToIterableFunction<T> implements Function<T, Iterable<T>>
+    private static final class ToIterableFunction<T> implements Function<T, Iterable<T>>
     {
         @Override
         public Iterable<T> apply(final T element)
@@ -136,7 +136,7 @@ public final class TcFunctions
         return new PredicateAsFunction<T>(predicate);
     }
 
-    private static class PredicateAsFunction<T> implements Function<T, Boolean>
+    private static final class PredicateAsFunction<T> implements Function<T, Boolean>
     {
         private final Predicate<T> predicate;
 
