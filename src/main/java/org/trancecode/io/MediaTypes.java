@@ -29,4 +29,5 @@ public interface MediaTypes
     String MEDIA_TYPE_PDF = "application/pdf";
     String MEDIA_TYPE_XHTML = "application/xhtml+xml";
     String MEDIA_TYPE_XML = "text/xml";
+    String MEDIA_TYPE_TEXT = "text/plain";
 }
