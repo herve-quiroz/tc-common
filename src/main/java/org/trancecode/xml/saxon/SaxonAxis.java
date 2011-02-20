@@ -63,12 +63,12 @@ public final class SaxonAxis
 
     public static XdmNode childElement(final XdmNode node)
     {
-        return Iterables.getOnlyElement(childElements(node));
+        return Iterables.getOnlyElement(childElements(node), null);
     }
 
     public static XdmNode childElement(final XdmNode node, final Collection<QName> elementNames)
     {
-        return Iterables.getOnlyElement(childElements(node, elementNames));
+        return Iterables.getOnlyElement(childElements(node, elementNames), null);
     }
 
     public static XdmNode childElement(final XdmNode node, final QName... elementNames)
