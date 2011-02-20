@@ -25,12 +25,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
+import org.trancecode.logging.Logger;
+
 /**
  * @author Herve Quiroz
  */
 public final class DefaultOutputResolver implements OutputResolver
 {
     public static final DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
+
+    private static final Logger LOG = Logger.getLogger(DefaultOutputResolver.class);
 
     private DefaultOutputResolver()
     {
@@ -40,6 +44,8 @@ public final class DefaultOutputResolver implements OutputResolver
     @Override
     public OutputStream resolveOutputStream(final String href, final String base)
     {
+        LOG.trace("{@method} href = {} ; base = {}", href, base);
+
         final URI uri = Uris.resolve(href, base);
         if (uri.getScheme() == null || "file".equals(uri.getScheme()))
         {
