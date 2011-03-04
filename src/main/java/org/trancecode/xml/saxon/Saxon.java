@@ -23,14 +23,11 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
-
 import java.io.StringReader;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
-
 import net.sf.saxon.s9api.DOMDestination;
 import net.sf.saxon.s9api.ItemTypeFactory;
 import net.sf.saxon.s9api.Processor;
@@ -41,6 +38,7 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XsltTransformer;
+import org.apache.commons.lang.StringUtils;
 import org.trancecode.xml.XmlSchemaTypes;
 import org.w3c.dom.Document;
 
@@ -180,4 +178,38 @@ public final class Saxon
     {
         return Preconditions.checkNotNull(node).getNodeKind().equals(XdmNodeKind.ELEMENT);
     }
+
+    public static boolean isDocument(final XdmNode node)
+    {
+        final XdmNodeKind kind = node.getNodeKind();
+
+        if (XdmNodeKind.ELEMENT.equals(kind))
+        {
+            return true;
+        }
+        else if (XdmNodeKind.DOCUMENT.equals(kind)) {
+            final Iterable<XdmNode> childs = SaxonAxis.childNodes(node);
+            int nbChildsElts = 0;
+            for (final XdmNode child : childs)
+            {
+                if (XdmNodeKind.TEXT.equals(child.getNodeKind()) && StringUtils.isNotBlank(child.toString()))
+                {
+                        return false;
+                }
+                if (XdmNodeKind.ELEMENT.equals(child.getNodeKind()))
+                {
+                    nbChildsElts ++;
+                    if (nbChildsElts > 1)
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
 }
