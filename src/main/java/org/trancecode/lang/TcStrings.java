@@ -24,6 +24,8 @@ import com.google.common.collect.Iterators;
 
 import java.util.Iterator;
 
+import org.trancecode.api.Nullable;
+import org.trancecode.api.ReturnsNullable;
 import org.trancecode.base.TcPreconditions;
 import org.trancecode.collection.TcIterables;
 
@@ -65,6 +67,17 @@ public final class TcStrings
                 return TcIterables.prepend(split(after, separatorSequence), string.substring(0, index)).iterator();
             }
         };
+    }
+
+    @ReturnsNullable
+    public static String toString(@Nullable final Object object)
+    {
+        if (object != null)
+        {
+            return object.toString();
+        }
+
+        return null;
     }
 
     private TcStrings()
