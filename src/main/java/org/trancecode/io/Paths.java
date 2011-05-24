@@ -19,6 +19,8 @@
  */
 package org.trancecode.io;
 
+import com.google.common.base.Preconditions;
+
 /**
  * Utility methods related to file paths handling.
  * 
@@ -54,5 +56,11 @@ public final class Paths
         }
 
         return path + delimiter();
+    }
+
+    public static String getName(final String path)
+    {
+        Preconditions.checkNotNull(path);
+        return path.replaceAll("/+$", "").replaceAll(".*/", "");
     }
 }
