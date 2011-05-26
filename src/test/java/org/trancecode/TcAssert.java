@@ -18,9 +18,20 @@
 package org.trancecode;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import junit.framework.AssertionFailedError;
 import net.sf.saxon.dom.NodeOverNodeInfo;
-import net.sf.saxon.s9api.*;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XQueryCompiler;
+import net.sf.saxon.s9api.XQueryEvaluator;
+import net.sf.saxon.s9api.XdmNode;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.testng.Assert;
@@ -28,13 +39,9 @@ import org.trancecode.xml.saxon.Saxon;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 /**
  * {@link Assert} extensions.
- *
+ * 
  * @author Herve Quiroz
  */
 public final class TcAssert
@@ -98,7 +105,8 @@ public final class TcAssert
     {
         assert expected != null;
         assert actual != null;
-        try {
+        try
+        {
             XMLUnit.setIgnoreComments(true);
             XMLUnit.setIgnoreDiffBetweenTextAndCDATA(true);
             XMLUnit.setIgnoreWhitespace(true);
@@ -124,11 +132,11 @@ public final class TcAssert
         }
         catch (final IOException e)
         {
-           throw new XdmNodeCompareAssertionError(expected, actual, e);
+            throw new XdmNodeCompareAssertionError(expected, actual, e);
         }
     }
 
-    private static String getXmlDocument(XdmNode saxonNode) throws SaxonApiException
+    private static String getXmlDocument(final XdmNode saxonNode) throws SaxonApiException
     {
         final Processor processor = (Processor) saxonNode.getUnderlyingNode().getConfiguration().getProcessor();
         final Serializer serializer = new Serializer();
@@ -146,9 +154,19 @@ public final class TcAssert
         {
             return stream.toString("UTF-8");
         }
-        catch (UnsupportedEncodingException uee)
+        catch (final UnsupportedEncodingException uee)
         {
             throw new IllegalStateException(uee);
         }
+    }
+
+    public static void assertSetEquals(final Iterable<?> actual, final Iterable<?> expected)
+    {
+        Assert.assertEquals(ImmutableSet.copyOf(actual), ImmutableSet.copyOf(expected));
+    }
+
+    public static void assertSetEquals(final Iterable<?> actual, final Object... expected)
+    {
+        Assert.assertEquals(ImmutableSet.copyOf(actual), ImmutableSet.copyOf(expected));
     }
 }
