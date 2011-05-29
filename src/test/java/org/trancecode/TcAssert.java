@@ -162,6 +162,8 @@ public final class TcAssert
 
     public static void assertSetEquals(final Iterable<?> actual, final Iterable<?> expected)
     {
+        assert actual != null;
+        assert expected != null;
         Assert.assertEquals(ImmutableSet.copyOf(actual), ImmutableSet.copyOf(expected));
     }
 
