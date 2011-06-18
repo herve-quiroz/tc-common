@@ -21,7 +21,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -36,7 +35,7 @@ public final class TcSets
         Preconditions.checkNotNull(set);
         Preconditions.checkNotNull(element);
 
-        if (set instanceof Collection && ((Collection<?>) set).contains(element))
+        if (set instanceof Set && ((Set<?>) set).contains(element))
         {
             return ImmutableSet.copyOf(set);
         }
