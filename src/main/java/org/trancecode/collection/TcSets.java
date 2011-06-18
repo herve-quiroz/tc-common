@@ -18,8 +18,10 @@
 package org.trancecode.collection;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
+import com.google.common.collect.Iterables;
 
 import java.util.Set;
 
@@ -61,6 +63,19 @@ public final class TcSets
 
         final Builder<T> builder = ImmutableSet.builder();
         return builder.addAll(set1).addAll(set2).build();
+    }
+
+    public static <T> ImmutableSet<T> immutableSetWithout(final Iterable<T> elements, final T element)
+    {
+        Preconditions.checkNotNull(elements);
+        Preconditions.checkNotNull(element);
+
+        if (elements instanceof Set && !((Set<?>) elements).contains(element))
+        {
+            return ImmutableSet.copyOf(elements);
+        }
+
+        return ImmutableSet.copyOf(Iterables.filter(elements, Predicates.not(Predicates.equalTo(element))));
     }
 
     private TcSets()
