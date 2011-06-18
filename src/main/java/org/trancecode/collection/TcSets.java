@@ -19,8 +19,9 @@ package org.trancecode.collection;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
+import com.google.common.collect.ImmutableSet.Builder;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -32,7 +33,16 @@ public final class TcSets
 {
     public static <T> ImmutableSet<T> immutableSet(final Iterable<T> set, final T element)
     {
-        return ImmutableSet.copyOf(Iterables.concat(set, ImmutableSet.of(element)));
+        Preconditions.checkNotNull(set);
+        Preconditions.checkNotNull(element);
+
+        if (set instanceof Collection && ((Collection<?>) set).contains(element))
+        {
+            return ImmutableSet.copyOf(set);
+        }
+
+        final Builder<T> builder = ImmutableSet.builder();
+        return builder.addAll(set).add(element).build();
     }
 
     public static <T> ImmutableSet<T> immutableSet(final Set<T> set1, final Set<T> set2)
@@ -50,7 +60,8 @@ public final class TcSets
             return ImmutableSet.copyOf(set1);
         }
 
-        return ImmutableSet.copyOf(Iterables.concat(set1, set2));
+        final Builder<T> builder = ImmutableSet.builder();
+        return builder.addAll(set1).addAll(set2).build();
     }
 
     private TcSets()
