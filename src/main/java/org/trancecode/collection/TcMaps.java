@@ -22,6 +22,7 @@ package org.trancecode.collection;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -49,11 +50,8 @@ public final class TcMaps
 
     public static <K, V> Map<K, V> merge(final Map<K, V> map1, final Map<? extends K, ? extends V> map2)
     {
-        final Map<K, V> map = Maps.newHashMapWithExpectedSize(map1.size() + map2.size());
-        map.putAll(map1);
-        map.putAll(map2);
-
-        return ImmutableMap.copyOf(map);
+        final Builder<K, V> builder = ImmutableMap.builder();
+        return builder.putAll(map1).putAll(map2).build();
     }
 
     public static <K, V> Map<K, V> copyAndPut(final Map<K, V> map, final K key, final V value)
@@ -65,10 +63,8 @@ public final class TcMaps
             return map;
         }
 
-        final Map<K, V> newMap = Maps.newLinkedHashMap(map);
-        newMap.put(key, value);
-
-        return ImmutableMap.copyOf(newMap);
+        final Builder<K, V> builder = ImmutableMap.builder();
+        return builder.putAll(map).put(key, value).build();
     }
 
     public static <K, V> V get(final Map<K, V> map, final K key, final V defaultValue)
