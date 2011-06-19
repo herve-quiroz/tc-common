@@ -42,12 +42,6 @@ public final class TcMaps
         // No instantiation
     }
 
-    public static <K, V> Map<K, V> newSmallWriteOnceMap()
-    {
-        // TODO
-        return Maps.newLinkedHashMap();
-    }
-
     public static <K, V> Map<K, V> merge(final Map<K, V> map1, final Map<? extends K, ? extends V> map2)
     {
         final Builder<K, V> builder = ImmutableMap.builder();
