@@ -44,6 +44,10 @@ public final class TaskExecutors
         };
     }
 
+    /**
+     * Returns a {@link TaskExecutor} which executes tasks when the
+     * {@link Future#get()} method is invoked.
+     */
     public static TaskExecutor onDemandExecutor()
     {
         return OnDemandTaskExecutor.INSTANCE;
