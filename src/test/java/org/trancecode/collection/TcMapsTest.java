@@ -39,4 +39,12 @@ public final class TcMapsTest extends AbstractTest
         final Map<Integer, String> map2 = ImmutableMap.of(2, "2", 3, "3", 4, "4");
         Assert.assertEquals(TcMaps.merge(map1, map2), ImmutableMap.of(1, "1", 2, "2", 3, "3", 4, "4"));
     }
+
+    @Test
+    public void copyAndPut()
+    {
+        final Map<Integer, String> map = ImmutableMap.of(1, "1", 2, "2", 3, "3");
+        Assert.assertEquals(TcMaps.copyAndPut(map, 4, "4"), ImmutableMap.of(1, "1", 2, "2", 3, "3", 4, "4"));
+        Assert.assertEquals(TcMaps.copyAndPut(map, 3, "4"), ImmutableMap.of(1, "1", 2, "2", 3, "4"));
+    }
 }
