@@ -35,10 +35,10 @@ import org.trancecode.concurrent.TcFutures;
 /**
  * @author Herve Quiroz
  */
-public abstract class AbstractEventObservable<T extends Event> implements EventObservable<T>, EventObserver<T>
+public abstract class AbstractEventObservable<T extends Event> implements EventDispatcher<T>
 {
     private final boolean blockingNotification;
-    private final TaskExecutor eventDispatcher;
+    private final TaskExecutor executor;
     private final NotificationFailurePolicy notificationFailurePolicy;
 
     private Iterable<EventObserver<T>> observers = ImmutableSet.of();
@@ -86,11 +86,11 @@ public abstract class AbstractEventObservable<T extends Event> implements EventO
         this(true, TaskExecutors.directExecutor(), notificationFailurePolicy);
     }
 
-    protected AbstractEventObservable(final boolean blockingNotification, final TaskExecutor eventDispatcher,
+    protected AbstractEventObservable(final boolean blockingNotification, final TaskExecutor executor,
             final NotificationFailurePolicy notificationFailurePolicy)
     {
         this.blockingNotification = blockingNotification;
-        this.eventDispatcher = eventDispatcher;
+        this.executor = executor;
         this.notificationFailurePolicy = Preconditions.checkNotNull(notificationFailurePolicy);
     }
 
@@ -133,7 +133,7 @@ public abstract class AbstractEventObservable<T extends Event> implements EventO
                         };
                     }
                 });
-        final Iterable<Future<Object>> results = TcFutures.submit(eventDispatcher, notificationTasks);
+        final Iterable<Future<Object>> results = TcFutures.submit(executor, notificationTasks);
         if (blockingNotification)
         {
             for (final Future<Object> result : results)

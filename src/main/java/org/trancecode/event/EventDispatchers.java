@@ -21,36 +21,50 @@ import org.trancecode.concurrent.TaskExecutor;
 import org.trancecode.event.AbstractEventObservable.NotificationFailurePolicy;
 
 /**
- * Utility methods related to {@link EventObservable}.
+ * Utility methods related to {@link EventDispatcher}.
  * 
  * @author Herve Quiroz
  */
-public final class EventObservables
+public final class EventDispatchers
 {
-    public static <T extends Event> EventObservable<T> newEventDispatcher()
+    private static final class InternalEventDispatcher<T extends Event> extends AbstractEventObservable<T>
     {
-        return new AbstractEventObservable<T>()
+        public InternalEventDispatcher()
         {
-        };
+            super();
+        }
+
+        public InternalEventDispatcher(final boolean blockingNotification, final TaskExecutor executor,
+                final NotificationFailurePolicy notificationFailurePolicy)
+        {
+            super(blockingNotification, executor, notificationFailurePolicy);
+        }
+
+        public InternalEventDispatcher(final NotificationFailurePolicy notificationFailurePolicy)
+        {
+            super(notificationFailurePolicy);
+        }
+
     }
 
-    public static <T extends Event> EventObservable<T> newEventDispatcher(
+    public static <T extends Event> EventDispatcher<T> newEventDispatcher()
+    {
+        return new InternalEventDispatcher<T>();
+    }
+
+    public static <T extends Event> EventDispatcher<T> newEventDispatcher(
             final NotificationFailurePolicy notificationFailurePolicy)
     {
-        return new AbstractEventObservable<T>(notificationFailurePolicy)
-        {
-        };
+        return new InternalEventDispatcher<T>(notificationFailurePolicy);
     }
 
     public static <T extends Event> EventObservable<T> newEventDispatcher(final boolean blockingNotification,
-            final TaskExecutor eventDispatcher, final NotificationFailurePolicy notificationFailurePolicy)
+            final TaskExecutor executor, final NotificationFailurePolicy notificationFailurePolicy)
     {
-        return new AbstractEventObservable<T>(blockingNotification, eventDispatcher, notificationFailurePolicy)
-        {
-        };
+        return new InternalEventDispatcher<T>(blockingNotification, executor, notificationFailurePolicy);
     }
 
-    private EventObservables()
+    private EventDispatchers()
     {
         // No instantiation
     }
