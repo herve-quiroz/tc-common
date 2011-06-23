@@ -34,6 +34,14 @@ public final class EventObservables
         };
     }
 
+    public static <T extends Event> EventObservable<T> newEventDispatcher(
+            final NotificationFailurePolicy notificationFailurePolicy)
+    {
+        return new AbstractEventObservable<T>(notificationFailurePolicy)
+        {
+        };
+    }
+
     public static <T extends Event> EventObservable<T> newEventDispatcher(final boolean blockingNotification,
             final TaskExecutor eventDispatcher, final NotificationFailurePolicy notificationFailurePolicy)
     {
