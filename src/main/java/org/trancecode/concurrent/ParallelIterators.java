@@ -21,15 +21,17 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
-import com.google.common.util.concurrent.ValueFuture;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.trancecode.collection.MapFunctions;
@@ -45,7 +47,39 @@ public final class ParallelIterators
 {
     private static final int MAXIMUM_NUMBER_OF_ELEMENTS_IN_ADVANCE = 1024;
 
-    private static Future<?> LAST = ValueFuture.create();
+    private static final Future<?> LAST = new Future<Object>()
+    {
+        @Override
+        public boolean cancel(final boolean mayInterruptIfRunning)
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Object get() throws InterruptedException, ExecutionException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Object get(final long timeout, final TimeUnit unit) throws InterruptedException, ExecutionException,
+                TimeoutException
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isCancelled()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isDone()
+        {
+            throw new UnsupportedOperationException();
+        }
+    };
 
     private static <T> Future<T> last()
     {
