@@ -50,11 +50,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.google.code.guice</groupId>
-      <artifactId>guice</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>saxon-he</artifactId>
       <version>${saxon9.version}</version>
