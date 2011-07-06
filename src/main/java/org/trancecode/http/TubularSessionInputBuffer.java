@@ -23,11 +23,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+
 import org.apache.http.impl.io.AbstractSessionInputBuffer;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.CharArrayBuffer;
 
 /**
  * @author Emmanuel Tourdot
@@ -36,8 +35,7 @@ class TubularSessionInputBuffer extends AbstractSessionInputBuffer
 {
     public static final int BUFFER_SIZE = 16;
 
-    public TubularSessionInputBuffer(final InputStream instream, final int buffersize,
-            final HttpParams params)
+    public TubularSessionInputBuffer(final InputStream instream, final int buffersize, final HttpParams params)
     {
         super();
         init(instream, buffersize, params);
@@ -58,8 +56,7 @@ class TubularSessionInputBuffer extends AbstractSessionInputBuffer
         this(bytes, BUFFER_SIZE, new BasicHttpParams());
     }
 
-    public TubularSessionInputBuffer(final byte[] bytes, final int buffersize,
-            final HttpParams params)
+    public TubularSessionInputBuffer(final byte[] bytes, final int buffersize, final HttpParams params)
     {
         this(new ByteArrayInputStream(bytes), buffersize, params);
     }
@@ -70,25 +67,24 @@ class TubularSessionInputBuffer extends AbstractSessionInputBuffer
     }
 
     public TubularSessionInputBuffer(final String s, final String charset, final int buffersize, final HttpParams params)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         this(s.getBytes(charset), buffersize, params);
     }
 
     public TubularSessionInputBuffer(final String s, final String charset, final int buffersize)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         this(s.getBytes(charset), buffersize, new BasicHttpParams());
     }
 
     public TubularSessionInputBuffer(final String s, final String charset, final HttpParams params)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         this(s.getBytes(charset), params);
     }
 
-    public TubularSessionInputBuffer(final String s, final String charset)
-        throws UnsupportedEncodingException
+    public TubularSessionInputBuffer(final String s, final String charset) throws UnsupportedEncodingException
     {
         this(s.getBytes(charset), new BasicHttpParams());
 
