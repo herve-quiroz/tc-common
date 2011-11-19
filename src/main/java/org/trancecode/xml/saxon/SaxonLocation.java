@@ -48,6 +48,12 @@ public final class SaxonLocation implements Location
         return node;
     }
 
+    @Override
+    public int getCharacterOffset()
+    {
+        return -1;
+    }
+
     public String getSystemId()
     {
         return node.getUnderlyingNode().getSystemId();
