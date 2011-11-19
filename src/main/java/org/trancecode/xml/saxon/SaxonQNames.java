@@ -40,4 +40,14 @@ public final class SaxonQNames
 
         return qname.toString();
     }
+
+    public static javax.xml.namespace.QName asXmlQName(final QName qname)
+    {
+        return new javax.xml.namespace.QName(qname.getNamespaceURI(), qname.getLocalName(), qname.getPrefix());
+    }
+
+    public static QName asSaxonQName(final javax.xml.namespace.QName qname)
+    {
+        return new QName(qname.getPrefix(), qname.getNamespaceURI(), qname.getLocalPart());
+    }
 }
