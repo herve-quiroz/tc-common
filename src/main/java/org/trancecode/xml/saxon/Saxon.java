@@ -29,6 +29,7 @@ import java.io.StringReader;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
