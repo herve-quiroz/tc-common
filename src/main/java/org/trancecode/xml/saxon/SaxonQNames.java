@@ -26,6 +26,11 @@ import net.sf.saxon.s9api.QName;
  */
 public final class SaxonQNames
 {
+    private SaxonQNames()
+    {
+        // No instantiation
+    }
+
     public static String toPrefixString(final QName qname)
     {
         if (qname.getPrefix() != null)
@@ -34,10 +39,5 @@ public final class SaxonQNames
         }
 
         return qname.toString();
-    }
-
-    private SaxonQNames()
-    {
-        // No instantiation
     }
 }
