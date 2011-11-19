@@ -148,4 +148,20 @@ public final class SaxonFunctions
             }
         };
     }
+
+    public static Function<XdmNode, Source> asSource()
+    {
+        return AsSourceFunction.INSTANCE;
+    }
+
+    private static final class AsSourceFunction implements Function<XdmNode, Source>
+    {
+        private static final AsSourceFunction INSTANCE = new AsSourceFunction();
+
+        @Override
+        public Source apply(final XdmNode node)
+        {
+            return node.asSource();
+        }
+    }
 }
