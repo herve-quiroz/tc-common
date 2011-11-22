@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Herve Quiroz
+ * Copyright (C) 2011 Herve Quiroz
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,8 +14,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
- *
- * $Id$
  */
 package org.trancecode.io;
 
@@ -25,9 +23,12 @@ import java.net.URI;
 /**
  * @author Herve Quiroz
  */
-public interface OutputResolver
+public abstract class AbstractOutputResolver implements OutputResolver
 {
-    OutputStream resolveOutputStream(URI resource);
-
-    OutputStream resolveOutputStream(String href, String base);
+    @Override
+    public OutputStream resolveOutputStream(final String href, final String base)
+    {
+        final URI uri = Uris.resolve(href, base);
+        return resolveOutputStream(uri);
+    }
 }

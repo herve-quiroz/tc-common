@@ -30,7 +30,7 @@ import org.trancecode.logging.Logger;
 /**
  * @author Herve Quiroz
  */
-public final class DefaultOutputResolver implements OutputResolver
+public final class DefaultOutputResolver extends AbstractOutputResolver
 {
     public static final DefaultOutputResolver INSTANCE = new DefaultOutputResolver();
 
@@ -42,11 +42,10 @@ public final class DefaultOutputResolver implements OutputResolver
     }
 
     @Override
-    public OutputStream resolveOutputStream(final String href, final String base)
+    public OutputStream resolveOutputStream(final URI uri)
     {
-        LOG.trace("{@method} href = {} ; base = {}", href, base);
+        LOG.trace("{@method} uri = {}", uri);
 
-        final URI uri = Uris.resolve(href, base);
         if (uri.getScheme() == null || "file".equals(uri.getScheme()))
         {
             final File file = new File(uri);
@@ -56,7 +55,7 @@ public final class DefaultOutputResolver implements OutputResolver
             }
             catch (final IOException e)
             {
-                throw new RuntimeIOException(e, "error resolving output: href = %s ; base = %s", href, base);
+                throw new RuntimeIOException(e, "error resolving output: uri = %s", uri);
             }
         }
 
