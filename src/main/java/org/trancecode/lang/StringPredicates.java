@@ -65,4 +65,16 @@ public final class StringPredicates
         // TODO singleton
         return Predicates.not(isEmpty());
     }
+
+    public static Predicate<String> isContainedBy(final String string)
+    {
+        return new Predicate<String>()
+        {
+            @Override
+            public boolean apply(final String fragment)
+            {
+                return string.contains(fragment);
+            }
+        };
+    }
 }
