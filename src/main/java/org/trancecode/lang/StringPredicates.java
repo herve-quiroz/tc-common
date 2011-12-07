@@ -27,6 +27,11 @@ import com.google.common.base.Predicates;
  */
 public final class StringPredicates
 {
+    private StringPredicates()
+    {
+        // No instantiation
+    }
+
     /**
      * @see String#endsWith(String)
      */
@@ -59,10 +64,5 @@ public final class StringPredicates
     {
         // TODO singleton
         return Predicates.not(isEmpty());
-    }
-
-    private StringPredicates()
-    {
-        // No instantiation
     }
 }
