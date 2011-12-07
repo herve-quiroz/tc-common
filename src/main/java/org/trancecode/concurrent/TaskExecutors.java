@@ -26,6 +26,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Utility methods related to {@link TaskExecutor}
@@ -65,8 +67,9 @@ public final class TaskExecutors
             return new Future<T>()
             {
                 private T result;
-                private boolean cancelled;
-                private boolean done;
+                private volatile boolean cancelled;
+                private volatile boolean done;
+                private final Lock lock = new ReentrantLock(false);
 
                 @Override
                 public boolean cancel(final boolean mayInterruptIfRunning)
@@ -93,29 +96,36 @@ public final class TaskExecutors
                 }
 
                 @Override
-                public synchronized T get() throws InterruptedException, ExecutionException
+                public T get() throws InterruptedException, ExecutionException
                 {
-                    // TODO use lightweight lock
-                    if (cancelled)
+                    lock.lock();
+                    try
                     {
-                        throw new CancellationException();
-                    }
-
-                    if (!done)
-                    {
-                        try
+                        if (cancelled)
                         {
-                            result = task.call();
-                        }
-                        catch (final Exception e)
-                        {
-                            throw new ExecutionException(e);
+                            throw new CancellationException();
                         }
 
-                        done = true;
-                    }
+                        if (!done)
+                        {
+                            try
+                            {
+                                result = task.call();
+                            }
+                            catch (final Exception e)
+                            {
+                                throw new ExecutionException(e);
+                            }
 
-                    return result;
+                            done = true;
+                        }
+
+                        return result;
+                    }
+                    finally
+                    {
+                        lock.unlock();
+                    }
                 }
 
                 @Override
