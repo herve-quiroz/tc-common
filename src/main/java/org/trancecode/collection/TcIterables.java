@@ -203,4 +203,14 @@ public final class TcIterables
     {
         return Iterables.getFirst(Iterables.filter(elements, Predicates.notNull()), defaultValue);
     }
+
+    /**
+     * Returns the first non-null element from the specified sequence, or the
+     * specified default value if all elements from the sequence were
+     * {@code null}.
+     */
+    public static <T> T getFirstNonNull(final T... elements)
+    {
+        return getFirstNonNull(ImmutableList.copyOf(elements), null);
+    }
 }
