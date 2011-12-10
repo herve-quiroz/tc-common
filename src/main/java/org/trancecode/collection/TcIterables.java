@@ -205,9 +205,8 @@ public final class TcIterables
     }
 
     /**
-     * Returns the first non-null element from the specified sequence, or the
-     * specified default value if all elements from the sequence were
-     * {@code null}.
+     * Returns the first non-null element from the specified sequence, or
+     * {@code null} if all elements from the sequence were {@code null}.
      */
     public static <T> T getFirstNonNull(final T... elements)
     {
