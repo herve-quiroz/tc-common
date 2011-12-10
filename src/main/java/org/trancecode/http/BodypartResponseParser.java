@@ -54,14 +54,14 @@ public class BodypartResponseParser
     private final HeaderGroup headers;
 
     public BodypartResponseParser(final InputStream stream, final String boundary, final HttpParams params,
-                                  final String contentType, final String charset)
+            final String contentType, final String charset)
     {
         this.stream = stream;
         this.boundary = "--" + boundary;
         this.params = params;
         this.contentType = contentType;
         this.charset = charset;
-        sessionBuffer =  new TubularSessionInputBuffer(stream, 4096, params == null ? new BasicHttpParams() : params);
+        sessionBuffer = new TubularSessionInputBuffer(stream, 4096, params == null ? new BasicHttpParams() : params);
         this.headers = new HeaderGroup();
     }
 
@@ -76,11 +76,11 @@ public class BodypartResponseParser
             }
             while (line != null && !StringUtils.equals(boundary, line));
         }
-        catch(IOException e)
+        catch (IOException e)
         {
         }
     }
-    
+
     public List<BodypartEntity> parseMultipart()
     {
         final List<BodypartEntity> entities = Lists.newArrayList();
@@ -146,7 +146,8 @@ public class BodypartResponseParser
                 {
                     sessionBuffer.readLine();
                     sessionBuffer.readLine();
-                    return new BodypartEntity(new ByteArrayEntity(buffer.toByteArray()), hasHeaders ? headers.copy() : null);
+                    return new BodypartEntity(new ByteArrayEntity(buffer.toByteArray()), hasHeaders ? headers.copy()
+                            : null);
                 }
             }
         }
@@ -175,7 +176,8 @@ public class BodypartResponseParser
             while (!finish);
             if (builder.length() > 0)
             {
-                return new BodypartEntity(new StringEntity(builder.toString(), mime, ch), hasHeaders ? headers.copy() : null);
+                return new BodypartEntity(new StringEntity(builder.toString(), mime, ch), hasHeaders ? headers.copy()
+                        : null);
             }
         }
         return null;
@@ -250,7 +252,8 @@ public class BodypartResponseParser
         {
             if (contentType != null)
             {
-                return !contentType.startsWith("multipart") && !contentType.endsWith("xml") && !contentType.startsWith("text");
+                return !contentType.startsWith("multipart") && !contentType.endsWith("xml")
+                        && !contentType.startsWith("text");
             }
         }
         return false;

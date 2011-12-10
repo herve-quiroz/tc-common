@@ -192,7 +192,7 @@ public class SaxonBuilder
         try
         {
             final int nameCode = namePool.allocate(qname.getPrefix(), qname.getNamespaceURI(), qname.getLocalName());
-            receiver.attribute(nameCode, StandardNames.XS_UNTYPED_ATOMIC , value, 0, 0);
+            receiver.attribute(nameCode, StandardNames.XS_UNTYPED_ATOMIC, value, 0, 0);
         }
         catch (final XPathException e)
         {
