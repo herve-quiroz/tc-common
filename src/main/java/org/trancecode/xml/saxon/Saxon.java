@@ -42,6 +42,7 @@ import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
+import net.sf.saxon.s9api.XdmValue;
 import net.sf.saxon.s9api.XsltTransformer;
 import org.apache.commons.lang.StringUtils;
 import org.trancecode.xml.XmlSchemaTypes;
@@ -221,5 +222,37 @@ public final class Saxon
     public static Iterable<Source> asSources(final Iterable<XdmNode> nodes)
     {
         return Iterables.transform(nodes, SaxonFunctions.asSource());
+    }
+
+    /**
+     * Returns {@code true} if the specified XDM value represents {@code true}.
+     */
+    public static boolean isTrue(final XdmValue value)
+    {
+        if (value.size() == 0)
+        {
+            return false;
+        }
+
+        if (value.size() > 1)
+        {
+            return true;
+        }
+
+        final XdmItem resultNode = value.iterator().next();
+        if (resultNode.isAtomicValue())
+        {
+            try
+            {
+                return ((XdmAtomicValue) resultNode).getBooleanValue();
+            }
+            catch (final SaxonApiException e)
+            {
+                throw new IllegalStateException(e);
+            }
+        }
+
+        // TODO what shall we do with this value then?
+        throw new IllegalStateException(value.toString());
     }
 }
