@@ -22,6 +22,7 @@ package org.trancecode.collection;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
@@ -191,5 +192,15 @@ public final class TcIterables
                 return TcIterators.removeAll(fromQueue);
             }
         };
+    }
+
+    /**
+     * Returns the first non-null element from the specified sequence, or the
+     * specified default value if all elements from the sequence were
+     * {@code null}.
+     */
+    public static <T> T getFirstNonNull(final Iterable<T> elements, final T defaultValue)
+    {
+        return Iterables.getFirst(Iterables.filter(elements, Predicates.notNull()), defaultValue);
     }
 }
