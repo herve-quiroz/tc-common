@@ -210,6 +210,14 @@ public final class TcIterables
      */
     public static <T> T getFirstNonNull(final T... elements)
     {
-        return getFirstNonNull(ImmutableList.copyOf(elements), null);
+        for (final T element : elements)
+        {
+            if (element != null)
+            {
+                return element;
+            }
+        }
+
+        return null;
     }
 }
