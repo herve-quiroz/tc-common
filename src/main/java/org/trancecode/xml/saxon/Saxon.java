@@ -252,7 +252,6 @@ public final class Saxon
             }
         }
 
-        // TODO what shall we do with this value then?
-        throw new IllegalStateException(value.toString());
+        return true;
     }
 }
