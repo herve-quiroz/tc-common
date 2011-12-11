@@ -24,5 +24,4 @@ package org.trancecode.event;
  */
 public interface Event
 {
-
 }

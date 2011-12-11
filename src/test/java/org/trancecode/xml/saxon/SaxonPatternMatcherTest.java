@@ -73,7 +73,6 @@ public class SaxonPatternMatcherTest extends AbstractTest
 
     private XdmNode select(final String select, final XdmNode xpathContext)
     {
-
         try
         {
             final XPathCompiler xpathCompiler = processor.newXPathCompiler();

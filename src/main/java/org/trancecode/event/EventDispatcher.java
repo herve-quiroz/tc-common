@@ -22,5 +22,4 @@ package org.trancecode.event;
  */
 public interface EventDispatcher<T extends Event> extends EventObservable<T>, EventObserver<T>
 {
-
 }
