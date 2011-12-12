@@ -18,6 +18,8 @@
 package org.trancecode.xml.saxon;
 
 import net.sf.saxon.s9api.QName;
+import org.trancecode.api.Nullable;
+import org.trancecode.api.ReturnsNullable;
 
 /**
  * Utility methods related to Saxon API {@link QName}.
@@ -41,13 +43,25 @@ public final class SaxonQNames
         return qname.toString();
     }
 
-    public static javax.xml.namespace.QName asXmlQName(final QName qname)
+    @ReturnsNullable
+    public static javax.xml.namespace.QName asXmlQName(@Nullable final QName qname)
     {
+        if (qname == null)
+        {
+            return null;
+        }
+
         return new javax.xml.namespace.QName(qname.getNamespaceURI(), qname.getLocalName(), qname.getPrefix());
     }
 
-    public static QName asSaxonQName(final javax.xml.namespace.QName qname)
+    @ReturnsNullable
+    public static QName asSaxonQName(@Nullable final javax.xml.namespace.QName qname)
     {
+        if (qname == null)
+        {
+            return null;
+        }
+
         return new QName(qname.getPrefix(), qname.getNamespaceURI(), qname.getLocalPart());
     }
 }
