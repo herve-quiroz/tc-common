@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableList;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.event.NamespaceReducer;
 import net.sf.saxon.event.Receiver;
+import net.sf.saxon.event.ReceiverOptions;
 import net.sf.saxon.event.TreeReceiver;
 import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NodeInfo;
@@ -296,6 +297,24 @@ public class SaxonBuilder
         try
         {
             receiver.characters(text, 0, 0);
+        }
+        catch (final XPathException e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Adds a raw text node
+     * 
+     * @param raw
+     *            The raw content
+     */
+    public void raw(final String raw)
+    {
+        try
+        {
+            receiver.characters(raw, 0, ReceiverOptions.DISABLE_ESCAPING);
         }
         catch (final XPathException e)
         {
