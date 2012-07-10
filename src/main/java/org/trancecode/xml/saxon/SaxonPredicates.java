@@ -22,9 +22,13 @@ package org.trancecode.xml.saxon;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableSet;
+
+import javax.annotation.Nullable;
+
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import org.trancecode.function.TcPredicates;
+import org.trancecode.xml.XmlAttributes;
 
 /**
  * {@link Predicate} implementations related to Saxon.
@@ -58,5 +62,22 @@ public final class SaxonPredicates
     {
         return Predicates.compose(TcPredicates.isContainedBy(ImmutableSet.copyOf(nodeKinds)),
                 SaxonFunctions.getNodeKind());
+    }
+
+    public static Predicate<XdmNode> isIgnorableWhitespace()
+    {
+        return IsIgnorableWhitespacePredicate.INSTANCE;
+    }
+
+    private static final class IsIgnorableWhitespacePredicate implements Predicate<XdmNode>
+    {
+        private static final IsIgnorableWhitespacePredicate INSTANCE = new IsIgnorableWhitespacePredicate();
+
+        @Override
+        public boolean apply(@Nullable final XdmNode node)
+        {
+            return node.getNodeKind() == XdmNodeKind.TEXT && node.getStringValue().matches("\\s*")
+                    && "preserve".equals(node.getParent().getAttributeValue(XmlAttributes.SPACE));
+        }
     }
 }

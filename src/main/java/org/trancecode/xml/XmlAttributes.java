@@ -27,6 +27,7 @@ import net.sf.saxon.s9api.QName;
 public final class XmlAttributes
 {
     public static final QName BASE = XmlNamespace.INSTANCE.newSaxonQName("base");
+    public static final QName SPACE = XmlNamespace.INSTANCE.newSaxonQName("space");
 
     private XmlAttributes()
     {
