@@ -17,7 +17,10 @@
  */
 package org.trancecode.xml.saxon;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.event.NamespaceReducer;
 import net.sf.saxon.event.Receiver;
@@ -25,6 +28,7 @@ import net.sf.saxon.event.TreeReceiver;
 import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.StandardNames;
+import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmDestination;
@@ -301,6 +305,30 @@ public class SaxonBuilder
         {
             throw new IllegalStateException(e);
         }
+    }
+
+    /**
+     * Adds a raw XML fragment
+     * 
+     * @param raw
+     *            The XML fragment
+     */
+    public void raw(final String raw, final Processor processor)
+    {
+        Preconditions.checkNotNull(processor);
+        Preconditions.checkNotNull(raw);
+
+        final String toBeParsed = "<wrapperElement>" + raw + "</wrapperElement>";
+        final XdmNode parsedNode = Saxon.parse(toBeParsed, processor);
+        final XdmNode rootNode = Iterables.getOnlyElement(SaxonAxis.childNodes(parsedNode));
+
+        // Re-ask for subnodes as the first childNodes() call will give the
+        // wrapperElement element
+        final Iterable<XdmNode> subNodesList = SaxonAxis.childNodes(rootNode);
+        final Iterable<XdmNode> filteredSubNodesList = Iterables.filter(subNodesList,
+                Predicates.not(SaxonPredicates.isIgnorableWhitespace()));
+
+        nodes(filteredSubNodesList);
     }
 
     /**
