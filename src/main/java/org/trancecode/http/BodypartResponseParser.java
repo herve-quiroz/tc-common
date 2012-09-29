@@ -20,9 +20,11 @@
 package org.trancecode.http;
 
 import com.google.common.collect.Lists;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -45,7 +47,7 @@ public class BodypartResponseParser
 {
     private InputStream stream;
     private String boundary;
-    private HttpParams params;
+    private final HttpParams params;
     private String contentType;
     private String partContentType;
     private String charset;
@@ -76,7 +78,7 @@ public class BodypartResponseParser
             }
             while (line != null && !StringUtils.equals(boundary, line));
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
         }
     }
@@ -95,7 +97,7 @@ public class BodypartResponseParser
                 part = parseBodypart(true);
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             return null;
         }
@@ -212,10 +214,10 @@ public class BodypartResponseParser
             }
             while (true);
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
         }
-        catch (ParseException e)
+        catch (final ParseException e)
         {
         }
     }
