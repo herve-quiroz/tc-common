@@ -22,11 +22,9 @@ package org.trancecode.xml.saxon;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableSet;
-
-import javax.annotation.Nullable;
-
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
+import org.trancecode.api.Nullable;
 import org.trancecode.function.TcPredicates;
 import org.trancecode.xml.XmlAttributes;
 
