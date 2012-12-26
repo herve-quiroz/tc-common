@@ -81,6 +81,11 @@ public final class ParallelIterators
         }
     };
 
+    private ParallelIterators()
+    {
+        // No instantiation
+    }
+
     private static <T> Future<T> last()
     {
         @SuppressWarnings("unchecked")
@@ -184,10 +189,5 @@ public final class ParallelIterators
 
         final Function<Entry<T, Boolean>, T> getKeyFunction = MapFunctions.getKey();
         return Iterators.transform(filtered, getKeyFunction);
-    }
-
-    private ParallelIterators()
-    {
-        // No instantiation
     }
 }
