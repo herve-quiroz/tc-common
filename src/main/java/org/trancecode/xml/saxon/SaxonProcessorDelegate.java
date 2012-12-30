@@ -76,7 +76,7 @@ public interface SaxonProcessorDelegate
      * @param builder
      *            the shared builder used to create the result document
      */
-    public EnumSet<NextSteps> startElement(XdmNode node, SaxonBuilder builder);
+    EnumSet<NextSteps> startElement(XdmNode node, SaxonBuilder builder);
 
     /**
      * Called after having processed an element.
