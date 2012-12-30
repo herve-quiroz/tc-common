@@ -39,7 +39,8 @@ public interface SaxonProcessorDelegate
      * {@link SaxonProcessorDelegate#startElement(XdmNode, SaxonBuilder)} method
      * has been called.
      */
-    enum NextSteps {
+    enum NextSteps
+    {
         PROCESS_CHILDREN, PROCESS_ATTRIBUTES, START_CONTENT
     }
 
