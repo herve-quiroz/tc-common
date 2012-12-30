@@ -43,7 +43,7 @@ public abstract class AbstractEventObservable<T extends Event> implements EventD
 
     private Iterable<EventObserver<T>> observers = ImmutableSet.of();
 
-    public static interface NotificationFailurePolicy
+    public interface NotificationFailurePolicy
     {
         void notificationFailure(EventObserver<?> observer, Event event, Throwable error);
     }
