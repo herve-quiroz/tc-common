@@ -39,15 +39,16 @@ import org.apache.http.message.HeaderGroup;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.ByteArrayBuffer;
+import org.trancecode.logging.Logger;
 
 /**
  * @author Emmanuel Tourdot
  */
-public class BodypartResponseParser
+public final class BodypartResponseParser
 {
-    private InputStream stream;
+    private static final Logger LOG = Logger.getLogger();
+
     private String boundary;
-    private final HttpParams params;
     private String contentType;
     private String partContentType;
     private String charset;
@@ -58,9 +59,7 @@ public class BodypartResponseParser
     public BodypartResponseParser(final InputStream stream, final String boundary, final HttpParams params,
             final String contentType, final String charset)
     {
-        this.stream = stream;
         this.boundary = "--" + boundary;
-        this.params = params;
         this.contentType = contentType;
         this.charset = charset;
         sessionBuffer = new TubularSessionInputBuffer(stream, 4096, params == null ? new BasicHttpParams() : params);
@@ -80,6 +79,7 @@ public class BodypartResponseParser
         }
         catch (final IOException e)
         {
+            LOG.trace("{}", e);
         }
     }
 
@@ -216,9 +216,11 @@ public class BodypartResponseParser
         }
         catch (final IOException e)
         {
+            LOG.trace("{}", e);
         }
         catch (final ParseException e)
         {
+            LOG.trace("{}", e);
         }
     }
 
@@ -264,11 +266,6 @@ public class BodypartResponseParser
     public void setBoundary(final String boundary)
     {
         this.boundary = "--" + boundary;
-    }
-
-    public void setStream(final InputStream stream)
-    {
-        this.stream = stream;
     }
 
     public void setCharset(final String charset)

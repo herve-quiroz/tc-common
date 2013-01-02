@@ -19,13 +19,13 @@
  */
 package org.trancecode;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.varia.NullAppender;
+import java.io.File;
+
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.trancecode.logging.Logger;
+import org.trancecode.logging.simple.SimpleLoggerManager;
+import org.trancecode.logging.spi.LoggerLevel;
 
 /**
  * @author Herve Quiroz
@@ -35,26 +35,26 @@ public abstract class AbstractTest
     public static final String PROPERTY_QUIET = "test.quiet";
     public static final boolean QUIET = Boolean.getBoolean(PROPERTY_QUIET);
 
-    protected final org.trancecode.logging.Logger log = org.trancecode.logging.Logger.getLogger(getClass());
+    protected final Logger log = Logger.getLogger(getClass());
 
     @BeforeSuite
     public static void setupLogging()
     {
-        Logger.getRootLogger().removeAllAppenders();
+        SimpleLoggerManager.setOutputDirectory(new File("target/test-logs"));
         if (!QUIET)
         {
-            Logger.getRootLogger().addAppender(new ConsoleAppender(new PatternLayout("%-5p %30.30c{2} %m%n")));
-            Logger.getLogger("org.trancecode").setLevel(Level.TRACE);
+            SimpleLoggerManager.setLevel(LoggerLevel.TRACE);
         }
         else
         {
-            Logger.getRootLogger().addAppender(new NullAppender());
+            SimpleLoggerManager.setLevel(LoggerLevel.TRACE);
         }
     }
 
     @BeforeTest
     public void logTestDelimiter()
     {
+        SimpleLoggerManager.setLogFileNamePrefix(getClass().getName());
         log.info("------------------------------------------------------------------------------");
     }
 }
