@@ -47,7 +47,7 @@ public abstract class AbstractTest
         }
         else
         {
-            SimpleLoggerManager.setLevel(LoggerLevel.TRACE);
+            SimpleLoggerManager.setLevel(LoggerLevel.ERROR);
         }
     }
 
