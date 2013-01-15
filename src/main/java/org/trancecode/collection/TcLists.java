@@ -34,6 +34,11 @@ public final class TcLists
         return ImmutableList.copyOf(Iterables.concat(elements, ImmutableList.of(newElement)));
     }
 
+    public static <T> List<T> immutableList(final T prefixElement, final Iterable<T> elements)
+    {
+        return ImmutableList.copyOf(Iterables.concat(ImmutableList.of(prefixElement), elements));
+    }
+
     private TcLists()
     {
         // No instantiation
