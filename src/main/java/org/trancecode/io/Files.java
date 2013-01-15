@@ -20,11 +20,13 @@ package org.trancecode.io;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -84,5 +86,11 @@ public final class Files
         {
             throw new IllegalStateException(e);
         }
+    }
+
+    public static void write(final byte[] bytes, final File toFile)
+    {
+        final OutputStream fileOut = newFileOutputStream(toFile);
+        TcByteStreams.copy(new ByteArrayInputStream(bytes), fileOut, true);
     }
 }
