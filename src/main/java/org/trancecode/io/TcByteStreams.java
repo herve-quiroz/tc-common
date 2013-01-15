@@ -25,7 +25,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
+import org.trancecode.concurrent.TcExecutors;
 import org.trancecode.lang.TcThreads;
 
 /**
@@ -63,9 +66,21 @@ public final class TcByteStreams
         }
     }
 
+    public static Future<Long> concurrentCopy(final InputStream in, final OutputStream out, final boolean close)
+    {
+        return TcExecutors.concurrentExecute(new Callable<Long>()
+        {
+            @Override
+            public Long call() throws Exception
+            {
+                return copy(in, out, close);
+            }
+        });
+    }
+
     public static Supplier<File> copyToTempFile(final InputStream in)
     {
-        final File file = Files.createTempFile(TcByteStreams.class);
+        final File file = Files.createTempFile(TcByteStreamsTest.class);
         final Thread thread = new Thread(new Runnable()
         {
             @Override
