@@ -48,8 +48,11 @@ public final class TcByteStreams
         try
         {
             final long bytes = ByteStreams.copy(in, out);
-            Closeables.close(in, false);
-            Closeables.close(out, false);
+            if (close)
+            {
+                Closeables.close(in, false);
+                Closeables.close(out, false);
+            }
             return bytes;
         }
         catch (final IOException e)
