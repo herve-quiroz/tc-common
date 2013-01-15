@@ -35,6 +35,11 @@ import org.trancecode.lang.TcThreads;
  */
 public final class TcByteStreams
 {
+    private TcByteStreams()
+    {
+        // No instantiation
+    }
+
     public static long copy(final InputStream in, final OutputStream out, final boolean close)
     {
         try
@@ -79,10 +84,5 @@ public final class TcByteStreams
                 return file;
             }
         };
-    }
-
-    private TcByteStreams()
-    {
-        // No instantiation
     }
 }
