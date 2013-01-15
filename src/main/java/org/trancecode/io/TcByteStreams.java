@@ -83,7 +83,7 @@ public final class TcByteStreams
 
     public static Supplier<File> copyToTempFile(final InputStream in)
     {
-        final File file = Files.createTempFile(TcByteStreamsTest.class);
+        final File file = Files.createTempFile(TcByteStreams.class);
         final Thread thread = new Thread(new Runnable()
         {
             @Override
