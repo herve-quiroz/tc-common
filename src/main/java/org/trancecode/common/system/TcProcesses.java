@@ -19,6 +19,7 @@ package org.trancecode.common.system;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.io.IOException;
@@ -61,7 +62,12 @@ public final class TcProcesses
 
         public Builder args(final String... args)
         {
-            this.args.addAll(ImmutableList.copyOf(args));
+            return args(ImmutableList.copyOf(args));
+        }
+
+        public Builder args(final Iterable<String> args)
+        {
+            Iterables.addAll(this.args, args);
             return this;
         }
 
